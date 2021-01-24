@@ -34,13 +34,40 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# 유저모델 재설정
+AUTH_USER_MODEL = "user.User"
+
+# 로그인 실패시 URL
+LOGIN_URL = "/"
+
+"""이메일 설정"""
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_ADDRESS = "contacthanmin01@gmail.com"
+EMAIL_HOST_USER = EMAIL_ADDRESS
+EMAIL_HOST_PASSWORD = get_secret("EMAIL_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+SERVER_EMAIL = EMAIL_ADDRESS
+DEFAULT_FORM_MAIL = "contacthanmin01"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    "material.admin",
+    "material.admin.default",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "api",
+    "article",
+    "board",
+    "main",
+    "menu",
+    "policy",
+    "user",
 ]
 
 MIDDLEWARE = [
