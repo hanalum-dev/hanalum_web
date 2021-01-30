@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block content %}
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <form method = "POST" action = "{% url 'signup' %}" class="align-middle col-10 col-sm-8 col-md-8 col-lg-8 col-xl-6">
+      {% csrf_token %}
+      <div class = "card p-3 m-3">
+        <div class="card-header bg-white text-center">
+          <img class="main-icon" src= "{% static 'img/no-title-logo.png' %}" alt="" width="140" height="140">
+          <h4 class="mb-1 text-center text-muted">회원가입</h4>
+        </div>
+        <div class = "card-content p-3">
+          {% for field in form %}
+            <div class="mb-3">
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+            {% if field.id_for_label == "id_email" %}
+                <div class="register_error ml-3 mb-2">{{error.email}}</div>
+            {% endif %}
+            {% if field.id_for_label == "id_nickname" %}
+                <div class="register_error ml-3 mb-2">{{error.nickname}}</div>
+            {% endif %}
+            {% if field.id_for_label == "id_password" %}
+                <div class="register_error ml-3 mb-2">{{error.password1}}</div>
+            {% endif %}
+            {% if field.id_for_label == "id_password2" %}
+                <div class="register_error ml-3 mb-2">{{error.password2}}</div>
+            {% endif %}
+            {% if field.id_for_label == "id_realname" %}
+                <div class="register_error ml-3 mb-2">{{error.realname}}</div>
+            {% endif %}
+            {{field}}
+            </div>
+          {% endfor %}
+        </div>
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-md" type="submit">회원 가입</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

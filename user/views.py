@@ -15,6 +15,7 @@ def signup(request):
         'form' : None,
     }
 
+    # TODO: error message 다중 적용 필요
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         _email = request.POST.get('email')
