@@ -29,6 +29,7 @@ def signup(request):
         )
 
         if not validate_user_form_result.status:
+            # TODO: 더 간결하게 적기
             response['status'] = validate_user_form_result.status
             response['msg'] = validate_user_form_result.msg
             response['form'] = form

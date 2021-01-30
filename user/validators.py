@@ -1,5 +1,7 @@
 """ user(사용자 계정) validations 데이터 검증 모듈입니다."""
-from helpers.regexes import email_regex, nickname_regex, password_regex
+from helpers.error import Error
+from helpers.regexes import (email_regex, nickname_regex, password_regex,
+                             realname_regex)
 from helpers.success import Success
 from helpers.user_errors import (AlreadyRegisteredEmailError,
                                  AlreadyRegisteredNicknameError,
@@ -26,14 +28,20 @@ class UserCreationValidator:
         v_realname = self.validate_realname(_realname)
         v_password = self.validate_password(_password1, _password2)
 
+        e = Error()
+        e.msg = {}
+
         if not v_email.status:
-            return v_email
+            e.msg['email'] = v_email
         if not v_nickname.status:
-            return v_nickname
+            e.msg['nickname'] = v_nickname
         if not v_realname.status:
-            return v_realname
+            e.msg['realname'] = v_realname
         if not v_password.status:
-            return v_password
+            e.msg['password'] = v_password
+
+        if e.msg != {}:
+            return e
 
         return UserCreationValidationSuccess()
 
@@ -75,7 +83,7 @@ class UserCreationValidator:
         if _realname is None:
             return NoInputRealnameError()
 
-        is_match = email_regex.match(_realname)
+        is_match = realname_regex.match(_realname)
 
         if is_match is None:
             return InvalidFormatRealnameError()

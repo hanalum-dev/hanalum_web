@@ -9,7 +9,7 @@ class InvalidFormatEmailError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "형식에 맞는 이메일을 입력해주세요."
+        self.msg = "형식에 맞는 이메일을 입력해주세요."
 
 
 class AlreadyRegisteredEmailError(Error):
@@ -18,7 +18,7 @@ class AlreadyRegisteredEmailError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "이미 등록된 이메일입니다."
+        self.msg = "이미 등록된 이메일입니다."
 
 
 class NoInputEmailError(Error):
@@ -27,7 +27,7 @@ class NoInputEmailError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "이메일을 입력해주세요."
+        self.msg = "이메일을 입력해주세요."
 
 
 class InvalidFormatRealnameError(Error):
@@ -36,7 +36,7 @@ class InvalidFormatRealnameError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "한글 실명을 입력해주세요."
+        self.msg = "한글 실명을 입력해주세요."
 
 
 class NoInputRealnameError(Error):
@@ -45,7 +45,7 @@ class NoInputRealnameError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "이름을 입력해주세요."
+        self.msg = "이름을 입력해주세요."
 
 
 class InvalidFormatNicknameError(Error):
@@ -54,7 +54,7 @@ class InvalidFormatNicknameError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "닉네임은 최대 8글자 한글, 영문, 숫자 조합의 문자열만 가능합니다."
+        self.msg = "닉네임은 최대 8글자 한글, 영문, 숫자 조합의 문자열만 가능합니다."
 
 
 class NoInputNicknameError(Error):
@@ -63,7 +63,7 @@ class NoInputNicknameError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "닉네임을 입력해주세요."
+        self.msg = "닉네임을 입력해주세요."
 
 
 class AlreadyRegisteredNicknameError(Error):
@@ -72,7 +72,7 @@ class AlreadyRegisteredNicknameError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "이미 사용 중인 닉네임입니다."
+        self.msg = "이미 사용 중인 닉네임입니다."
 
 
 class AlreadyUsedNicknameError(Error):
@@ -81,7 +81,7 @@ class AlreadyUsedNicknameError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "현재 닉네임과 동일합니다."
+        self.msg = "현재 닉네임과 동일합니다."
 
 
 class InvalidFormatPasswordError(Error):
@@ -90,7 +90,7 @@ class InvalidFormatPasswordError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "비밀번호는 8자리 이상 16자리 이하로 만들어져야 합니다."
+        self.msg = "비밀번호는 8자리 이상 16자리 이하로 만들어져야 합니다."
 
 
 class MismatchedPasswordError(Error):
@@ -99,7 +99,7 @@ class MismatchedPasswordError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "비밀번호가 일치하지 않습니다."
+        self.msg = "비밀번호가 일치하지 않습니다."
 
 
 class NoInputPasswordError(Error):
@@ -108,4 +108,4 @@ class NoInputPasswordError(Error):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "비밀번호를 입력해주세요."
+        self.msg = "비밀번호를 입력해주세요."

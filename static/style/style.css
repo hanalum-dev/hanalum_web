@@ -1,0 +1,9 @@
+.text-error {
+    margin-top: 1px;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.text-error::before {
+    content: "* ";
+}

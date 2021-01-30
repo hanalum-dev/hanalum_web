@@ -9,7 +9,7 @@ class UserCreationSuccess(Success):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "회원가입이 완료되었습니다."
+        self.msg = "회원가입이 완료되었습니다."
 
 
 class UserCreationValidationSuccess(Success):
@@ -18,4 +18,4 @@ class UserCreationValidationSuccess(Success):
     def __init__(self):
         """생성자"""
         super().__init__()
-        self.message = "정상적으로 입력되었습니다."
+        self.msg = "정상적으로 입력되었습니다."
