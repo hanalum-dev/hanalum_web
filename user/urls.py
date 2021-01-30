@@ -1,7 +1,10 @@
 """user 관련 urls 정의 파일입니다."""
 from django.urls import path
 
-from .views import delete, edit, show, signin, signout, signup, update
+from .views import (activate_account, delete, edit, show, signin, signout,
+                    signup, update)
+
+app_name = 'user'
 
 urlpatterns = [
     path('signin', signin, name="signin"),
@@ -11,4 +14,5 @@ urlpatterns = [
     path('edit', edit, name="edit"),
     path('update', update, name="update"),
     path('delete', delete, name="delete"),
+    path('activate_account/<str:uidb64>/<str:token>/', activate_account, name="activate_account")
 ]

@@ -1,12 +1,17 @@
 """user(사용자 계정) views 모듈입니다."""
+from django.contrib import auth
 from django.contrib.sites.shortcuts import get_current_site
+from django.db import IntegrityError, transaction
 from django.shortcuts import redirect, render
+from django.utils.http import urlsafe_base64_decode
 
 from .forms import UserCreationForm
 from .models import User
+from .tokens import account_activation_token
 from .validators import UserCreationValidator
 
 
+@transaction.atomic
 def signup(request):
     """회원가입 뷰"""
     response = {
@@ -35,17 +40,20 @@ def signup(request):
             response['form'] = form
             return render(request, 'user/registrations/new.html', response)
 
-        if form.is_valid():
-            current_site = get_current_site(request)
-            form.f_save(current_site, request.POST['email'])
-            # TODO: message framework 사용해서, 이메일 확인하라는 메세지 추가하기
-            redirect('user:signin')
-        else:
-            # TODO: 이것도 따로 helper errors 클래스 분리하기
-            response['status'] = False
-            response['msg'] = '입력이 제대로 되지 않았습니다.'
-            return render(request, 'user/registrations/new.html', response)
-
+        # TODO: transaction 적용하기
+        try:
+            with transaction.atomic():
+                if form.is_valid():
+                    current_site = get_current_site(request)
+                    form.f_save(current_site, request.POST['email'])
+                    # TODO: message framework 사용해서, 이메일 확인하라는 메세지 추가하기
+                    redirect('user:signin')
+        except IntegrityError as e:
+            print(e)
+        except Exception as e:
+            print(e)
+        # TODO: 라벨링 다시 하기
+        # TODO: 메세지 프레임워크로 표시하기 response['msg'] = '입력이 제대로 되지 않았습니다.'
         return redirect('user:signup')
     else:
         form = UserCreationForm()
@@ -54,7 +62,7 @@ def signup(request):
 
 def signin(request):
     """로그인 뷰"""
-    return
+    return render(request, 'user/confirmations/new.html')
 
 
 def signout(request):
@@ -87,3 +95,25 @@ def update(request):
 
 def delete(request):
     """사용자 회원 탈퇴 반영 뷰"""
+
+
+def activate_account(request, uidb64, token):
+    """사용자 인증 메일 활성화 뷰"""
+    # TODO: transaction 적용하기
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth.login(request, user)
+        # TODO: 메세지 프레임워크 적용하기
+        # 이메일 인증이 되었습니다.
+        return redirect("user:signin")
+    else:
+        # TODO: 여기도 아래 메세지로, 메세지 프레임워크 적용하고 또다른 에러 화면으로 연결시키기
+        # 인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다.
+        # 계속해서 오류가 발생한다면, 한아름에 건의해주세요.
+        return redirect("user:signin")
