@@ -12,6 +12,7 @@ def signup(request):
     response = {
         'status' : True,
         'msg' : '',
+        'form' : None,
     }
 
     if request.method == 'POST':
@@ -29,7 +30,8 @@ def signup(request):
         if not validate_user_form_result.status:
             response['status'] = validate_user_form_result.status
             response['msg'] = validate_user_form_result.msg
-            return render(request, 'user/registrations/new.html', response)
+            response['form'] = form
+            return render(request, '/user/registrations/new.html', response)
 
         if form.is_valid():
             current_site = get_current_site(request)
@@ -40,11 +42,12 @@ def signup(request):
             # TODO: 이것도 따로 helper errors 클래스 분리하기
             response['status'] = False
             response['msg'] = '입력이 제대로 되지 않았습니다.'
+            return render(request, '/user/registrations/new.html', response)
 
-        return render(request, 'user/registrations/new.html', response)
+        return redirect('user:signup')
     else:
         form = UserCreationForm()
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'user/registrations/new.html', {'form': form})
 
 
 def signin(request):
