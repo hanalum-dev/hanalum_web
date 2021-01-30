@@ -15,7 +15,7 @@ from helpers.user_successes import UserCreationValidationSuccess
 from .models import User
 
 
-class ValidateUserCreation:
+class UserCreationValidator:
     """사용자 생성 데이터 검증 클래스"""
 
     def validate(self, _email, _nickname, _realname, _password1, _password2):
@@ -99,7 +99,7 @@ class ValidateUserCreation:
         return Success()
 
 
-class ValidateUserEdition:
+class UserEditionValidator:
     """사용자 수정 데이터 검증 클래스"""
 
     def validate_nickname(self, current_user, _nickname):

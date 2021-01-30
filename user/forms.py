@@ -1,6 +1,4 @@
 """user(사용자 계정) forms 모듈입니다."""
-import re
-
 from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserChangeForm
@@ -13,72 +11,7 @@ from .models import User
 from .tokens import account_activation_token
 
 
-class CheckUserClass:
-    """유저 생성 Validation 클래스"""
-
-    def __init__(self):
-        """생성자"""
-        self.cleaned_data = None
-
-    def check_password(self):
-        """비밀번호 Validation"""
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        password_regex = re.compile(
-            r"^\s*(?:\S\s*){8,16}$"
-        )  # 8~16개의 비 공백 문자가 포함된 문자열과 일치된다.
-        is_match = password_regex.match(password1)
-        if is_match is None:  # 비밀번호가 정규식에 매치되지 않음
-            return "비밀번호는 8자리 이상 16자리 이하로 만들어야합니다."
-
-        if password1 and password2 and password1 != password2:
-            return "비밀번호가 일치하지 않습니다."
-        return ""
-
-    def check_nickname(self, _nickname, user_nickname=None):
-        """닉네임 Validation"""
-        # _nickname : 생성할(변경할) 닉네임  # user_nickname : 기존 닉네임
-        if user_nickname is not None:  # CustomUserChangeForm에서 사용
-            if user_nickname == _nickname:  # 현재 닉네임이랑 같은경우
-                return "현재 닉네임과 동일합니다."  # 그대로 사용
-
-        if User.objects.filter(nickname=_nickname).count() > 0:  # 닉네임 중복인 경우
-            return "이미 사용중인 닉네임 입니다."
-
-        nickname_regex = re.compile(
-            r"^[a-zA-Z0-9가-힣]{1,10}$"
-        )  # 영문 & 숫자로 이루어진 길이 1~8 닉네임만 허용
-        is_match = nickname_regex.match(nickname_regex)
-
-        if is_match is None:  # 비밀번호가 정규식에 매치되지 않음
-            return "닉네임은 한글 & 영문 & 숫자 조합으로 이루어져야합니다."
-
-        return ""
-
-    def check_realname(self, _realname):  # 실명확인
-        """이름 Validation"""
-        realname_regex = re.compile("^[가-힣]+$")
-        is_match = realname_regex.match(_realname)
-        if is_match is None:
-            return "한글 실명을 입력하세요."
-        return ""
-
-    def check_email(self, _email):
-        """이메일 Validation"""
-        email_regex = re.compile(
-            r"/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i"
-        )
-        is_match = email_regex.match(_email)
-        if is_match is None:
-            return "형식에 맞는 이메일을 입력해주세요."
-
-        if User.objects.filter(email=_email).count() > 0:
-            return "이미 등록된 이메일입니다."
-        else:
-            return ""
-
-
-class UserCreationForm(forms.ModelForm, CheckUserClass):
+class UserCreationForm(forms.ModelForm):
     """user 생성 폼 클래스"""
 
     class Meta:
@@ -164,7 +97,7 @@ class UserCreationForm(forms.ModelForm, CheckUserClass):
         return user
 
 
-class CustomUserChangeForm(UserChangeForm, CheckUserClass):
+class CustomUserChangeForm(UserChangeForm):
     """유저 정보 변경 폼 클래스"""
 
     class Meta:
