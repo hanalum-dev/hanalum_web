@@ -1,6 +1,6 @@
 """ user 앱 관련 success module 입니다. """
 
-from success import Success
+from .success import Success
 
 
 class UserCreationSuccess(Success):
