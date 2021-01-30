@@ -69,7 +69,8 @@ class UserCreationForm(forms.ModelForm):
         ),
     )
 
-    def form_save(self, current_site, mail_to, commit=True):
+    # TODO: save ovrriden issue 해결해서 save로 변경하기
+    def f_save(self, current_site, mail_to, commit=True):
         """비밀번호를 해시 상태로 저장"""
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
@@ -130,7 +131,7 @@ class CustomUserChangeForm(UserChangeForm):
         ),
     )
 
-    def form_save(self, commit=True):
+    def f_save(self, commit=True):
         """비밀번호를 해시 상태로 저장"""
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])

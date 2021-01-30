@@ -18,6 +18,7 @@ class UserAdmin(BaseUserAdmin):
         "gender",
         "avatar",
         "is_admin",
+        "is_staff",
         "is_active",
         "is_superuser",
         "read_authority",
@@ -45,6 +46,7 @@ class UserAdmin(BaseUserAdmin):
                 "fields": (
                     "is_admin",
                     "is_active",
+                    "is_staff",
                     "is_superuser",
                     "read_authority",
                     "write_authority",

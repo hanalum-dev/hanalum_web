@@ -32,18 +32,18 @@ def signup(request):
             response['status'] = validate_user_form_result.status
             response['msg'] = validate_user_form_result.msg
             response['form'] = form
-            return render(request, '/user/registrations/new.html', response)
+            return render(request, 'user/registrations/new.html', response)
 
         if form.is_valid():
             current_site = get_current_site(request)
-            form.save(current_site, request.POST['email'])
+            form.f_save(current_site, request.POST['email'])
             # TODO: message framework 사용해서, 이메일 확인하라는 메세지 추가하기
             redirect('user:signin')
         else:
             # TODO: 이것도 따로 helper errors 클래스 분리하기
             response['status'] = False
             response['msg'] = '입력이 제대로 되지 않았습니다.'
-            return render(request, '/user/registrations/new.html', response)
+            return render(request, 'user/registrations/new.html', response)
 
         return redirect('user:signup')
     else:
