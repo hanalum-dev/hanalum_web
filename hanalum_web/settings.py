@@ -63,6 +63,9 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+""" summernote load issue """
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 INSTALLED_APPS = [
     "material.admin",
     "material.admin.default",
@@ -71,14 +74,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "bootstrap5",
+    "django_summernote",
     "api",
     "article",
     "board",
+    "hanmaum",
     "main",
     "menu",
     "policy",
     "user",
-    "bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -163,3 +168,6 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
