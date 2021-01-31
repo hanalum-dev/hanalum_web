@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 
+from django.contrib.messages import constants as messages
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,15 @@ EMAIL_USE_SSL = False
 SERVER_EMAIL = EMAIL_ADDRESS
 DEFAULT_FORM_MAIL = "contacthanmin01"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+""" 메세지 프레임워크 클래스 설정 """
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 INSTALLED_APPS = [
     "material.admin",

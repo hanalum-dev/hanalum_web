@@ -1,5 +1,5 @@
 """user(사용자 계정) views 모듈입니다."""
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.db import IntegrityError, transaction
 from django.shortcuts import redirect, render
@@ -38,22 +38,22 @@ def signup(request):
             response['status'] = validate_user_form_result.status
             response['msg'] = validate_user_form_result.msg
             response['form'] = form
+            messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
             return render(request, 'user/registrations/new.html', response)
 
-        # TODO: transaction 적용하기
         try:
             with transaction.atomic():
                 if form.is_valid():
                     current_site = get_current_site(request)
                     form.f_save(current_site, request.POST['email'])
-                    # TODO: message framework 사용해서, 이메일 확인하라는 메세지 추가하기
+                    messages.success(request, '회원가입이 완료되었습니다. 이메일을 확인해주세요.')
                     redirect('user:signin')
         except IntegrityError as e:
             print(e)
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-except
             print(e)
         # TODO: 라벨링 다시 하기
-        # TODO: 메세지 프레임워크로 표시하기 response['msg'] = '입력이 제대로 되지 않았습니다.'
+        messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
         return redirect('user:signup')
     else:
         form = UserCreationForm()
