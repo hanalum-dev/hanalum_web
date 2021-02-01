@@ -29,6 +29,8 @@ def get_secret(setting, secrets=secret_text):
         raise ImproperlyConfigured(error_msg) from KeyError(error_msg)
 
 
+SITE_ID = 1
+
 SECRET_KEY = get_secret("SECRET_KEY")
 
 DEBUG = True
@@ -67,13 +69,16 @@ MESSAGE_TAGS = {
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 INSTALLED_APPS = [
-    "material.admin",
-    "material.admin.default",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    'adminlteui',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'treebeard',
     "bootstrap5",
     "django_summernote",
     "api",
@@ -165,8 +170,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
+    os.path.join(BASE_DIR, "static/")
 ]
 
 MEDIA_URL = '/media/'
