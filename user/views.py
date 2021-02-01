@@ -15,6 +15,7 @@ from .validators import UserCreationValidator
 def signup(request):
     """회원가입 뷰"""
     response = {
+        'non_nav' : True,
         'status' : True,
         'msg' : '',
         'form' : None,
@@ -63,6 +64,7 @@ def signup(request):
 def signin(request):
     """로그인 뷰"""
     response = {
+        'non_nav' : True,
     }
 
     if request.method == 'POST':
@@ -79,7 +81,7 @@ def signin(request):
             else:
                 auth.login(request, user)
                 # TODO: 메세지 프레임워크: 로그인되었습니다.
-                return redirect('')
+                return redirect('/')
         else:
             # TODO: 메세지 프레임워크: 오류가 발생하였습니다.
             return render(request, 'use/confirmations/new.html', response)
@@ -87,7 +89,7 @@ def signin(request):
     else:
         if request.user.is_authenticated:
             # TODO: 메세지 프레임워크: 이미 로그인되어있습니다.
-            return redirect('')
+            return redirect('/')
         response['form'] = UserConfirmationForm()
         return render(request, 'user/confirmations/new.html', response)
 
