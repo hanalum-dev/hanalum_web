@@ -8,6 +8,7 @@
       {% csrf_token %}
       <div class = "card p-3 m-3">
         <div class="card-header bg-white text-center">
+          {% comment %} 로고 클릭시 홈으로 이동 {% endcomment %}
           <img class="main-icon" src= "{% static 'img/no-title-logo.png' %}" alt="" width="140" height="140">
           <h4 class="mb-1 text-center text-muted">회원가입</h4>
         </div>

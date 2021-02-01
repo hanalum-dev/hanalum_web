@@ -76,19 +76,20 @@ def signin(request):
             user = auth.authenticate(request, username=email, password=password)
 
             if user is None:
-                # TODO: 메세지 프레임워크: 오류가 발생하였습니다.
-                return render(request, 'use/confirmations/new.html', response)
+                # TODO: message가 아니라 validation text로 나오게 하기
+                messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
+                return render(request, 'user/confirmations/new.html', response)
             else:
+                messages.error(request, '로그인되었습니다.')
                 auth.login(request, user)
-                # TODO: 메세지 프레임워크: 로그인되었습니다.
                 return redirect('/')
         else:
-            # TODO: 메세지 프레임워크: 오류가 발생하였습니다.
-            return render(request, 'use/confirmations/new.html', response)
+            messages.error(request, '오류가 발생하였습니다.')
+            return render(request, 'user/confirmations/new.html', response)
 
     else:
         if request.user.is_authenticated:
-            # TODO: 메세지 프레임워크: 이미 로그인되어있습니다.
+            messages.error(request, '이미 로그인되어있습니다.')
             return redirect('/')
         response['form'] = UserConfirmationForm()
         return render(request, 'user/confirmations/new.html', response)

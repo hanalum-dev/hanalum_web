@@ -9,6 +9,7 @@
       {% csrf_token %}
       <div class = "card p-3 m-3">
         <div class="card-header bg-white text-center">
+          {% comment %} TODO: 로고 클릭시 홈으로 이동 {% endcomment %}
           <img class="main-icon" src= "{% static 'img/no-title-logo.png' %}" alt="" width="140" height="140">
           <h4 class="mb-1 text-center text-muted">로그인</h4>
         </div>
@@ -32,8 +33,9 @@
             </div>
           {% endfor %}
         </div>
+        {% comment %} TODO: 회원가입 링크 추가 {% endcomment %}
         <hr class="mb-4">
-        <button class="btn btn-primary btn-md" type="submit">회원 가입</button>
+        <button class="btn btn-primary btn-md" type="submit">로그인</button>
       </div>
     </form>
   </div>
