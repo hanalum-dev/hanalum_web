@@ -5,7 +5,7 @@ from django.db import IntegrityError, transaction
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 
-from .forms import UserCreationForm
+from .forms import UserConfirmationForm, UserCreationForm
 from .models import User
 from .tokens import account_activation_token
 from .validators import UserCreationValidator
@@ -62,12 +62,41 @@ def signup(request):
 
 def signin(request):
     """로그인 뷰"""
-    return render(request, 'user/confirmations/new.html')
+    response = {
+    }
+
+    if request.method == 'POST':
+        form = response['form'] = UserConfirmationForm(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = auth.authenticate(request, username=email, password=password)
+
+            if user is None:
+                # TODO: 메세지 프레임워크: 오류가 발생하였습니다.
+                return render(request, 'use/confirmations/new.html', response)
+            else:
+                auth.login(request, user)
+                # TODO: 메세지 프레임워크: 로그인되었습니다.
+                return redirect('')
+        else:
+            # TODO: 메세지 프레임워크: 오류가 발생하였습니다.
+            return render(request, 'use/confirmations/new.html', response)
+
+    else:
+        if request.user.is_authenticated:
+            # TODO: 메세지 프레임워크: 이미 로그인되어있습니다.
+            return redirect('')
+        response['form'] = UserConfirmationForm()
+        return render(request, 'user/confirmations/new.html', response)
 
 
 def signout(request):
     """로그아웃 뷰"""
-    return
+    auth.logout(request)
+    # TODO: 메세지 프레임워크 활용: 로그아웃되었습니다
+    return redirect('/')
 
 
 def show(request):

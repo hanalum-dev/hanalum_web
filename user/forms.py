@@ -98,7 +98,7 @@ class UserCreationForm(forms.ModelForm):
         return user
 
 
-class CustomUserChangeForm(UserChangeForm):
+class UserModifyForm(UserChangeForm):
     """유저 정보 변경 폼 클래스"""
 
     class Meta:
@@ -138,6 +138,27 @@ class CustomUserChangeForm(UserChangeForm):
         if commit:
             user.save()
         return user
+
+
+class UserConfirmationForm(forms.Form):
+    """유저 로그인 폼 클래스"""
+
+    email = forms.CharField(
+        label="이메일",
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control', 'placeholder': '이메일', 'autofocus': 'autofocus', 'id': 'user_id'}
+        )
+    )
+    password = forms.CharField(
+        label='비밀번호',
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': '비밀번호'}
+        )
+    )
+
+    class Meta:
+        """로그인 폼 메타 클래스"""
+        fields = ['email', 'password']
 
 
 # TODO: 비밀번호 변경 폼 클래스

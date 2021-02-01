@@ -5,7 +5,14 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>한아름 동료평가</title>
+        <title>
+            {% if title %}
+                {{title}}
+            {% else %}
+                한아름
+            {% endif %}
+
+        </title>
         <meta name="description" content="한아름 동료 평가 사이트입니다.">
         <link  rel="shortcut icon" href="{% static 'img/no-title-logo.png' %}?v=2">
         <meta name="viewport" content="width=device-width, initial-scale=1">
