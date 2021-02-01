@@ -1,7 +1,7 @@
 """루트 사이트 관련 어드민 사이트 설정 모듈입니다."""
 from django.contrib import admin
 
-from .models import TopBanner
+from .models import MainBoard, TopBanner
 
 
 @admin.register(TopBanner)
@@ -14,3 +14,17 @@ class TopBannerAdmin(admin.ModelAdmin):
         "updated_at",
     ]
     list_filter = ["is_active"]
+
+
+@admin.register(MainBoard)
+class MainBoardAdmin(admin.ModelAdmin):
+    """ 메인보드 어드민 설정 클래스입니다. """
+    list_display = [
+        'board',
+        'priority',
+        'visible_anonymous',
+    ]
+    list_filter = [
+        'priority',
+        'visible_anonymous',
+    ]

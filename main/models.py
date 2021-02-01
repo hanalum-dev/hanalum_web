@@ -1,5 +1,8 @@
 """ 루트 페이지 관련 모듈 파일입니다. """
+from django.core.exceptions import ValidationError
 from django.db import models
+
+from board.models import Board
 
 
 class TopBanner(models.Model):
@@ -24,3 +27,16 @@ class TopBanner(models.Model):
             except TopBanner.DoesNotExist:  # pylint: disable=no-member
                 pass
         super().save(*args, **kwargs)
+
+
+class MainBoard(models.Model):
+    """ 메인화면에 보이는 게시판을 지정하는 모델입니다. """
+
+    board = models.ForeignKey(Board, related_name="board", on_delete=models.CASCADE, verbose_name="게시판")
+    priority = models.IntegerField(verbose_name="우선순위", default=0)
+    visible_anonymous = models.BooleanField(verbose_name="비로그인 유저의 확인 가능 여부", default=True)
+
+    def clean(self):
+        """ published 되어있는 게시판만 메인 보드로 허용하는 메서드입니다. """
+        if self.board.status != 'p':  # pylint: disable=no-member
+            raise ValidationError("published 상태가 아닌 게시판은 메인 화면 보드로 지정할 수 없습니다.")
