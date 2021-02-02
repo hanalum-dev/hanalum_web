@@ -1,10 +1,10 @@
 """ 한마음 어드민 사이트 설정 모듈입니다. """
 from django.contrib import admin
 
-from .models import Hanmaum
+from .models import HanmaumArticle
 
 
-@admin.register(Hanmaum)
+@admin.register(HanmaumArticle)
 class HanmaumAdmin(admin.ModelAdmin):
     """ 한마음 어드민 설정 클래스입니다. """
     list_display = [

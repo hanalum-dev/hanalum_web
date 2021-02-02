@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block stylesheet %}
+{% endblock %}
+
+{% block content %}
+    인터뷰어: {{article.interviewer}}
+    인터뷰이: {{article.interviewee}}
+
+    {{article.content | safe }}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

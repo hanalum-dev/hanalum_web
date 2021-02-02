@@ -31,6 +31,9 @@
         {% if not non_nav %}
             {% include 'nav.html' %}
         {% endif %}
+        {% if not non_banner%}
+            {% include '_banner.html' %}
+        {% endif %}
         {% block content %}
         {% endblock %}
         {% include '_toasts.html' %}

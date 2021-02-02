@@ -2,10 +2,12 @@
 <nav class = "navbar p-3">
     <div class = "row w-100">
         <div class = "col-4">
-            <h4 class = "nav-brand">
-                <img src = "{% static 'img/no-title-logo.png'%}" height = "40"/>
-                한민의 소리, 한아름
-            </h4>
+            <a href = "/">
+                <h4 class = "nav-brand">
+                        <img src = "{% static 'img/no-title-logo.png'%}" height = "40"/>
+                        한민의 소리, 한아름
+                </h4>
+            </a>
         </div>
 
         <div class = "col-4">
@@ -17,7 +19,7 @@
                     <a class="nav-menu-text" href="#"> 공지사항 </a>
                 </div>
                 <div class = "col-3 text-center">
-                    <a class="nav-menu-text" href="#"> 한마음 </a>
+                    <a class="nav-menu-text" href="{% url 'hanmaum:index' %}"> 한마음 </a>
                 </div>
                 <div class = "col-3 text-center">
                     <a class="nav-menu-text" href="#"> FAQ </a>

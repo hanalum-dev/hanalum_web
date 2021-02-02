@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block stylesheet %}
+{% endblock %}
+
+{% block content %}
+
+    <section class="article-group">
+        {% for article in articles %}
+            {{article.title}}
+        {% endfor %}
+    </section>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
