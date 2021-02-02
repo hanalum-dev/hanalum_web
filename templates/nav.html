@@ -1,0 +1,45 @@
+{% load static %}
+<nav class = "navbar p-3">
+    <div class = "row w-100">
+        <div class = "col-4">
+            <h4 class = "nav-brand">
+                <img src = "{% static 'img/no-title-logo.png'%}" height = "40"/>
+                한민의 소리, 한아름
+            </h4>
+        </div>
+
+        <div class = "col-4">
+            <div class = "row w-100">
+                <div class = "col-3 text-center">
+                    <a class="nav-menu-text" href="#"> 게시판 </a>
+                </div>
+                <div class = "col-3 text-center">
+                    <a class="nav-menu-text" href="#"> 공지사항 </a>
+                </div>
+                <div class = "col-3 text-center">
+                    <a class="nav-menu-text" href="#"> 한마음 </a>
+                </div>
+                <div class = "col-3 text-center">
+                    <a class="nav-menu-text" href="#"> FAQ </a>
+                </div>
+            </div>
+        </div>
+        <div class = "col-2"></div>
+
+        {% if user.is_authenticated %}
+            <div class = "col-1">
+                <a class="nav-menu-text" href="{% url 'user:signout' %}"> 로그아웃  </a>
+            </div>
+            <div class = "col-1">
+                <a class="nav-menu-text" href="#"> 내 정보 </a>
+            </div>
+        {% else %}
+            <div class = "col-1">
+                <a class="nav-menu-text" href="{% url 'user:signin' %}"> 로그인 </a>
+            </div>
+            <div class = "col-1">
+                <a class="nav-menu-text" href="{% url 'user:signup' %}"> 회원가입 </a>
+            </div>
+        {% endif %}
+    </div>
+</nav>
