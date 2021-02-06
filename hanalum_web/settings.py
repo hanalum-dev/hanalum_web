@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'treebeard',
     "bootstrap5",
     "django_summernote",
+    "user",
     "api",
     "article",
     "board",
@@ -88,7 +89,7 @@ INSTALLED_APPS = [
     "main",
     "menu",
     "policy",
-    "user",
+    "history",
 ]
 
 MIDDLEWARE = [
