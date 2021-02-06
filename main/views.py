@@ -21,4 +21,4 @@ def root(request):
     published_boards = Board.objects.published().all()
     response['boards'] = published_boards
 
-    return render(request, 'main/index.html', response)
+    return render(request, 'main/index.dj.html', response)

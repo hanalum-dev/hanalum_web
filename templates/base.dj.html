@@ -27,12 +27,12 @@
         {% endblock %}
     </head>
     <body>
-        {% include '_top_banner.html' %}
+        {% include '_top_banner.dj.html' %}
         {% if not non_nav %}
-            {% include 'nav.html' %}
+            {% include 'nav.dj.html' %}
         {% endif %}
         {% if not non_banner%}
-            {% include '_banner.html' %}
+            {% include '_banner.dj.html' %}
         {% endif %}
         <div class = "row">
             <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
@@ -42,7 +42,7 @@
             </div>
             <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
         </div>
-        {% include '_toasts.html' %}
+        {% include '_toasts.dj.html' %}
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
         <script src="{% static 'library/bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/_toast.js' %}"></script>

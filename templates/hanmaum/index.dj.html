@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.dj.html' %}
 {% load static %}
 {% load bootstrap5 %}
 {% block stylesheet %}
@@ -10,7 +10,7 @@
             <section class="article-group">
                 <div class="row gy-2">
                     {% for article in articles %}
-                        {% include 'hanmaum/_article_card.html' %}
+                        {% include 'hanmaum/_article_card.dj.html' %}
                     {% endfor %}
                 </div>
             </section>

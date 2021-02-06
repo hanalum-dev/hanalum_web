@@ -1,6 +1,13 @@
 from django.db import models
 
 
+from helpers.activity_errors import (
+    AlreadyLikeArticle, AlreadyDisLikeArticle
+)
+from helpers.activity_sucesses import(
+    LikeSuccess, DisLikeSuccess
+)
+
 class ViewHistory(models.Model):
     """ 사용자 모델 뷰 로그 모델입니다. """
     viewed_model = models.CharField(verbose_name="모델명", max_length=100, null=False, blank=False, default="")
@@ -82,4 +89,47 @@ class LikeActivity(Activity):
         """ 사용자가 싫어요가 되어있는지 확인하는 메서드"""
         return self.is_user_in_activity(_activity_model, _activity_id, _user, 'dislike')
     
-    
+    def set_user_in_category(self, _activity_model, _activity_id, _user, _category):
+        """ 액티비티를 세팅하는 base 메서드 """
+        response = {
+            'prev_category': None,
+            'crt_category': _category
+        }
+        try:
+            activity = LikeActivity.objects.get(activity_model=_activity_model, activity_id=_activity_id, user=_user)
+            response['prev_category'] = activity.category
+            activity.category = _category
+
+        except LikeActivity.DoesNotExist:  # pylint: disable=no-member
+            activity = LikeActivity()
+            activity.activity_model = _activity_model
+            activity.activity_id = _activity_id
+            activity.user = _user
+            activity.category = _category
+        activity.save()
+
+        return response
+
+    def set_user_in_like(self, _activity_model, _activity_id, _user):
+        """ set 사용자 좋아요 액티비티 """
+        response = self.set_user_in_category(_activity_model, _activity_id, _user, 'like')
+        
+        prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
+        crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
+
+        if prev_category == crt_category:
+            return AlreadyLikeArticle()
+        
+        return LikeSuccess()
+        
+    def set_user_in_dislike(self, _activity_model, _activity_id, _user):
+        """ set 사용자 싫어요 액티비티 """
+        response = self.set_user_in_category(_activity_model, _activity_id, _user, 'dislike')
+        
+        prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
+        crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
+
+        if prev_category == crt_category:
+            return AlreadyDisLikeArticle()
+        
+        return DisLikeSuccess()
