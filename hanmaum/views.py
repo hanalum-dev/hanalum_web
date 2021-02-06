@@ -12,6 +12,10 @@ def index(request):
         'banner_title' : '한민 마을의 소리, 한마음'
     }
     response['articles'] = HanmaumArticle.objects.published()
+
+    for article in response['articles']:
+        article.total_viewed_count = ViewHistory().total_viewed_count(_viewed_model=HanmaumArticle().classname(),_viewed_id=article.id)
+
     return render(request, 'hanmaum/index.html', response)
 
 

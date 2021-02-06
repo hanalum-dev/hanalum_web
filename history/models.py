@@ -16,6 +16,18 @@ class ViewHistory(models.Model):
         """ created_at 과 viewed_at을 동일시하기 위한 메서드"""
         return self.created_at
 
+    def total_viewed_count(self, _viewed_model, _viewed_id):
+        """ 특정 아이템의 사용자별 뷰 카운트를 모두 합쳐 리턴하는 메서드입니다. """
+        total_count = 0
+        history_group = ViewHistory.objects.filter(viewed_model=_viewed_model, viewed_id=_viewed_id)
+        for history in history_group:
+            total_count += history.viewed_count
+        return total_count        
+
+    def distinct_total_viewed_count(self, _viewed_model, _viewed_id):
+        """ 특정 아이템을 본 사용자 카운트를 리턴하는 메서드입니다. """
+        return ViewHistory.objects.filter(viewed_model=_viewed_model, viewed_id=_viewed_id).count()
+
     def add_history(self, _viewed_model, _viewed_id, _viewer):
         """ 사용자 로그 접속 로그 추가 메서드 """
         try:
