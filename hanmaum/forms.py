@@ -1,14 +1,14 @@
 """ 한마음 게시글 폼 모둘입니다. """
 from django import forms
 
-from .models import Hanmaum
+from .models import HanmaumArticle
 
 
 class HanmaumCreationForm(forms.ModelForm):
     """ 한마음 게시글 생성 폼입니다. """
     class Meta:
         """HanmaumCreationForm meta 클래스"""
-        model = Hanmaum
+        model = HanmaumArticle
         fields = [
             "title",
             "interviewer",

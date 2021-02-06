@@ -16,6 +16,7 @@ def signup(request):
     """회원가입 뷰"""
     response = {
         'non_nav' : True,
+        'non_banner' : True,
         'status' : True,
         'msg' : '',
         'form' : None,
@@ -40,7 +41,7 @@ def signup(request):
             response['msg'] = validate_user_form_result.msg
             response['form'] = form
             messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
-            return render(request, 'user/registrations/new.html', response)
+            return render(request, 'user/registrations/new.dj.html', response)
 
         try:
             with transaction.atomic():
@@ -57,14 +58,15 @@ def signup(request):
         messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
         return redirect('user:signup')
     else:
-        form = UserCreationForm()
-        return render(request, 'user/registrations/new.html', {'form': form})
+        response['form'] = UserCreationForm()
+        return render(request, 'user/registrations/new.dj.html', response)
 
 
 def signin(request):
     """로그인 뷰"""
     response = {
         'non_nav' : True,
+        'non_banner' : True,
     }
 
     if request.method == 'POST':
@@ -78,21 +80,21 @@ def signin(request):
             if user is None:
                 # TODO: message가 아니라 validation text로 나오게 하기
                 messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
-                return render(request, 'user/confirmations/new.html', response)
+                return render(request, 'user/confirmations/new.dj.html', response)
             else:
-                messages.error(request, '로그인되었습니다.')
+                messages.success(request, '로그인되었습니다.')
                 auth.login(request, user)
                 return redirect('/')
         else:
             messages.error(request, '오류가 발생하였습니다.')
-            return render(request, 'user/confirmations/new.html', response)
+            return render(request, 'user/confirmations/new.dj.html', response)
 
     else:
         if request.user.is_authenticated:
             messages.error(request, '이미 로그인되어있습니다.')
             return redirect('/')
         response['form'] = UserConfirmationForm()
-        return render(request, 'user/confirmations/new.html', response)
+        return render(request, 'user/confirmations/new.dj.html', response)
 
 
 def signout(request):
