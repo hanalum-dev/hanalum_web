@@ -11,7 +11,7 @@ class HanmaumArticleQuerySet(models.QuerySet):
 
     def published(self):
         """ published 상태인 게시판만 리턴합니다. """
-        return self.filter(status='p')
+        return self.filter(status='p').order_by("-updated_at")
 
 
 class HanmaumArticle(models.Model):
