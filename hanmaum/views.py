@@ -4,7 +4,9 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib import auth
 
 from .models import HanmaumArticle
-from history.models import ViewHistory
+from history.models import ViewHistory, LikeActivity
+
+HANMAUMARTICLE = HanmaumArticle().classname()
 
 def index(request):
     """ index """
@@ -14,8 +16,10 @@ def index(request):
     response['articles'] = HanmaumArticle.objects.published()
 
     for article in response['articles']:
-        article.total_viewed_count = ViewHistory().total_viewed_count(_viewed_model=HanmaumArticle().classname(),_viewed_id=article.id)
-
+        article.total_viewed_count = ViewHistory().total_viewed_count(_viewed_model=HANMAUMARTICLE,_viewed_id=article.id)
+        if request.user.is_authenticated:
+            article.is_user_in_like = LikeActivity().is_user_in_like(_activity_model=HANMAUMARTICLE, _activity_id=article.id, _user=request.user)
+            article.is_user_in_dislike = LikeActivity().is_user_in_dislike(_activity_model=HANMAUMARTICLE, _activity_id=article.id, _user=request.user)
     return render(request, 'hanmaum/index.html', response)
 
 
@@ -31,7 +35,7 @@ def show(request, article_id):
 
     # 사용자 접속 로그 추가
     if request.user.is_authenticated:
-        ViewHistory().add_history(_viewed_model=HanmaumArticle().classname(),_viewed_id=article_id, _viewer=request.user)
+        ViewHistory().add_history(_viewed_model=HANMAUMARTICLE,_viewed_id=article_id, _viewer=request.user)
 
 
     return render(request, 'hanmaum/show.html', response)

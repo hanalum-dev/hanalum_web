@@ -51,6 +51,8 @@ class Activity(models.Model):
     created_at = models.DateTimeField(verbose_name="생성된 날짜", auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name="수정된 날짜", auto_now=True)
 
+    objects = models.Manager()
+
 
 class LikeActivity(Activity):
     """ 좋아요/싫어요 등의 액션 모델입니다."""
@@ -61,3 +63,23 @@ class LikeActivity(Activity):
     )
 
     category = models.CharField(verbose_name="카테고리", max_length=10, null=True, choices=ACTIVITY_CATEGORY)
+
+    def is_user_in_activity(self, _activity_model, _activity_id, _user, _category):
+        """ 사용자가 특정 액티비티를 수행하였는지 확인하는 메서드"""
+        try:
+            activity = LikeActivity.objects.get(activity_model=_activity_model, activity_id=_activity_id, user=_user, category=_category)
+            if activity:
+                return True
+        except LikeActivity.DoesNotExist:  # pylint: disable=no-member
+            return False
+        return False
+
+    def is_user_in_like(self, _activity_model, _activity_id, _user):
+        """ 사용자가 좋아요가 되어있는지 확인하는 메서드"""
+        return self.is_user_in_activity(_activity_model, _activity_id, _user, 'like')
+    
+    def is_user_in_dislike(self, _activity_model, _activity_id, _user):
+        """ 사용자가 싫어요가 되어있는지 확인하는 메서드"""
+        return self.is_user_in_activity(_activity_model, _activity_id, _user, 'dislike')
+    
+    
