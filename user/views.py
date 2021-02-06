@@ -16,6 +16,7 @@ def signup(request):
     """회원가입 뷰"""
     response = {
         'non_nav' : True,
+        'non_banner' : True,
         'status' : True,
         'msg' : '',
         'form' : None,
@@ -57,14 +58,15 @@ def signup(request):
         messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
         return redirect('user:signup')
     else:
-        form = UserCreationForm()
-        return render(request, 'user/registrations/new.dj.html', {'form': form})
+        response['form'] = UserCreationForm()
+        return render(request, 'user/registrations/new.dj.html', response)
 
 
 def signin(request):
     """로그인 뷰"""
     response = {
         'non_nav' : True,
+        'non_banner' : True,
     }
 
     if request.method == 'POST':
