@@ -10,7 +10,11 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">{{article.title}}</h5>
+                <h5 class="card-title">
+                    <a href = "{% url 'hanmaum:show' article.id %}">
+                        {{article.title}}
+                    </a>
+                </h5>
                 <p class="card-text">{{article.summary}}</p>
                 {% comment %} TODO: 한글 날짜 형식 혹은 YYYY-MM-DD HH:mm:ss으로 바꾸기 {% endcomment %}
                 <p class="card-text">조회수: {{article.total_viewed_count}}</p>
