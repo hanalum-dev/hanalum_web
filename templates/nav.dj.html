@@ -1,5 +1,5 @@
 {% load static %}
-<nav class = "navbar p-3">
+<nav class = "navbar p-3 sticky-top">
     <div class = "row w-100">
         <div class = "col-4">
             <a href = "/">
@@ -13,7 +13,11 @@
         <div class = "col-4">
             <div class = "row w-100">
                 <div class = "col-3 text-center">
-                    <a class="nav-menu-text" href="#"> 게시판 </a>
+                    <a class="nav-menu-text" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne" id = "nav-board"> 
+                        게시판 
+                    </a>
                 </div>
                 <div class = "col-3 text-center">
                     <a class="nav-menu-text" href="#"> 공지사항 </a>
@@ -43,5 +47,20 @@
                 <a class="nav-menu-text" href="{% url 'user:signup' %}"> 회원가입 </a>
             </div>
         {% endif %}
+    </div>
+    <div class = "row board-menu-group w-80p">
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
+            <div class="accordion-body">
+                <div class = "row">
+                    {% for i in nav_board_list%}
+                        <div class = "col-4 p-2 text-center">
+                            <a href = "">
+                                {{i.title}}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 </nav>

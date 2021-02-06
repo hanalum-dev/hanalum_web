@@ -8,16 +8,18 @@ from django.http import HttpResponse
 
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
-
+from helpers.default import default_response
+from copy import deepcopy as dp
 
 HANMAUMARTICLE = HanmaumArticle().classname()
 
 def index(request):
     """ index """
-    response = {
-        'banner_title' : '한민 마을의 소리, 한마음'
-    }
-    response['articles'] = HanmaumArticle.objects.published()
+    response = dp(default_response)
+    response.update({
+        'banner_title' : '한민 마을의 소리, 한마음',
+        'articles': HanmaumArticle.objects.published()
+    })
 
     for article in response['articles']:
         article.total_viewed_count = ViewHistory().total_viewed_count(
@@ -40,8 +42,7 @@ def index(request):
 
 def show(request, article_id):
     """ show """
-    response = {
-    }
+    response = dp(default_response)
 
     article = get_object_or_404(HanmaumArticle, pk=article_id)
 
@@ -70,9 +71,8 @@ def edit(request):
 @login_required(login_url='/user/signin')
 def new(request):
     """ new """
-    response = {
+    response = dp(default_response)
 
-    }
     return render(request, 'hanmaum/new.dj.html', response)
 
 @login_required(login_url='/user/signin')

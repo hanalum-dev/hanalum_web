@@ -1,3 +1,29 @@
+.bg-black {
+    background-color: black;
+}
+
+.bg-light-gray{
+    background-color: #a8bac7;
+}
+
+.w-auto-fit {
+    width: auto;
+    max-width: 100%;
+    height: 100;
+}
+
+.w-90p {
+    width: 90%;
+}
+
+.w-80p  {
+    width: 80%;
+}
+
+.w-70p {
+    width: 70%;
+}
+
 .text-error {
     margin-top: 1px;
     font-size: 0.8rem;
@@ -6,6 +32,13 @@
 
 .text-error::before {
     content: "* ";
+}
+
+.text-underline {
+    text-decoration: underline!important;
+    text-decoration-color: #ffffff!important;
+    text-decoration-thickness: .125em!important;
+    text-underline-offset: 1.5px!important;
 }
 
 .background-banner {
@@ -37,6 +70,8 @@
     top: 200px;
     left: 50%;
 }
+
+/* -------- nav -------- */
 
 nav {
     z-index: 1000;
@@ -72,16 +107,13 @@ nav .nav-menu-text {
     text-decoration: double;
 }
 
-.bg-black {
-    background-color: black;
+nav .board-menu-group {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
 }
 
-.bg-light-gray{
-    background-color: #a8bac7;
-}
-
-.w-auto-fit {
-    width: auto;
-    max-width: 100%;
-    height: 100;
+nav .board-menu-group a{
+    color: white;
+    font-weight: 600;
+    text-decoration: double;
 }
