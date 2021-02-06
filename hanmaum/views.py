@@ -76,11 +76,14 @@ def new(request):
     return render(request, 'hanmaum/new.dj.html', response)
 
 @login_required(login_url='/user/signin')
-def like(request, article_id):
+def like(request):
     """ 좋아요 view""" 
     response = {
         'status' : False   
     }
+
+    article_id = request.POST.get('article_id')
+    # TODO: validation 추가하기
     
     user = request.user
 
@@ -101,15 +104,47 @@ def like(request, article_id):
 
 
 @login_required(login_url='/user/signin')
-def dislike(request, article_id):
+def dislike(request):
     """ 싫어요 view """
     response = {
         'status' : False   
     }
-    
+
+    article_id = request.POST.get('article_id')
+    # TODO: validation 추가하기
+
     user = request.user
 
-    activity_result = LikeActivity().set_user_in_like(
+    activity_result = LikeActivity().set_user_in_dislike(
+        _activity_model=HANMAUMARTICLE,
+        _activity_id=article_id,
+        _user=user
+    )
+
+    response['status'] = activity_result.status
+
+    if activity_result.status:
+        messages.success(request, activity_result.msg)
+    else:
+        messages.error(request, activity_result.msg)
+
+    return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+@login_required(login_url='/user/signin')
+def cancle(request):
+
+    """ 좋아요/싫어요 취소 view """
+    response = {
+        'status' : False   
+    }
+    
+    article_id = request.POST.get('article_id')
+    # TODO: validation 추가하기
+
+    user = request.user
+
+    activity_result = LikeActivity().set_user_in_none(
         _activity_model=HANMAUMARTICLE,
         _activity_id=article_id,
         _user=user

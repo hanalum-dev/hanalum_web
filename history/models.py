@@ -2,10 +2,10 @@ from django.db import models
 
 
 from helpers.activity_errors import (
-    AlreadyLikeArticle, AlreadyDisLikeArticle
+    AlreadyLikeArticle, AlreadyDisLikeArticle, AlreadyNoneActivityArticle
 )
 from helpers.activity_sucesses import(
-    LikeSuccess, DisLikeSuccess
+    LikeSuccess, DisLikeSuccess, LikeCancleSuccess, DisLikeCancleSuccess
 )
 
 class ViewHistory(models.Model):
@@ -67,6 +67,7 @@ class LikeActivity(Activity):
     ACTIVITY_CATEGORY = (
         ('like', '좋아요'),
         ('dislike', '싫어요'),
+        ('none', '상태없음')
     )
 
     category = models.CharField(verbose_name="카테고리", max_length=10, null=True, choices=ACTIVITY_CATEGORY)
@@ -133,3 +134,22 @@ class LikeActivity(Activity):
             return AlreadyDisLikeArticle()
         
         return DisLikeSuccess()
+
+        
+    def set_user_in_none(self, _activity_model, _activity_id, _user):
+        """ set 사용자 싫어요 액티비티 """
+        response = self.set_user_in_category(_activity_model, _activity_id, _user, 'none')
+        
+        prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
+        crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
+
+        if prev_category == crt_category:
+            return AlreadyNoneActivityArticle()
+        
+        if prev_category == 'like':
+            return LikeCancleSuccess()
+
+        if prev_category == 'dislike':
+            return DisLikeCancleSuccess()
+        
+        return AlreadyNoneActivityArticle()

@@ -20,9 +20,6 @@
         <link href={% static 'library/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css' %}?v=2 rel="stylesheet">
         <link rel="stylesheet" href="{% static 'style/normalize.css' %}?v=2">
         <link rel="stylesheet" href="{% static 'style/style.css' %}?v=2">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
         {% block stylesheet %}
         {% endblock %}
     </head>
@@ -43,7 +40,10 @@
             <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
         </div>
         {% include '_toasts.dj.html' %}
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+            integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+            crossorigin="anonymous"></script>
         <script src="{% static 'library/bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/_toast.js' %}"></script>
         {% block scripts %}

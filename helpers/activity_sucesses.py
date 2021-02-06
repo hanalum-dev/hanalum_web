@@ -21,3 +21,23 @@ class DisLikeSuccess(Success):
         super().__init__()
         # TODO: 문구 매끄럽게 바꾸기
         self.msg = "싫어요 처리되었습니다."
+
+
+class LikeCancleSuccess(Success):
+    """좋아요 취소 성공"""
+
+    def __init__(self):
+        """생성자"""
+        super().__init__()
+        # TODO: 문구 매끄럽게 바꾸기
+        self.msg = "좋아요를 취소하였습니다."
+
+
+class DisLikeCancleSuccess(Success):
+    """ 싫어요 취소 성공 """
+
+    def __init__(self):
+        """생성자"""
+        super().__init__()
+        # TODO: 문구 매끄럽게 바꾸기
+        self.msg = "싫어요를 취소하였습니다."
