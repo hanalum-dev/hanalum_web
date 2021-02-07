@@ -90,4 +90,4 @@ class ArticleAttachment(models.Model):
         upload_to="files/%Y/%m/%d/"
     )
 
-    # 첨부된 파일은 article이 지워지고 특정 기간이 지난 후에 삭제되게 하기.
+    # TODO: 첨부된 파일은 article이 지워지고 특정 기간이 지난 후에 삭제되게 하기.

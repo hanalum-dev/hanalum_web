@@ -2,7 +2,7 @@
 from django.urls import path
 
 from .views import (
-    show
+    show, new
 )
 
 app_name = 'article'
@@ -10,4 +10,5 @@ app_name = 'article'
 urlpatterns = [
     # path('', index, name="index"),
     path('<int:article_id>', show, name="show"),
+    path('new/<int:board_id>', new, name="new"),
 ]
