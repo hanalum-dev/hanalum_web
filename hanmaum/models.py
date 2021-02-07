@@ -1,9 +1,11 @@
 """ 한마음 게시글 모델 모듈 파일입니다."""
 import html2text
 from bs4 import BeautifulSoup
+from markdown import markdown
+
 from django.db import models
 from django_summernote.fields import SummernoteTextField
-from markdown import markdown
+
 from user.models import User
 
 class HanmaumArticleQuerySet(models.QuerySet):
@@ -39,6 +41,7 @@ class HanmaumArticle(models.Model):
         return "{}".format(self.title)
 
     def classname(self):
+        """ 클래스명 """
         return self.__class__.__name__
 
     def summary(self, length=100):

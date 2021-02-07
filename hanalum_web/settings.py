@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'treebeard',
     "bootstrap5",
     "django_summernote",
+    "fontawesome_5",
     "user",
     "api",
     "article",

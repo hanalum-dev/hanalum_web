@@ -153,3 +153,15 @@ class LikeActivity(Activity):
             return DisLikeCancleSuccess()
         
         return AlreadyNoneActivityArticle()
+
+
+    def get_like_count(self, _activity_model, _activity_id):
+        response = LikeActivity.objects.filter(activity_model=_activity_model, activity_id=_activity_id, category='like').count()
+
+        return response
+
+
+    def get_dislike_count(self, _activity_model, _activity_id):
+        response = LikeActivity.objects.filter(activity_model=_activity_model, activity_id=_activity_id, category='dislike').count()
+
+        return response
