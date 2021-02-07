@@ -165,3 +165,8 @@ class LikeActivity(Activity):
         response = LikeActivity.objects.filter(activity_model=_activity_model, activity_id=_activity_id, category='dislike').count()
 
         return response
+
+
+    def get_like_activities(self, _user, _activity_model):
+        like_activities = LikeActivity.objects.filter(user=_user, activity_model=_activity_model).order_by('-updated_at')
+        return like_activities
