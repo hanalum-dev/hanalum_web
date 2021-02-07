@@ -20,14 +20,53 @@ class Board(models.Model):
         ('t', 'trash')
     )
 
-    title = models.CharField(verbose_name='게시판명', max_length=100)
-    auth_read = models.IntegerField(verbose_name='읽기 권한', default=10, null=False)
-    auth_write = models.IntegerField(verbose_name='쓰기 권한', default=10, null=False)
-    use_comment = models.BooleanField(verbose_name='댓글 사용 여부', default=True, null=False)
-    use_good = models.BooleanField(verbose_name='좋아요 사용 여부', default=True, null=False)
-    use_bad = models.BooleanField(verbose_name='싫어요 사용 여부', default=True, null=False)
-    use_anonymous = models.BooleanField(verbose_name='익명 사용 가능 여부', default=False, null=False)
-    status = models.CharField(verbose_name='게시판 공개 상태', max_length=2, default='d', null=False, choices=STATUS_CHOICES)
+    title = models.CharField(
+        verbose_name='게시판명',
+        max_length=100
+    )
+    auth_read = models.IntegerField(
+        verbose_name='읽기 권한',
+        default=10,
+        null=False
+    )
+    auth_write = models.IntegerField(
+        verbose_name='쓰기 권한',
+        default=10,
+        null=False
+    )
+    use_comment = models.BooleanField(
+        verbose_name='댓글 사용 여부',
+        default=True,
+        null=False
+    )
+    use_good = models.BooleanField(
+        verbose_name='좋아요 사용 여부',
+        default=True,
+        null=False
+    )
+    use_bad = models.BooleanField(
+        verbose_name='싫어요 사용 여부',
+        default=True,
+        null=False
+    )
+    use_anonymous = models.BooleanField(
+        verbose_name='익명 사용 가능 여부',
+        default=False,
+        null=False
+    )
+    status = models.CharField(
+        verbose_name='게시판 공개 상태',
+        max_length=2,
+        default='d',
+        null=False,
+        choices=STATUS_CHOICES
+    )
+    max_attachment_count = models.IntegerField(
+        verbose_name="첨부 파일 최대 개수",
+        default=0,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return "{}".format(self.title)

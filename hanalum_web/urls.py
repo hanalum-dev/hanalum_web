@@ -12,6 +12,8 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path("user/", include('user.urls', 'user')),
     path("main/", include('main.urls', 'main')),
+    path("article/", include('article.urls', 'article')),
+    path("board/", include('board.urls', 'board')),
     path("hanmaum/", include('hanmaum.urls', 'hanmaum')),
     path("admin/", admin.site.urls),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),

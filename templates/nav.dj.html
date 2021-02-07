@@ -52,10 +52,10 @@
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
             <div class="accordion-body">
                 <div class = "row">
-                    {% for i in nav_board_list%}
+                    {% for board in nav_board_list%}
                         <div class = "col-4 p-2 text-center">
-                            <a href = "">
-                                {{i.title}}
+                            <a href = "{% url 'board:show' board.id %}">
+                                {{board.title}}
                             </a>
                         </div>
                     {% endfor %}

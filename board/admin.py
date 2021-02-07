@@ -17,7 +17,8 @@ class BoardAdmin(admin.ModelAdmin):
         'use_bad',
         'use_anonymous',
         'status',
+        'max_attachment_count'
     ]
     list_filter = [
-        'auth_read', 'auth_write', 'use_comment', 'use_good', 'use_bad', 'use_anonymous', 'status',
+        'auth_read', 'auth_write', 'use_comment', 'use_good', 'use_bad', 'use_anonymous', 'status', 'max_attachment_count',
     ]

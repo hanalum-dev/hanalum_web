@@ -47,7 +47,7 @@ def signup(request):
             with transaction.atomic():
                 if form.is_valid():
                     current_site = get_current_site(request)
-                    form.f_save(current_site, request.POST['email'])
+                    form.save(current_site, request.POST['email'])
                     messages.success(request, '회원가입이 완료되었습니다. 이메일을 확인해주세요.')
                     redirect('user:signin')
         except IntegrityError as e:

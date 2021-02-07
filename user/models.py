@@ -117,7 +117,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         """user 객체 -> str"""
-        return "{}({})".format(self.nickname, self.realname)
+        return "{}".format(self.nickname)
 
     class Meta:
         """user meta class"""
