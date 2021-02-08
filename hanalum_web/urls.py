@@ -2,7 +2,8 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.static import serve
 
 from main.views import root
 
@@ -11,7 +12,12 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path("user/", include('user.urls', 'user')),
     path("main/", include('main.urls', 'main')),
+    path("article/", include('article.urls', 'article')),
+    path("board/", include('board.urls', 'board')),
+    path("hanmaum/", include('hanmaum.urls', 'hanmaum')),
     path("admin/", admin.site.urls),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

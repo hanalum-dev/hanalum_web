@@ -1,14 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'base.dj.html' %}
 {% load static %}
 {% load bootstrap5 %}
 {% block stylesheet %}
 {% endblock %}
 
 {% block content %}
-<div class = "background-banner">
+    인터뷰어: {{article.interviewer}}
+    인터뷰이: {{article.interviewee}}
 
-</div>
-
+    {{article.content | safe }}
 {% endblock %}
 
 {% block scripts %}

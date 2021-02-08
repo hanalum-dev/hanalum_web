@@ -1,0 +1,64 @@
+{% load bootstrap5 %}
+{% load fontawesome_5 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            {% if title %}
+                {{title}}
+            {% else %}
+                한아름
+            {% endif %}
+
+        </title>
+        {% comment %} favicon 추가 {% endcomment %}
+        <meta name="description" content="한민의 소리, 한아름입니다.">
+        <link rel="shortcut icon" href="{% static 'img/no-title-logo.png' %}?v=2">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{% static 'library/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css' %}?v=2" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'style/normalize.css' %}?v=2">
+        <link rel="stylesheet" href="{% static 'style/style.css' %}?v=2">
+        {% fontawesome_5_static %}
+        {% block stylesheet %}
+        {% endblock %}
+    </head>
+    <body>
+        {% include '_top_banner.dj.html' %}
+        {% if not non_nav %}
+            {% include 'nav.dj.html' %}
+        {% endif %}
+        {% if not non_banner %}
+            {% include '_banner.dj.html' %}
+        {% endif %}
+        <div class = "row h-100">
+            <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
+            <div class = "col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-10 col-10">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
+        </div>
+        {% include '_toasts.dj.html' %}
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+            integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+            crossorigin="anonymous"></script>
+        <script src="{% static 'library/bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/_toast.js' %}"></script>
+
+        {% if not non_nav %}
+            <script>
+                $(document).ready(function() {
+                    $("#nav-board").click(function() {
+                        $("#nav-board").toggleClass("text-underline")
+                    });
+                })
+            </script>
+        {% endif %}
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

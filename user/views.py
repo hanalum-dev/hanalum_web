@@ -1,21 +1,33 @@
 """user(사용자 계정) views 모듈입니다."""
+from copy import deepcopy as dp
+
 from django.contrib import auth, messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.db import IntegrityError, transaction
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
+from helpers.default import default_response
 from .forms import UserConfirmationForm, UserCreationForm
 from .models import User
 from .tokens import account_activation_token
 from .validators import UserCreationValidator
+from history.models import LikeActivity, ViewHistory
+from article.models import Article
+from hanmaum.models import HanmaumArticle
 
+
+ARTICLE = Article().classname()
+HANMAUMARTICLE = HanmaumArticle().classname()
+like_activity = LikeActivity()
+view_history = ViewHistory()
 
 @transaction.atomic
 def signup(request):
     """회원가입 뷰"""
     response = {
         'non_nav' : True,
+        'non_banner' : True,
         'status' : True,
         'msg' : '',
         'form' : None,
@@ -40,13 +52,13 @@ def signup(request):
             response['msg'] = validate_user_form_result.msg
             response['form'] = form
             messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
-            return render(request, 'user/registrations/new.html', response)
+            return render(request, 'user/registrations/new.dj.html', response)
 
         try:
             with transaction.atomic():
                 if form.is_valid():
                     current_site = get_current_site(request)
-                    form.f_save(current_site, request.POST['email'])
+                    form.save(current_site, request.POST['email'])
                     messages.success(request, '회원가입이 완료되었습니다. 이메일을 확인해주세요.')
                     redirect('user:signin')
         except IntegrityError as e:
@@ -57,14 +69,15 @@ def signup(request):
         messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
         return redirect('user:signup')
     else:
-        form = UserCreationForm()
-        return render(request, 'user/registrations/new.html', {'form': form})
+        response['form'] = UserCreationForm()
+        return render(request, 'user/registrations/new.dj.html', response)
 
 
 def signin(request):
     """로그인 뷰"""
     response = {
         'non_nav' : True,
+        'non_banner' : True,
     }
 
     if request.method == 'POST':
@@ -78,21 +91,21 @@ def signin(request):
             if user is None:
                 # TODO: message가 아니라 validation text로 나오게 하기
                 messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
-                return render(request, 'user/confirmations/new.html', response)
+                return render(request, 'user/confirmations/new.dj.html', response)
             else:
-                messages.error(request, '로그인되었습니다.')
+                messages.success(request, '로그인되었습니다.')
                 auth.login(request, user)
                 return redirect('/')
         else:
             messages.error(request, '오류가 발생하였습니다.')
-            return render(request, 'user/confirmations/new.html', response)
+            return render(request, 'user/confirmations/new.dj.html', response)
 
     else:
         if request.user.is_authenticated:
             messages.error(request, '이미 로그인되어있습니다.')
             return redirect('/')
         response['form'] = UserConfirmationForm()
-        return render(request, 'user/confirmations/new.html', response)
+        return render(request, 'user/confirmations/new.dj.html', response)
 
 
 def signout(request):
@@ -101,18 +114,52 @@ def signout(request):
     # TODO: 메세지 프레임워크 활용: 로그아웃되었습니다
     return redirect('/')
 
+def me(request):
+    response = dp(default_response)
+    user = get_object_or_404(User, pk=request.user.id)
 
-def show(request):
+    if not request.user.is_authenticated or not user:
+        messages.error(request, "로그인 후, 이용할 수 있습니다.")
+        return redirect("user:signin")
+
+    like_articles = like_activity.get_like_activities(_user=user, _activity_model=ARTICLE)
+    for like_article in like_articles:
+        try:
+            article = Article.objects.get(id=like_article.id)
+            like_article.title = article.title
+            like_article.updated_at = article.updated_at
+        except:
+           continue
+
+    # TODO: 코드 개선하기
+    like_hanmaum_articles = like_activity.get_like_activities(_user=user, _activity_model=HANMAUMARTICLE)
+    for like_hanmaum_article in like_hanmaum_articles:
+        try:
+            article = HanmaumArticle.objects.get(id=like_hanmaum_article.id)
+            like_hanmaum_article.id = article.id
+            like_hanmaum_article.thumbnail = article.thumbnail
+            like_hanmaum_article.title = article.title
+            like_hanmaum_article.updated_at = article.updated_at
+            like_hanmaum_article.total_viewed_count = view_history.total_viewed_count(
+                _viewed_model=HANMAUMARTICLE,
+                _viewed_id=article.id
+            )
+        except:
+            continue
+    response.update({
+        'user':user,
+        'like_articles': like_articles,
+        'like_hanmaum_articles': like_hanmaum_articles
+    })
+
+    return render(request, 'user/me.dj.html', response)
+
+def show(request, user_id):
     """사용자 페이지 뷰"""
-    response = {
-    }
-    user_id = request.GET.get('user_id')
-
-    user = User.objects.get(user_id=user_id)
-
+    response = dp(default_response)
+    user = get_object_or_404(User, pk=user_id)
     response['user'] = user
-
-    return render(request, 'user/show.html', response)
+    return render(request, 'user/show.dj.html', response)
 
 
 def edit(request):

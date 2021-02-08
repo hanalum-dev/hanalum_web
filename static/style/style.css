@@ -1,3 +1,45 @@
+.bg-black {
+    background-color: black;
+}
+
+.bg-light-gray{
+    background-color: #a8bac7;
+}
+
+.w-auto-fit {
+    width: auto;
+    max-width: 100%;
+    height: 100;
+}
+
+.w-90p {
+    width: 90%;
+}
+
+.w-80p  {
+    width: 80%;
+}
+
+.w-70p {
+    width: 70%;
+}
+
+.left-0 {
+    left: 0;
+}
+
+.right-0 {
+    right: 0;
+}
+
+.top-0 {
+    top: 0;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
 .text-error {
     margin-top: 1px;
     font-size: 0.8rem;
@@ -8,24 +50,50 @@
     content: "* ";
 }
 
+.text-underline {
+    text-decoration: underline!important;
+    text-decoration-color: #ffffff!important;
+    text-decoration-thickness: .125em!important;
+    text-underline-offset: 1.5px!important;
+}
+
 .background-banner {
     width: 100%;
     margin-top: -60px;
     min-height: 400px;
     max-height: 600px;
-    background-image: url("/static/img/hanmin_background.jpg");
     background-position: bottom 200px center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.9;
+    position: relative;
 }
+
+.banner-title {
+    filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+    color: #ffffff;
+    font-family: 'Raleway',sans-serif;
+    font-weight: 800;
+    line-height: 72px;
+    margin: 0 0 24px;
+    text-align: center;
+    text-decoration: solid 2px;
+
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 200px;
+    left: 50%;
+}
+
+/* -------- nav -------- */
 
 nav {
     z-index: 1000;
-    opacity: 1;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 nav.navbar {
@@ -34,8 +102,16 @@ nav.navbar {
     text-decoration: double;
 }
 
+nav a {
+    text-decoration: none;
+}
+
 nav .nav-brand {
-    color: white;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+    font-family: 'Raleway',sans-serif;
 }
 
 nav .nav-menu-text:visited {
@@ -43,13 +119,51 @@ nav .nav-menu-text:visited {
 }
 nav .nav-menu-text {
     color: white;
+    font-weight: 600;
     text-decoration: double;
 }
 
-.bg-black {
-    background-color: black;
+nav .board-menu-group {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
 }
 
-.bg-light-gray{
-    background-color: #a8bac7;
+nav .board-menu-group a{
+    color: white;
+    font-weight: 600;
+    text-decoration: double;
+}
+
+.none-itmes-wrapper {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 4px;
+    min-height: 100px;
+}
+
+.none-items-msg {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    filter: drop-shadow(0 0 0.05rem #5C6F7D);
+    font-family: 'Raleway',sans-serif;
+    line-height: 100px
+}
+
+
+/* user page */
+
+.user-page .avatar-image-wrapper {
+    overflow: hidden;
+    width: 12rem;
+    height: 12rem;
+    box-shadow: 1px 1px #cbcbcb;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-page .avatar-image-wrapper img {
+    width: 100%;
+    height: auto;
 }

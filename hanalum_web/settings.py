@@ -35,7 +35,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['34.220.59.114', '127.0.0.1', 'alpha.hanalum.kr']
 
 # 유저모델 재설정
 AUTH_USER_MODEL = "user.User"
@@ -68,6 +68,81 @@ MESSAGE_TAGS = {
 """ summernote load issue """
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+""" summernote setting """
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    # 'iframe': True,
+
+    # Or, you can set it as False to use SummernoteInplaceWidget by default - no iframe mode
+    # In this case, you have to load Bootstrap/jQuery stuff by manually.
+    # Use this when you're already using Bootstraip/jQuery based themes.
+    'iframe': False,
+
+    # You can put custom Summernote settings
+    'summernote': {
+        # As an example, using Summernote Air-mode
+        'airMode': False,
+
+        # Change editor size
+        'width': '100%',
+        'height': '480',
+
+        # Use proper language setting automatically (default)
+        'lang': None,
+
+        # Or, set editor language/locale forcely
+        'lang': 'ko-KR',
+
+        # You can also add custom settings for external plugins
+        # 'print': {
+        #     'stylesheetUrl': '/some_static_folder/printable.css',
+        # },
+    },
+    # Need authentication while uploading attachments.
+    'attachment_require_authentication': True,
+    # Set `upload_to` function for attachments.
+    # 'attachment_upload_to': my_custom_upload_to_func(),
+    # Set custom storage class for attachments.
+    # 'attachment_storage_class': 'my.custom.storage.class.name',
+    # Set custom model for attachments (default: 'django_summernote.Attachment')
+    # 'attachment_model': 'my.custom.attachment.model', # must inherit 'django_summernote.AbstractAttachment'
+    # You can disable attachment feature.
+    'disable_attachment': False,
+    # Set `True` to return attachment paths in absolute URIs.
+    'attachment_absolute_uri': False,
+    # You can also add custom css/js for SummernoteInplaceWidget.
+    # !!! Be sure to put {{ form.media }} in template before initiate summernote.
+    'css_for_inplace': (
+    ),
+    'js_for_inplace': (
+    ),
+    # You can add custom css/js for SummernoteWidget.
+    # Codemirror as codeview
+    # If any codemirror settings are defined, it will include codemirror files automatically.
+    'css': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/theme/monokai.min.css',
+    ),
+    'codemirror': {
+        'mode': 'htmlmixed',
+        'lineNumbers': 'true',
+        # You have to include theme file in 'css' or 'css_for_inplace' before using it.
+        'theme': 'monokai',
+    },
+
+    # Lazy initialize
+    # If you want to initialize summernote at the bottom of page, set this as True
+    # and call `initSummernote()` on your page.
+    'lazy': True,
+
+    # To use external plugins,
+    # Include them within `css` and `js`.
+    # 'js': {
+    #     '/some_static_folder/summernote-ext-print.js',
+    #     '//somewhere_in_internet/summernote-plugin-name.js',
+    # },
+}
+
+
 INSTALLED_APPS = [
     'adminlteui',
     'django.contrib.admin',
@@ -81,6 +156,8 @@ INSTALLED_APPS = [
     'treebeard',
     "bootstrap5",
     "django_summernote",
+    "fontawesome_5",
+    "user",
     "api",
     "article",
     "board",
@@ -88,7 +165,7 @@ INSTALLED_APPS = [
     "main",
     "menu",
     "policy",
-    "user",
+    "history",
 ]
 
 MIDDLEWARE = [
@@ -125,10 +202,15 @@ WSGI_APPLICATION = "hanalum_web.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# TODO password 분리
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "db",
+        "PORT": 5432,
     }
 }
 

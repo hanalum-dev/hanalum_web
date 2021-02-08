@@ -1,0 +1,42 @@
+<div class="card col-12">
+    <div class="row g-0">
+        <div class="col-md-4">
+            {% if article.thumbnail %}
+                <img src="{{ article.thumbnail.url }}" alt="..." class = "w-auto-fit">
+            {% else %}
+                {% comment %} TODO: 이미지가 없을 때의 이미지 추가 {% endcomment %}
+                <img src="" alt="..." class = "w-auto-fit">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href = "{% url 'hanmaum:show' article.id %}">
+                        {{article.title}}
+                    </a>
+                </h5>
+                <p class="card-text">{{article.summary}}</p>
+                {% comment %} TODO: 한글 날짜 형식 혹은 YYYY-MM-DD HH:mm:ss으로 바꾸기 {% endcomment %}
+                <p class="card-text">조회수: {{article.total_viewed_count}}</p>
+                
+                {% comment %} TODO: 좋아요 버튼, 좋아요 여부에따라 색상 표시하기 {% endcomment %}
+                
+                <div class = "like-action-group-{{article.id}}">
+                    {% if article.is_user_in_like %}
+                        <a class = "cancle-button" data-article-id = "{{article.id}}"> 좋아요 취소 </a>
+                    {% else %}
+                        <a class = "like-button" data-article-id = "{{article.id}}"> 좋아요 </a>
+                    {% endif %}
+                    
+                    {% if article.is_user_in_dislike %}
+                        <a class = "cancle-button" data-article-id = "{{article.id}}"> 싫어요 취소 </a>
+                    {% else %}
+                        <a class = "dislike-button" data-article-id = "{{article.id}}"> 싫어요 </a>
+                    {% endif %}
+                </div>
+
+                <p class="card-text"><small class="text-muted">Last updated {{article.updated_at}}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
