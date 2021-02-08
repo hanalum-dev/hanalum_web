@@ -4,8 +4,9 @@ services:
   web:
     build: .
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:3000"
+      sh -c  "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:3000"
     ports:
       - "80:3000"
     volumes:

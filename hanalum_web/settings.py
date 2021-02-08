@@ -35,7 +35,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.220.59.114']
+ALLOWED_HOSTS = ['34.220.59.114', '127.0.0.1']
 
 # 유저모델 재설정
 AUTH_USER_MODEL = "user.User"
