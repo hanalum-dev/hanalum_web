@@ -9,8 +9,11 @@ from copy import deepcopy as dp
 
 def get_top_banner():
     """ TopBanner를 가져오는 함수입니다. """
-    banner = TopBanner.objects.get(is_active=True)
-    return banner
+    try:
+        banner = TopBanner.objects.get(is_active=True)
+        return banner
+    except TopBanner.DoesNotExist:  # pylint: disable=no-member
+        return None
 
 
 def root(request):

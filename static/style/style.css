@@ -133,3 +133,37 @@ nav .board-menu-group a{
     font-weight: 600;
     text-decoration: double;
 }
+
+.none-itmes-wrapper {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 4px;
+    min-height: 100px;
+}
+
+.none-items-msg {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    filter: drop-shadow(0 0 0.05rem #5C6F7D);
+    font-family: 'Raleway',sans-serif;
+    line-height: 100px
+}
+
+
+/* user page */
+
+.user-page .avatar-image-wrapper {
+    overflow: hidden;
+    width: 12rem;
+    height: 12rem;
+    box-shadow: 1px 1px #cbcbcb;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-page .avatar-image-wrapper img {
+    width: 100%;
+    height: auto;
+}
