@@ -1,0 +1,20 @@
+{% extends 'base.dj.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% load fontawesome_5 %}
+{% block stylesheet %}
+{% fontawesome_5_static %}
+{% endblock %}
+
+{% block content %}
+    <h2>
+    {{user.nickname}}
+    </h2>
+
+    {{user.realname}}
+    <p>
+    </p>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
