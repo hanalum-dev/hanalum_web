@@ -33,7 +33,7 @@ SITE_ID = 1
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
