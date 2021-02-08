@@ -7,7 +7,7 @@ services:
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:3000"
     ports:
-      - "3000:3000"
+      - "80:3000"
     volumes:
       - .:/web
   db:
