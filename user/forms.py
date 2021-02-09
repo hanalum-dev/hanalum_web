@@ -78,7 +78,7 @@ class UserCreationForm(forms.ModelForm):
             user.is_active = False
             user.save()
             message = render_to_string(
-                "mails/activation.html",
+                "mails/activation.dj.html",
                 {
                     "user": user,
                     "domain": current_site.domain,
