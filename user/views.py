@@ -60,7 +60,7 @@ def signup(request):
                     current_site = get_current_site(request)
                     form.save(current_site, request.POST['email'])
                     messages.success(request, '회원가입이 완료되었습니다. 이메일을 확인해주세요.')
-                    redirect('user:signin')
+                    return redirect('user:signin')
         except IntegrityError as e:
             print(e)
         except Exception as e:  # pylint: disable=broad-except
