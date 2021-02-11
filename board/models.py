@@ -25,6 +25,11 @@ class Board(models.Model):
         ('user', '일반유저')
     )
 
+    DEFAULT_BOARD_FORAMT_CHOICES = (
+        ('text', '텍스트 중심'),
+        ('gallery', '이미지 중심')
+    )
+
     title = models.CharField(
         verbose_name='게시판명',
         max_length=100
@@ -79,6 +84,13 @@ class Board(models.Model):
         default='d',
         null=False,
         choices=STATUS_CHOICES
+    )
+    default_board_format = models.CharField(
+        verbose_name='게시판 기본 형태',
+        max_length=10,
+        default='text',
+        null=False,
+        choices=DEFAULT_BOARD_FORAMT_CHOICES
     )
     max_attachment_count = models.IntegerField(
         verbose_name="첨부 파일 최대 개수",
