@@ -11,7 +11,7 @@ class TopBanner(models.Model):
     is_active = models.BooleanField(default=False, )
     created_at = models.DateTimeField(verbose_name='생성된 시각', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='수정된 시각', auto_now=True)
-    # TODO: 탑 배너 배경 색상코드 선택하는 필드 추가
+    # TODO: HNM-0061 탑 배너 배경 색상코드 선택하는 필드 추가
     # TODO: 탑 배너에 이미지 필드 추가
 
     objects = models.Manager()

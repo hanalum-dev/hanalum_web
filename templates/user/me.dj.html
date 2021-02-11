@@ -67,7 +67,7 @@
                         최근에 단 댓글
                     </h4>
                     <hr>
-                    {% comment %} TODO: comment 기능 {% endcomment %}
+                    {% comment %} TODO: HNM-0070: comment 기능 {% endcomment %}
                     {% if comment is None or comments.count is 0 %}
                         {% include '_none_items.dj.html' with msg="최근에 단 댓글이 없습니다. 게시글에 댓글을 달아보는 것은 어떤가요?"%}
                     {% else %}
