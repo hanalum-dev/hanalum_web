@@ -26,8 +26,7 @@ def show(request, board_id):
 
     for article in articles:
         article.total_viewed_count = view_history.total_viewed_count(
-            _viewed_model=ARTICLE,
-            _viewed_id=article.id
+            _viewed_obj=article,
         ) or 0
         article.like_count = like_activity.get_like_count(
             _activity_model=ARTICLE,

@@ -1,16 +1,6 @@
 version: "3"
 
 services:
-  web:
-    build: .
-    command: >
-      sh -c  "python manage.py makemigrations &&
-              python manage.py migrate &&
-              python manage.py runserver 0.0.0.0:3000 --insecure"
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/web
   db:
     image: postgres
     expose:
@@ -23,3 +13,13 @@ services:
     volumes:
       - ./backups:/home/backups
     command: -p 5433
+  web:
+    build: .
+    command: >
+      sh -c  "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:3000 --insecure"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/web
