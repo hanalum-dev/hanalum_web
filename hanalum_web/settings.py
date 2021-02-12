@@ -164,6 +164,7 @@ INSTALLED_APPS = [
     "hanmaum",
     "main",
     "menu",
+    "notice",
     "policy",
     "history",
 ]
