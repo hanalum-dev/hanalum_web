@@ -4,7 +4,7 @@
             {% if article.thumbnail %}
                 <img src="{{ article.thumbnail.url }}" alt="..." class = "w-auto-fit">
             {% else %}
-                {% comment %} TODO: 이미지가 없을 때의 이미지 추가 {% endcomment %}
+                {% comment %} TODO: HNM-0067: 이미지가 없을 때의 이미지 추가 {% endcomment %}
                 <img src="" alt="..." class = "w-auto-fit">
             {% endif %}
         </div>
@@ -16,7 +16,6 @@
                     </a>
                 </h5>
                 <p class="card-text">{{article.summary}}</p>
-                {% comment %} TODO: 한글 날짜 형식 혹은 YYYY-MM-DD HH:mm:ss으로 바꾸기 {% endcomment %}
                 <p class="card-text">조회수: {{article.total_viewed_count}}</p>
                 
                 {% comment %} TODO: 좋아요 버튼, 좋아요 여부에따라 색상 표시하기 {% endcomment %}
@@ -34,7 +33,7 @@
                         <a class = "dislike-button" data-article-id = "{{article.id}}"> 싫어요 </a>
                     {% endif %}
                 </div>
-
+                {% comment %} TODO: HNM-0068: 한글 날짜 형식 혹은 YYYY-MM-DD HH:mm:ss으로 바꾸기 {% endcomment %}
                 <p class="card-text"><small class="text-muted">Last updated {{article.updated_at}}</small></p>
             </div>
         </div>

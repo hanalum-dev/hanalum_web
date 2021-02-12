@@ -7,25 +7,37 @@ from .models import ViewHistory, LikeActivity
 class ViewHistoryAdmin(admin.ModelAdmin):
     """ ViewHistory 어드민 설정 클래스입니다. """
     list_display = [
-        "viewed_model",
+        "viewed_type",
         "viewed_id",
+        "viewed_object",
         "viewer",
         "viewed_count",
         "created_at",
         "updated_at"
     ]
-    list_filter = ["viewed_model", "viewed_id", "viewer", "viewed_count"]
+    list_filter = [
+        "viewed_type",
+        "viewed_id",
+        "viewer",
+        "viewed_count"
+    ]
 
 
 @admin.register(LikeActivity)
 class LikeActivityAdmin(admin.ModelAdmin):
     """ LikeActivity 어드민 설정 클래스입니다. """
     list_display = [
-        "activity_model",
-        "activity_id",
+        "content_type",
+        "content_id",
+        "content_object",
         "user",
         "category",
         "created_at",
         "updated_at",
     ]
-    list_filter = ["activity_model", "activity_id", "user", "category"]
+    list_filter = [
+        "content_type",
+        "content_id",
+        "user",
+        "category"
+    ]

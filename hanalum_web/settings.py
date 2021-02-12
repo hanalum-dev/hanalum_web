@@ -161,9 +161,11 @@ INSTALLED_APPS = [
     "api",
     "article",
     "board",
+    "comment",
     "hanmaum",
     "main",
     "menu",
+    "notice",
     "policy",
     "history",
 ]
@@ -210,7 +212,7 @@ DATABASES = {
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "db",
-        "PORT": 5432,
+        "PORT": 5433,
     }
 }
 

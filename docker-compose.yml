@@ -1,6 +1,18 @@
 version: "3"
 
 services:
+  db:
+    image: postgres
+    expose:
+    - "5433"
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./backups:/home/backups
+    command: -p 5433
   web:
     build: .
     command: >
@@ -11,8 +23,3 @@ services:
       - "3000:3000"
     volumes:
       - .:/web
-  db:
-    image: postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres

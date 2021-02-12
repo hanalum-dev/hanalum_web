@@ -11,7 +11,8 @@ from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from copy import deepcopy as dp
 
-HANMAUMARTICLE = HanmaumArticle().classname()
+like_activity = LikeActivity()
+view_history = ViewHistory()
 
 def index(request):
     """ index """
@@ -22,19 +23,16 @@ def index(request):
     })
 
     for article in response['articles']:
-        article.total_viewed_count = ViewHistory().total_viewed_count(
-            _viewed_model=HANMAUMARTICLE,
-            _viewed_id=article.id
+        article.total_viewed_count = view_history.total_viewed_count(
+            _viewed_obj=article,
         )
         if request.user.is_authenticated:
-            article.is_user_in_like = LikeActivity().is_user_in_like(
-                _activity_model=HANMAUMARTICLE,
-                _activity_id=article.id,
+            article.is_user_in_like = like_activity.is_user_in_like(
+                _content_obj=article,
                 _user=request.user
             )
             article.is_user_in_dislike = LikeActivity().is_user_in_dislike(
-                _activity_model=HANMAUMARTICLE,
-                _activity_id=article.id,
+                _content_obj=article,
                 _user=request.user
             )
     return render(request, 'hanmaum/index.dj.html', response)
@@ -51,9 +49,8 @@ def show(request, article_id):
 
     # 사용자 접속 로그 추가
     if request.user.is_authenticated:
-        ViewHistory().add_history(
-            _viewed_model=HANMAUMARTICLE,
-            _viewed_id=article_id,
+        view_history.add_history(
+            _viewed_obj=article,
             _viewer=request.user
         )
 
@@ -83,13 +80,14 @@ def like(request):
     }
 
     article_id = request.POST.get('article_id')
+
+    article = get_object_or_404(HanmaumArticle, pk=article_id)
     # TODO: validation 추가하기
     
     user = request.user
 
-    activity_result = LikeActivity().set_user_in_like(
-        _activity_model=HANMAUMARTICLE,
-        _activity_id=article_id,
+    activity_result = like_activity.set_user_in_like(
+        _content_obj=article,
         _user=user
     )
 
@@ -111,13 +109,13 @@ def dislike(request):
     }
 
     article_id = request.POST.get('article_id')
+    article = get_object_or_404(HanmaumArticle, pk=article_id)
     # TODO: validation 추가하기
 
     user = request.user
 
     activity_result = LikeActivity().set_user_in_dislike(
-        _activity_model=HANMAUMARTICLE,
-        _activity_id=article_id,
+        _content_obj=article,
         _user=user
     )
 
@@ -140,13 +138,13 @@ def cancle(request):
     }
     
     article_id = request.POST.get('article_id')
+    article = get_object_or_404(HanmaumArticle, pk=article_id)
     # TODO: validation 추가하기
 
     user = request.user
 
-    activity_result = LikeActivity().set_user_in_none(
-        _activity_model=HANMAUMARTICLE,
-        _activity_id=article_id,
+    activity_result = like_activity.set_user_in_none(
+        _content_obj=article,
         _user=user
     )
 

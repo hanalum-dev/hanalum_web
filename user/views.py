@@ -17,8 +17,8 @@ from article.models import Article
 from hanmaum.models import HanmaumArticle
 
 
-ARTICLE = Article().classname()
-HANMAUMARTICLE = HanmaumArticle().classname()
+ARTICLE = Article()
+HANMAUMARTICLE = HanmaumArticle()
 like_activity = LikeActivity()
 view_history = ViewHistory()
 
@@ -33,7 +33,6 @@ def signup(request):
         'form' : None,
     }
 
-    # TODO: error message 다중 적용 필요
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         _email = request.POST.get('email')
@@ -111,7 +110,7 @@ def signin(request):
 def signout(request):
     """로그아웃 뷰"""
     auth.logout(request)
-    # TODO: 메세지 프레임워크 활용: 로그아웃되었습니다
+    # TODO: HNM-0074: 메세지 프레임워크 활용: 로그아웃되었습니다
     return redirect('/')
 
 def me(request):
@@ -178,7 +177,7 @@ def delete(request):
 
 def activate_account(request, uidb64, token):
     """사용자 인증 메일 활성화 뷰"""
-    # TODO: transaction 적용하기
+    # TODO: HNM-0075: transaction 적용하기
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)
@@ -188,11 +187,11 @@ def activate_account(request, uidb64, token):
         user.is_active = True
         user.save()
         auth.login(request, user)
-        # TODO: 메세지 프레임워크 적용하기
+        # TODO: HNM-0076: 메세지 프레임워크 적용하기
         # 이메일 인증이 되었습니다.
         return redirect("user:signin")
     else:
-        # TODO: 여기도 아래 메세지로, 메세지 프레임워크 적용하고 또다른 에러 화면으로 연결시키기
+        # TODO: HNM:0077: 메세지 프레임워크 적용하기
         # 인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다.
         # 계속해서 오류가 발생한다면, 한아름에 건의해주세요.
         return redirect("user:signin")
