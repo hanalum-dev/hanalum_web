@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 from helpers.activity_errors import (
@@ -10,12 +12,39 @@ from helpers.activity_sucesses import(
 
 class ViewHistory(models.Model):
     """ 사용자 모델 뷰 로그 모델입니다. """
-    viewed_model = models.CharField(verbose_name="모델명", max_length=100, null=False, blank=False, default="")
-    viewed_id = models.IntegerField(verbose_name="객체 id", null=True, blank=True)
-    viewer = models.ForeignKey("user.User", verbose_name="유저",  on_delete=models.DO_NOTHING, null=True, blank=True)
-    viewed_count = models.IntegerField(verbose_name="유저별 조회수", null=False, default=0)
-    created_at = models.DateTimeField(verbose_name="생성된 날짜", auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name="수정된 날짜", auto_now=True)
+    viewed_type = models.ForeignKey(
+        ContentType,
+        verbose_name="모델명",
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    viewed_id = models.PositiveIntegerField(
+        null=True,
+    )
+    viewed_object = GenericForeignKey(
+        'viewed_type',
+        'viewed_id',
+    )
+    viewer = models.ForeignKey(
+        "user.User",
+        verbose_name="유저",
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True
+    )
+    viewed_count = models.IntegerField(
+        verbose_name="유저별 조회수",
+        null=False,
+        default=0
+    )
+    created_at = models.DateTimeField(
+        verbose_name="생성된 날짜",
+        auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        verbose_name="수정된 날짜",
+        auto_now=True
+    )
 
     objects = models.Manager()
 
@@ -23,28 +52,42 @@ class ViewHistory(models.Model):
         """ created_at 과 viewed_at을 동일시하기 위한 메서드"""
         return self.created_at
 
-    def total_viewed_count(self, _viewed_model, _viewed_id):
+    def total_viewed_count(self, _viewed_obj):
         """ 특정 아이템의 사용자별 뷰 카운트를 모두 합쳐 리턴하는 메서드입니다. """
+        viewed_type_obj = ContentType.objects.get_for_model(_viewed_obj)
+        history_group = ViewHistory.objects.filter(
+            viewed_type=viewed_type_obj,
+            viewed_id=_viewed_obj.id,
+        )
         total_count = 0
-        history_group = ViewHistory.objects.filter(viewed_model=_viewed_model, viewed_id=_viewed_id)
         for history in history_group:
             total_count += history.viewed_count
         return total_count        
 
-    def distinct_total_viewed_count(self, _viewed_model, _viewed_id):
+    def distinct_total_viewed_count(self, _viewed_obj):
         """ 특정 아이템을 본 사용자 카운트를 리턴하는 메서드입니다. """
-        return ViewHistory.objects.filter(viewed_model=_viewed_model, viewed_id=_viewed_id).count()
+        viewed_type_obj = ContentType.objects.get_for_model(_viewed_obj)
+        return ViewHistory.objects.filter(
+            viewed_type=viewed_type_obj,
+            viewed_id=_viewed_obj.id,
+        ).count()
 
-    def add_history(self, _viewed_model, _viewed_id, _viewer):
+    def add_history(self, _viewed_obj, _viewer):
+        viewed_type_obj = ContentType.objects.get_for_model(_viewed_obj)
         """ 사용자 로그 접속 로그 추가 메서드 """
         try:
-            prev_history = ViewHistory.objects.get(viewed_model=_viewed_model, viewed_id=_viewed_id, viewer=_viewer)
+            prev_history = ViewHistory.objects.get(
+                viewed_type=viewed_type_obj,
+                viewed_id=_viewed_obj.id,
+                viewer=_viewer
+            )
             prev_history.viewed_count +=1
             prev_history.save()
         except ViewHistory.DoesNotExist:  # pylint: disable=no-member
-            new_history = ViewHistory()
-            new_history.viewed_model = _viewed_model
-            new_history.viewed_id = _viewed_id
+            new_history = ViewHistory(
+                viewed_type=viewed_type_obj,
+                viewed_id=_viewed_obj.id,
+            )
             new_history.viewer = _viewer
             new_history.viewed_count = 1
             new_history.save()
@@ -52,11 +95,34 @@ class ViewHistory(models.Model):
 
 class Activity(models.Model):
     """ 사용자 액티비티 관련 베이스 모델입니다. """
-    activity_model = models.CharField(verbose_name="모델명", max_length=100, null=False, blank=False, default="")
-    activity_id = models.IntegerField(verbose_name="객체 id", null=True, blank=True)
-    user = models.ForeignKey("user.User", verbose_name="유저",  on_delete=models.DO_NOTHING, null=True, blank=True)
-    created_at = models.DateTimeField(verbose_name="생성된 날짜", auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name="수정된 날짜", auto_now=True)
+    content_type = models.ForeignKey(
+        ContentType,
+        verbose_name="모델명",
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    content_id = models.PositiveIntegerField(
+        null=True,
+    )
+    content_object = GenericForeignKey(
+        'content_type',
+        'content_id',
+    )
+    user = models.ForeignKey(
+        "user.User",
+        verbose_name="유저",
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True
+    )
+    created_at = models.DateTimeField(
+        verbose_name="생성된 날짜",
+        auto_now_add=True
+    )
+    updated_at = models.DateTimeField(
+        verbose_name="수정된 날짜",
+        auto_now=True
+    )
 
     objects = models.Manager()
 
@@ -70,50 +136,75 @@ class LikeActivity(Activity):
         ('none', '상태없음')
     )
 
-    category = models.CharField(verbose_name="카테고리", max_length=10, null=True, choices=ACTIVITY_CATEGORY)
+    category = models.CharField(
+        verbose_name="카테고리",
+        max_length=10,
+        null=True,
+        choices=ACTIVITY_CATEGORY
+    )
 
-    def is_user_in_activity(self, _activity_model, _activity_id, _user, _category):
+    def is_user_in_activity(self, _content_obj, _user, _category):
         """ 사용자가 특정 액티비티를 수행하였는지 확인하는 메서드"""
+        content_type_obj = ContentType.objects.get_for_model(_content_obj)
         try:
-            activity = LikeActivity.objects.get(activity_model=_activity_model, activity_id=_activity_id, user=_user, category=_category)
+            activity = LikeActivity.objects.get(
+                content_type=content_type_obj,
+                content_id=_content_obj.id,
+                user=_user,
+                category=_category
+            )
             if activity:
                 return True
         except LikeActivity.DoesNotExist:  # pylint: disable=no-member
             return False
         return False
 
-    def is_user_in_like(self, _activity_model, _activity_id, _user):
+    def is_user_in_like(self, _content_obj, _user):
         """ 사용자가 좋아요가 되어있는지 확인하는 메서드"""
-        return self.is_user_in_activity(_activity_model, _activity_id, _user, 'like')
+        return self.is_user_in_activity(
+            _content_obj,
+            _user,
+            'like'
+        )
     
-    def is_user_in_dislike(self, _activity_model, _activity_id, _user):
+    def is_user_in_dislike(self, _content_obj, _user):
         """ 사용자가 싫어요가 되어있는지 확인하는 메서드"""
-        return self.is_user_in_activity(_activity_model, _activity_id, _user, 'dislike')
+        return self.is_user_in_activity(
+            _content_obj,
+            _user,
+            'dislike'
+        )
     
-    def set_user_in_category(self, _activity_model, _activity_id, _user, _category):
+    def set_user_in_category(self, _content_obj, _user, _category):
+        content_type_obj = ContentType.objects.get_for_model(_content_obj)
         """ 액티비티를 세팅하는 base 메서드 """
         response = {
             'prev_category': None,
             'crt_category': _category
         }
         try:
-            activity = LikeActivity.objects.get(activity_model=_activity_model, activity_id=_activity_id, user=_user)
+            activity = LikeActivity.objects.get(
+                content_type=content_type_obj,
+                content_id=_content_obj.id,
+                user=_user
+            )
             response['prev_category'] = activity.category
             activity.category = _category
 
         except LikeActivity.DoesNotExist:  # pylint: disable=no-member
-            activity = LikeActivity()
-            activity.activity_model = _activity_model
-            activity.activity_id = _activity_id
+            activity = LikeActivity(
+                content_type=content_type_obj,
+                content_id=_content_obj.id
+            )
             activity.user = _user
             activity.category = _category
         activity.save()
 
         return response
 
-    def set_user_in_like(self, _activity_model, _activity_id, _user):
+    def set_user_in_like(self, _content_obj, _user):
         """ set 사용자 좋아요 액티비티 """
-        response = self.set_user_in_category(_activity_model, _activity_id, _user, 'like')
+        response = self.set_user_in_category(_content_obj, _user, 'like')
         
         prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
         crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
@@ -123,9 +214,9 @@ class LikeActivity(Activity):
         
         return LikeSuccess()
         
-    def set_user_in_dislike(self, _activity_model, _activity_id, _user):
+    def set_user_in_dislike(self, _content_obj, _user):
         """ set 사용자 싫어요 액티비티 """
-        response = self.set_user_in_category(_activity_model, _activity_id, _user, 'dislike')
+        response = self.set_user_in_category(_content_obj, _user, 'dislike')
         
         prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
         crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
@@ -136,9 +227,9 @@ class LikeActivity(Activity):
         return DisLikeSuccess()
 
         
-    def set_user_in_none(self, _activity_model, _activity_id, _user):
+    def set_user_in_none(self, _content_obj, _user):
         """ set 사용자 싫어요 액티비티 """
-        response = self.set_user_in_category(_activity_model, _activity_id, _user, 'none')
+        response = self.set_user_in_category(_content_obj, _user, 'none')
         
         prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
         crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
@@ -155,18 +246,32 @@ class LikeActivity(Activity):
         return AlreadyNoneActivityArticle()
 
 
-    def get_like_count(self, _activity_model, _activity_id):
-        response = LikeActivity.objects.filter(activity_model=_activity_model, activity_id=_activity_id, category='like').count()
+    def get_like_count(self, _content_obj):
+        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+        response = LikeActivity.objects.filter(
+            content_type=content_type_obj,
+            content_id=_content_obj.id,
+            category='like'
+        ).count()
 
         return response
 
 
-    def get_dislike_count(self, _activity_model, _activity_id):
-        response = LikeActivity.objects.filter(activity_model=_activity_model, activity_id=_activity_id, category='dislike').count()
+    def get_dislike_count(self, _content_obj):
+        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+        response = LikeActivity.objects.filter(
+            content_type=content_type_obj,
+            content_id=_content_obj.id,
+            category='dislike'
+        ).count()
 
         return response
 
 
-    def get_like_activities(self, _user, _activity_model):
-        like_activities = LikeActivity.objects.filter(user=_user, activity_model=_activity_model).order_by('-updated_at')
+    def get_like_activities(self, _user, _content_obj):
+        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+        like_activities = LikeActivity.objects.filter(
+            user=_user,
+            content_type=content_type_obj,
+        ).order_by('-updated_at')
         return like_activities

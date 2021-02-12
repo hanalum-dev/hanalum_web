@@ -161,6 +161,7 @@ INSTALLED_APPS = [
     "api",
     "article",
     "board",
+    "comment",
     "hanmaum",
     "main",
     "menu",

@@ -17,8 +17,8 @@ from article.models import Article
 from hanmaum.models import HanmaumArticle
 
 
-ARTICLE = Article().classname()
-HANMAUMARTICLE = HanmaumArticle().classname()
+ARTICLE = Article()
+HANMAUMARTICLE = HanmaumArticle()
 like_activity = LikeActivity()
 view_history = ViewHistory()
 

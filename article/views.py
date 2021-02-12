@@ -10,6 +10,7 @@ from .models import Article
 from .forms import ArticleCreationForm
 from history.models import ViewHistory, LikeActivity
 
+view_history = ViewHistory()
 ARTICLE = Article().classname()
 
 def show(request, article_id):
@@ -23,9 +24,8 @@ def show(request, article_id):
 
     # 사용자 접속 로그 추가
     if request.user.is_authenticated:
-        ViewHistory().add_history(
-            _viewed_model=ARTICLE,
-            _viewed_id=article_id,
+        view_history.add_history(
+            _viewed_obj=article,
             _viewer=request.user
         )
 
