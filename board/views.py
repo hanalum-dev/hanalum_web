@@ -7,7 +7,8 @@ from .models import Board
 from history.models import ViewHistory, LikeActivity
 from article.models import Article
 
-ARTICLE = Article().classname()
+view_history = ViewHistory()
+like_activity = LikeActivity()
 
 # def index(request):
 #     return render('')
@@ -20,8 +21,6 @@ def show(request, board_id):
         'board': board,
         'banner_title' : board.title
     })
-    view_history = ViewHistory()
-    like_activity = LikeActivity()
     articles = Article.objects.recent().filter(board= board).all()
 
     for article in articles:
@@ -29,23 +28,19 @@ def show(request, board_id):
             _viewed_obj=article,
         ) or 0
         article.like_count = like_activity.get_like_count(
-            _activity_model=ARTICLE,
-            _activity_id=article.id
+            _content_object=article
         )
         article.dislike_count = like_activity.get_dislike_count(
-            _activity_model=ARTICLE,
-            _activity_id=article.id
+            _content_object=article
         )
 
         if request.user.is_authenticated:
             article.is_user_in_like = like_activity.is_user_in_like(
-                _activity_model=ARTICLE,
-                _activity_id=article.id,
+                _content_object=article,
                 _user=request.user
             )
             article.is_user_in_dislike = like_activity.is_user_in_dislike(
-                _activity_model=ARTICLE,
-                _activity_id=article.id,
+                _content_object=article,
                 _user=request.user
             )
 

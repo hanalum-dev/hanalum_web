@@ -11,19 +11,21 @@
             <div class="card">
                 <div class="card-header p-3">
                     <h3 class="card-title">
-                        {{ article.title }}
+                        {{ notice.title }}
                     </h3>
+                    <span class="p-1">
+                        {% fa5_icon 'user' 'far' %}
+                        한아름
+                    </span>
                     <span class="p-1">
                         {% comment %} TODO: 날짜 형식 수정 {% endcomment %}
                         {% fa5_icon 'clock' 'far' %}
-                        {{ article.updated_at }}
+                        {{ notice.updated_at }}
                     </span>
                 </div>
                 <div class="card-body mn-height-px-500">
-                    인터뷰어: {{article.interviewer}}
-                    인터뷰이: {{article.interviewee}}
                     <div class="card-text">
-                        {{article.content | safe }}
+                        {{notice.content | safe }}
                     </div>
                 </div>
             </div>
@@ -35,7 +37,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block scripts %}

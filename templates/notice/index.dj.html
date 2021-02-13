@@ -1,0 +1,66 @@
+{% extends 'base.dj.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block stylesheet %}
+{% endblock %}
+
+{% block content %}
+    <div class = "row p-3 gx-lg-5">
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 col-12">
+            <h2>
+                한아름 공지사항
+            </h2>
+            <hr>
+            <section class="article-group">
+                <table class = "table table-striped table-hover table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"> # </th>
+                            <th class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2"> 분류 </th>
+                            <th class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"> 제목 </th>
+                            <th class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3"> 작성된 날짜 </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for top_fixed_notice in top_fixed_notices %}
+                            <tr class="table-primary align-middle">
+                                <th>{{ top_fixed_notice.id }}</th>
+                                <th>{{ top_fixed_notice.category }}</th>
+                                <th>
+                                    <a href="{% url 'notice:show' top_fixed_notice.id %}">
+                                        {{ top_fixed_notice.title }}
+                                    </a>
+                                </th>
+                                {% comment %} TODO: 날짜 형식 바꾸기 {% endcomment %}
+                                <th>{{ top_fixed_notice.updated_at }}</th>
+                            </tr>
+                        {% endfor %}
+                        {% for non_top_fixed_notice in non_top_fixed_notices %}
+                            <tr class="align-middle">
+                                <th>{{ non_top_fixed_notice.id }}</th>
+                                <th>{{ non_top_fixed_notice.category }}</th>
+                                <th>
+                                    <a href="{% url 'notice:show' non_top_fixed_notice.id %}">
+                                        {{ non_top_fixed_notice.title }}
+                                    </a>
+                                </th>
+                                {% comment %} TODO: 날짜 형식 바꾸기 {% endcomment %}
+                                <th>{{ non_top_fixed_notice.updated_at }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </section>
+        </div>
+
+        <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card mn-height-px-300">
+                {% comment %} TODO: 추가 컨텐츠{% endcomment %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

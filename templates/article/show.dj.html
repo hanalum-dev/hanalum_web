@@ -1,8 +1,9 @@
 {% extends 'base.dj.html' %}
 {% load static %}
-{% load fontawesome_5 %}
 {% load bootstrap5 %}
+{% load fontawesome_5 %}
 {% block stylesheet %}
+{% fontawesome_5_static %}
 {% endblock %}
 
 {% block content %}
@@ -14,14 +15,16 @@
                         {{ article.title }}
                     </h3>
                     <span class="p-1">
+                        {% fa5_icon 'user' 'far' %}
+                        {{ article.author}}
+                    </span>
+                    <span class="p-1">
                         {% comment %} TODO: 날짜 형식 수정 {% endcomment %}
                         {% fa5_icon 'clock' 'far' %}
                         {{ article.updated_at }}
                     </span>
                 </div>
                 <div class="card-body mn-height-px-500">
-                    인터뷰어: {{article.interviewer}}
-                    인터뷰이: {{article.interviewee}}
                     <div class="card-text">
                         {{article.content | safe }}
                     </div>
@@ -35,7 +38,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block scripts %}

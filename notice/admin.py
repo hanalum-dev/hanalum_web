@@ -11,11 +11,13 @@ class NoticeAdmin(admin.ModelAdmin):
         'title',
         'summary',
         'top_fixed',
+        'status',
         'created_at',
         'updated_at',
     ]
 
     list_filter = [
         'top_fixed',
+        'status',
         'title',
     ]

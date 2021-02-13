@@ -143,13 +143,13 @@ class LikeActivity(Activity):
         choices=ACTIVITY_CATEGORY
     )
 
-    def is_user_in_activity(self, _content_obj, _user, _category):
+    def is_user_in_activity(self, _content_object, _user, _category):
         """ 사용자가 특정 액티비티를 수행하였는지 확인하는 메서드"""
-        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+        content_type_obj = ContentType.objects.get_for_model(_content_object)
         try:
             activity = LikeActivity.objects.get(
                 content_type=content_type_obj,
-                content_id=_content_obj.id,
+                content_id=_content_object.id,
                 user=_user,
                 category=_category
             )
@@ -159,24 +159,24 @@ class LikeActivity(Activity):
             return False
         return False
 
-    def is_user_in_like(self, _content_obj, _user):
+    def is_user_in_like(self, _content_object, _user):
         """ 사용자가 좋아요가 되어있는지 확인하는 메서드"""
         return self.is_user_in_activity(
-            _content_obj,
+            _content_object,
             _user,
             'like'
         )
     
-    def is_user_in_dislike(self, _content_obj, _user):
+    def is_user_in_dislike(self, _content_object, _user):
         """ 사용자가 싫어요가 되어있는지 확인하는 메서드"""
         return self.is_user_in_activity(
-            _content_obj,
+            _content_object,
             _user,
             'dislike'
         )
     
-    def set_user_in_category(self, _content_obj, _user, _category):
-        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+    def set_user_in_category(self, _content_object, _user, _category):
+        content_type_obj = ContentType.objects.get_for_model(_content_object)
         """ 액티비티를 세팅하는 base 메서드 """
         response = {
             'prev_category': None,
@@ -185,7 +185,7 @@ class LikeActivity(Activity):
         try:
             activity = LikeActivity.objects.get(
                 content_type=content_type_obj,
-                content_id=_content_obj.id,
+                content_id=_content_object.id,
                 user=_user
             )
             response['prev_category'] = activity.category
@@ -194,7 +194,7 @@ class LikeActivity(Activity):
         except LikeActivity.DoesNotExist:  # pylint: disable=no-member
             activity = LikeActivity(
                 content_type=content_type_obj,
-                content_id=_content_obj.id
+                content_id=_content_object.id
             )
             activity.user = _user
             activity.category = _category
@@ -202,9 +202,9 @@ class LikeActivity(Activity):
 
         return response
 
-    def set_user_in_like(self, _content_obj, _user):
+    def set_user_in_like(self, _content_object, _user):
         """ set 사용자 좋아요 액티비티 """
-        response = self.set_user_in_category(_content_obj, _user, 'like')
+        response = self.set_user_in_category(_content_object, _user, 'like')
         
         prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
         crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
@@ -214,9 +214,9 @@ class LikeActivity(Activity):
         
         return LikeSuccess()
         
-    def set_user_in_dislike(self, _content_obj, _user):
+    def set_user_in_dislike(self, _content_object, _user):
         """ set 사용자 싫어요 액티비티 """
-        response = self.set_user_in_category(_content_obj, _user, 'dislike')
+        response = self.set_user_in_category(_content_object, _user, 'dislike')
         
         prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
         crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
@@ -227,9 +227,9 @@ class LikeActivity(Activity):
         return DisLikeSuccess()
 
         
-    def set_user_in_none(self, _content_obj, _user):
+    def set_user_in_none(self, _content_object, _user):
         """ set 사용자 싫어요 액티비티 """
-        response = self.set_user_in_category(_content_obj, _user, 'none')
+        response = self.set_user_in_category(_content_object, _user, 'none')
         
         prev_category = response['prev_category'] # 이전 액티비티 상태, 설정한 적 없으면 None
         crt_category = response['crt_category'] # 현재 설정된 액티비티 상태
@@ -246,30 +246,30 @@ class LikeActivity(Activity):
         return AlreadyNoneActivityArticle()
 
 
-    def get_like_count(self, _content_obj):
-        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+    def get_like_count(self, _content_object):
+        content_type_obj = ContentType.objects.get_for_model(_content_object)
         response = LikeActivity.objects.filter(
             content_type=content_type_obj,
-            content_id=_content_obj.id,
+            content_id=_content_object.id,
             category='like'
         ).count()
 
         return response
 
 
-    def get_dislike_count(self, _content_obj):
-        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+    def get_dislike_count(self, _content_object):
+        content_type_obj = ContentType.objects.get_for_model(_content_object)
         response = LikeActivity.objects.filter(
             content_type=content_type_obj,
-            content_id=_content_obj.id,
+            content_id=_content_object.id,
             category='dislike'
         ).count()
 
         return response
 
 
-    def get_like_activities(self, _user, _content_obj):
-        content_type_obj = ContentType.objects.get_for_model(_content_obj)
+    def get_like_activities(self, _user, _content_object):
+        content_type_obj = ContentType.objects.get_for_model(_content_object)
         like_activities = LikeActivity.objects.filter(
             user=_user,
             content_type=content_type_obj,
