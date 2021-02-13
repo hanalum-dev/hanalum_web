@@ -25,7 +25,8 @@ def show(request, notice_id):
     notice = get_object_or_404(Notice, pk=notice_id)
 
     response.update({
-        'notice' : notice
+        'banner_title' : "[공지사항] " + notice.title,
+        'notice' : notice,
     })
 
     return render(request, 'notice/show.dj.html', response)
