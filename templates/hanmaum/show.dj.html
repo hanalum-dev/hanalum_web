@@ -1,14 +1,41 @@
 {% extends 'base.dj.html' %}
 {% load static %}
+{% load fontawesome_5 %}
 {% load bootstrap5 %}
 {% block stylesheet %}
 {% endblock %}
 
 {% block content %}
-    인터뷰어: {{article.interviewer}}
-    인터뷰이: {{article.interviewee}}
+    <div class = "row p-3 gx-lg-5 gy-3">
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header p-3">
+                    <h3 class="card-title">
+                        {{ article.title }}
+                    </h3>
+                    <span class="p-1">
+                        {% comment %} TODO: 날짜 형식 수정 {% endcomment %}
+                        {% fa5_icon 'clock' 'far' %}
+                        {{ article.updated_at }}
+                    </span>
+                </div>
+                <div class="card-body mn-height-px-500">
+                    인터뷰어: {{article.interviewer}}
+                    인터뷰이: {{article.interviewee}}
+                    <div class="card-text">
+                        {{article.content | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    {{article.content | safe }}
+        <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card mn-height-px-300">
+                {% comment %} TODO: 추가 컨텐츠{% endcomment %}
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block scripts %}
