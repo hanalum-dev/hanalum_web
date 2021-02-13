@@ -1,5 +1,6 @@
 """ 한마음 views 모듈입니다."""
 import json
+from copy import deepcopy as dp
 
 from django.shortcuts import get_object_or_404, render
 from django.contrib import auth, messages
@@ -9,7 +10,6 @@ from django.http import HttpResponse
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
-from copy import deepcopy as dp
 
 like_activity = LikeActivity()
 view_history = ViewHistory()

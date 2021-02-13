@@ -29,7 +29,7 @@ def show(request, article_id):
             _viewer=request.user
         )
 
-    return render(request, 'articles/show.dj.html', response)
+    return render(request, 'article/show.dj.html', response)
 
 
 def new(request, board_id):
@@ -64,4 +64,4 @@ def new(request, board_id):
         return redirect("/")
     else:
         response['form'] = ArticleCreationForm()
-        return render(request, 'articles/new.dj.html', response)
+        return render(request, 'article/new.dj.html', response)
