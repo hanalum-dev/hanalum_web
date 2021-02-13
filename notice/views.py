@@ -14,7 +14,7 @@ def index(request):
         'non_top_fixed_notices' : Notice.objects.published().non_top_fixed().recent(),
     })
 
-    print(response)
+    # TODO: HNM-0097: 공지사항 페이지네이션 추가
 
     return render(request, 'notice/index.dj.html', response)
 
