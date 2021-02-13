@@ -52,13 +52,15 @@
                         좋아요를 누른 한마음 게시물
                     </h4>
                     <hr>
-                    {% if like_hanmaum_articles is None or like_hanmaum_articles.count is 0 %}
+                    {% if like_hanmaum_activities is None or like_hanmaum_activities.count is 0 %}
                         {% include '_none_items.dj.html' with msg="좋아요한 게시물이 없습니다. 게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
                     {% else %}
-                        {% for article in like_hanmaum_articles %}
-                            <div class = "p-2">
-                                {% include 'hanmaum/_article_card.dj.html'%}
-                            </div>
+                        {% for activity in like_hanmaum_activities %}
+                            {% with article=activity.article %}
+                                <div class = "p-2">
+                                    {% include 'user/_article_card.dj.html'%}
+                                </div>
+                            {% endwith %}
                         {% endfor %}
                     {% endif %}
                 </div>
@@ -82,10 +84,12 @@
     </div>
 </div>
 
-
-
-
 {% endblock %}
 
 {% block scripts %}
+<script>
+    $(document).ready(function() {
+        initLikeActivity();
+    })
+</script>
 {% endblock %}
