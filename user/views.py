@@ -121,7 +121,11 @@ def me(request):
         messages.error(request, "로그인 후, 이용할 수 있습니다.")
         return redirect("user:signin")
 
-    like_articles = like_activity.get_like_activities(_user=user, _activity_model=ARTICLE)
+    # FIXME: activity 개선하면서 작동 안될거임.(게시물을 가져오는게 아니라 activity가 리턴됨.)
+    like_articles = like_activity.get_like_activities(
+        _user=user,
+        _content_obj=ARTICLE
+    )
     for like_article in like_articles:
         try:
             article = Article.objects.get(id=like_article.id)
@@ -131,24 +135,24 @@ def me(request):
            continue
 
     # TODO: 코드 개선하기
-    like_hanmaum_articles = like_activity.get_like_activities(_user=user, _activity_model=HANMAUMARTICLE)
-    for like_hanmaum_article in like_hanmaum_articles:
+    like_hanmaum_activities = like_activity.get_like_activities(
+        _user=user,
+        _content_obj=HANMAUMARTICLE
+    )
+
+    for activity in like_hanmaum_activities:
         try:
-            article = HanmaumArticle.objects.get(id=like_hanmaum_article.id)
-            like_hanmaum_article.id = article.id
-            like_hanmaum_article.thumbnail = article.thumbnail
-            like_hanmaum_article.title = article.title
-            like_hanmaum_article.updated_at = article.updated_at
-            like_hanmaum_article.total_viewed_count = view_history.total_viewed_count(
-                _viewed_model=HANMAUMARTICLE,
-                _viewed_id=article.id
+            activity.article = HanmaumArticle.objects.get(id = activity.content_id)
+            activity.article.total_viewed_count = view_history.total_viewed_count(
+            _viewed_obj=activity.article,
             )
         except:
-            continue
+            pass
+
     response.update({
         'user':user,
         'like_articles': like_articles,
-        'like_hanmaum_articles': like_hanmaum_articles
+        'like_hanmaum_activities': like_hanmaum_activities
     })
 
     return render(request, 'user/me.dj.html', response)
