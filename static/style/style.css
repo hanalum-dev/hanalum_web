@@ -1,3 +1,4 @@
+/* ----- background-color ----- */
 .bg-black {
     background-color: black;
 }
@@ -6,6 +7,18 @@
     background-color: #a8bac7;
 }
 
+/* min-height */
+
+.mn-height-px-300 {
+    min-height: 500px;
+}
+
+.mn-height-px-500 {
+    min-height: 500px;
+}
+
+
+/* ----- width ----- */
 .w-auto-fit {
     width: auto;
     max-width: 100%;
@@ -24,6 +37,8 @@
     width: 70%;
 }
 
+/* ----- position ----- */
+
 .left-0 {
     left: 0;
 }
@@ -39,6 +54,8 @@
 .bottom-0 {
     bottom: 0;
 }
+
+/* ----- text ----- */
 
 .text-error {
     margin-top: 1px;
@@ -57,12 +74,13 @@
     text-underline-offset: 1.5px!important;
 }
 
+/* ----- banner ----- */
 .background-banner {
     width: 100%;
     margin-top: -60px;
     min-height: 400px;
     max-height: 600px;
-    background-position: bottom 200px center;
+    background-position: top -400px center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;

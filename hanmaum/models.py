@@ -12,7 +12,7 @@ class HanmaumArticleQuerySet(models.QuerySet):
     """ 한마음 모델 쿼리셋 클래스입니다. """
 
     def published(self):
-        """ published 상태인 게시판만 리턴합니다. """
+        """ published 상태인 게시글만 리턴합니다. """
         return self.filter(status='p').order_by("-updated_at")
 
 

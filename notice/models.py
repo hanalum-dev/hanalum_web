@@ -5,9 +5,34 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 from markdown import markdown
 
+class NoticeQuerySet(models.QuerySet):
+    """ notice 모델 쿼리셋 클래스입니다. """
+
+    def recent(self):
+        """ 최근에 수정된 게시글을 먼저 리턴합니다. """
+        return self.order_by("-updated_at")
+
+    def published(self):
+        """ published 상태인 게시글만 리턴합니다. """
+        return self.filter(status='p')
+
+    def top_fixed(self):
+        """ top_fixed 상태인 게시글만 리턴합니다. """
+        return self.filter(top_fixed=True)
+
+    def non_top_fixed(self):
+        """ top_fixed 상태가 아닌 게시글만 리턴합니다. """
+        return self.filter(top_fixed=False)
 
 class Notice(models.Model):
     """ 공지사항 모델 """
+    objects = NoticeQuerySet.as_manager()
+
+    STATUS_CHOICES = (
+        ('d', 'draft'),
+        ('p', 'published'),
+        ('t', 'trash')
+    )
 
     title = models.CharField(
         verbose_name="제목",
@@ -21,6 +46,13 @@ class Notice(models.Model):
         verbose_name="상단 고정 게시물",
         default=False,
         null=False
+    )
+    status = models.CharField(
+        verbose_name='공지사항 공개 상태',
+        max_length=2,
+        default='d',
+        null=False,
+        choices=STATUS_CHOICES
     )
     created_at = models.DateTimeField(
         verbose_name="생성된 날짜",
