@@ -56,10 +56,10 @@ class Comment(models.Model):
         comments = Comment.objects.filter(
             commented_type=commented_type_obj,
             parent=None,
-        ).order_by('-updated_at')
+        ).order_by('updated_at')
         for comment in comments:
             comment.recomments = Comment.objects.filter(
                 commented_type=commented_type_obj,
                 parent=comment,
-            )
+            ).order_by('updated_at')
         return comments
