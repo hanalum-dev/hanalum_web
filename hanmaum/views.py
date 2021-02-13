@@ -28,11 +28,11 @@ def index(request):
         )
         if request.user.is_authenticated:
             article.is_user_in_like = like_activity.is_user_in_like(
-                _content_obj=article,
+                _content_object=article,
                 _user=request.user
             )
             article.is_user_in_dislike = LikeActivity().is_user_in_dislike(
-                _content_obj=article,
+                _content_object=article,
                 _user=request.user
             )
     return render(request, 'hanmaum/index.dj.html', response)
@@ -87,7 +87,7 @@ def like(request):
     user = request.user
 
     activity_result = like_activity.set_user_in_like(
-        _content_obj=article,
+        _content_object=article,
         _user=user
     )
 
@@ -115,7 +115,7 @@ def dislike(request):
     user = request.user
 
     activity_result = LikeActivity().set_user_in_dislike(
-        _content_obj=article,
+        _content_object=article,
         _user=user
     )
 
@@ -144,7 +144,7 @@ def cancle(request):
     user = request.user
 
     activity_result = like_activity.set_user_in_none(
-        _content_obj=article,
+        _content_object=article,
         _user=user
     )
 

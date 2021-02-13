@@ -124,7 +124,7 @@ def me(request):
     # FIXME: activity 개선하면서 작동 안될거임.(게시물을 가져오는게 아니라 activity가 리턴됨.)
     like_articles = like_activity.get_like_activities(
         _user=user,
-        _content_obj=ARTICLE
+        _content_object=ARTICLE
     )
     for like_article in like_articles:
         try:
@@ -137,7 +137,7 @@ def me(request):
     # TODO: 코드 개선하기
     like_hanmaum_activities = like_activity.get_like_activities(
         _user=user,
-        _content_obj=HANMAUMARTICLE
+        _content_object=HANMAUMARTICLE
     )
 
     for activity in like_hanmaum_activities:
