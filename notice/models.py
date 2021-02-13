@@ -8,10 +8,21 @@ from markdown import markdown
 class NoticeQuerySet(models.QuerySet):
     """ notice 모델 쿼리셋 클래스입니다. """
 
+    def recent(self):
+        """ 최근에 수정된 게시글을 먼저 리턴합니다. """
+        return self.order_by("-updated_at")
+
     def published(self):
         """ published 상태인 게시글만 리턴합니다. """
-        return self.filter(status='p').order_by("-updated_at")
+        return self.filter(status='p')
 
+    def top_fixed(self):
+        """ top_fixed 상태인 게시글만 리턴합니다. """
+        return self.filter(top_fixed=True)
+
+    def non_top_fixed(self):
+        """ top_fixed 상태가 아닌 게시글만 리턴합니다. """
+        return self.filter(top_fixed=False)
 
 class Notice(models.Model):
     """ 공지사항 모델 """

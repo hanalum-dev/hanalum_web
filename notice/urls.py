@@ -2,11 +2,12 @@
 from django.urls import path
 
 from .views import (
-   index
+   index, show
 )
 
 app_name = 'notice'
 
 urlpatterns = [
     path('', index, name="index"),
+    path('<int:notice_id>', show, name="show"),
 ]
