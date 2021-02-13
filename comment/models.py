@@ -5,6 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 
 class Comment(models.Model):
     """ comment 클래스입니다. """
+    objects = models.Manager()
+
     commented_type = models.ForeignKey(
         ContentType,
         on_delete=models.CASCADE,
@@ -17,6 +19,16 @@ class Comment(models.Model):
         'commented_type',
         'commented_id',
     )
+
+    parent = models.ForeignKey(
+        "self",
+        verbose_name="답글을 단 댓글",
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+        related_name="replies",
+    )
+
     user = models.ForeignKey(
         "user.User",
         verbose_name="댓글을 단 사람",
@@ -38,3 +50,16 @@ class Comment(models.Model):
         verbose_name="수정된 날짜",
         auto_now=True
     )
+
+    def get_comments(self, _commented_object):
+        commented_type_obj = ContentType.objects.get_for_model(_commented_object)
+        comments = Comment.objects.filter(
+            commented_type=commented_type_obj,
+            parent=None,
+        ).order_by('-updated_at')
+        for comment in comments:
+            comment.recomments = Comment.objects.filter(
+                commented_type=commented_type_obj,
+                parent=comment,
+            )
+        return comments

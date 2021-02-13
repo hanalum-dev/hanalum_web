@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from helpers.default import default_response
 
 from .models import Notice
+from comment.models import Comment
 
 def index(request):
     response = dp(default_response)
@@ -16,6 +17,7 @@ def index(request):
 
     # TODO: HNM-0097: 공지사항 페이지네이션 추가
 
+
     return render(request, 'notice/index.dj.html', response)
 
 
@@ -24,9 +26,12 @@ def show(request, notice_id):
 
     notice = get_object_or_404(Notice, pk=notice_id)
 
+    comments = Comment().get_comments(notice)
+
     response.update({
         'banner_title' : "[공지사항] " + notice.title,
         'notice' : notice,
+        'comments' : comments,
     })
 
     return render(request, 'notice/show.dj.html', response)

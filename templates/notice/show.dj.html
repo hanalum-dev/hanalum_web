@@ -8,7 +8,7 @@
 {% block content %}
     <div class = "row p-3 gx-lg-5 gy-3">
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
-            <div class="card">
+            <div class="card m-3">
                 <div class="card-header p-3">
                     <h3 class="card-title">
                         {{ notice.title }}
@@ -23,13 +23,22 @@
                         {{ notice.updated_at }}
                     </span>
                 </div>
-                <div class="card-body mn-height-px-500">
+                <div class="card-body mn-height-px-300">
                     <div class="card-text">
                         {{notice.content | safe }}
                     </div>
                 </div>
+                <div class="comment">
+                    {% for comment in comments %}
+                        {{ comment.content }}
+                        {% for recomment in comment.recomments %}
+                            > {{recomment.content}}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
+
 
         <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
             <div class="card mn-height-px-300">

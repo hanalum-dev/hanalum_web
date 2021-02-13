@@ -9,8 +9,12 @@
 
 /* min-height */
 
+.mn-height-px-100 {
+    min-height: 100px;
+}
+
 .mn-height-px-300 {
-    min-height: 500px;
+    min-height: 300px;
 }
 
 .mn-height-px-500 {
