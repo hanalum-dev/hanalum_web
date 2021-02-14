@@ -1,5 +1,6 @@
 """user(사용자 계정) views 모듈입니다."""
 from copy import deepcopy as dp
+import logging
 
 from django.contrib import auth, messages
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,7 +17,7 @@ from history.models import LikeActivity, ViewHistory
 from article.models import Article
 from hanmaum.models import HanmaumArticle
 
-
+logger = logging.getLogger(__name__)
 ARTICLE = Article()
 HANMAUMARTICLE = HanmaumArticle()
 like_activity = LikeActivity()
@@ -61,9 +62,9 @@ def signup(request):
                     messages.success(request, '회원가입이 완료되었습니다. 이메일을 확인해주세요.')
                     return redirect('user:signin')
         except IntegrityError as e:
-            print(e)
+            logger.error(e)
         except Exception as e:  # pylint: disable=broad-except
-            print(e)
+            logger.error(e)
         # TODO: 라벨링 다시 하기
         messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
         return redirect('user:signup')

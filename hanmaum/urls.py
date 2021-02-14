@@ -2,7 +2,7 @@
 from django.urls import path
 
 from .views import (
-    edit, index, new, show, like, dislike, cancle
+    edit, index, new, show, like, dislike, cancle, new_comment
 )
 
 app_name = 'hanmaum'
@@ -16,4 +16,5 @@ urlpatterns = [
     path('like', like, name="like"),
     path('dislike', dislike, name="dislike"),
     path('cancle', cancle, name="cancle"),
+    path('<int:article_id>/comment/new/', new_comment, name="new_comment")
 ]

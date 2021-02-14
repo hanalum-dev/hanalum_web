@@ -7,27 +7,28 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "row p-3 gx-lg-5 gy-3">
+    <div class = "row m-3 gx-lg-5 gy-3">
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
-            <div class="card">
+            <div class="card m-3">
                 <div class="card-header p-3">
                     <h3 class="card-title">
                         {{ article.title }}
                     </h3>
-                    <span class="p-1">
+                    <span class="m-1">
                         {% fa5_icon 'user' 'far' %}
                         {{ article.author}}
                     </span>
-                    <span class="p-1">
+                    <span class="m-1">
                         {% fa5_icon 'clock' 'far' %}
                         {{ article.updated_at }}
                     </span>
                 </div>
-                <div class="card-body mn-height-px-500">
+                <div class="card-body mn-height-px-100">
                     <div class="card-text">
                         {{article.content | safe }}
                     </div>
                 </div>
+                {% include 'article/_comment_list.dj.html' %}
             </div>
         </div>
 
