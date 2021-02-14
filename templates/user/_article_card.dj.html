@@ -17,8 +17,7 @@
                 </h5>
                 <p class="card-text">{{article.summary}}</p>
                 <p class="card-text">조회수: {{article.total_viewed_count}}</p>
-                {% comment %} TODO: 한글 날짜 형식 혹은 YYYY-MM-DD HH:mm:ss으로 바꾸기 {% endcomment %}
-                <p class="card-text"><small class="text-muted">Last updated {{article.updated_at}}</small></p>
+                <p class="card-text"><small class="text-muted">{{article.updated_at}}</small></p>
             </div>
         </div>
     </div>
