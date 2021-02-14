@@ -10,5 +10,5 @@ app_name = 'notice'
 urlpatterns = [
     path('', index, name="index"),
     path('<int:notice_id>', show, name="show"),
-    path('new_comment/<int:notice_id>', new_comment, name="new_comment")
+    path('<int:notice_id>/comment/new/', new_comment, name="new_comment")
 ]

@@ -2,7 +2,7 @@
 import json
 from copy import deepcopy as dp
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -10,9 +10,11 @@ from django.http import HttpResponse
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
+from comment.models import Comment
 
 like_activity = LikeActivity()
 view_history = ViewHistory()
+comment_model = Comment()
 
 def index(request):
     """ index """
@@ -44,8 +46,13 @@ def show(request, article_id):
 
     article = get_object_or_404(HanmaumArticle, pk=article_id)
 
-    response['article'] = article
-    response['banner_title'] = article.title
+    comments = Comment().get_comments(article)
+
+    response.update({
+        'banner_title' : article.title,
+        'article' : article,
+        'comments' : comments,
+    })
 
     # 사용자 접속 로그 추가
     if request.user.is_authenticated:
@@ -53,7 +60,6 @@ def show(request, article_id):
             _viewed_obj=article,
             _viewer=request.user
         )
-
 
     return render(request, 'hanmaum/show.dj.html', response)
 
@@ -156,3 +162,26 @@ def cancle(request):
         messages.error(request, activity_result.msg)
 
     return HttpResponse(json.dumps(response), content_type="application/json")
+
+@login_required(login_url='/user/signin')
+def new_comment(request, article_id):
+
+    hanmaum_article = get_object_or_404(HanmaumArticle, pk=article_id)
+    user = request.user
+    content = request.POST.get('content')
+
+    parent_id = request.POST.get('parent_id')
+    if parent_id:
+        parent = get_object_or_404(Comment, pk=parent_id)
+    else:
+        parent = None
+
+    comment_model.new_comment(
+        _commented_object = hanmaum_article,
+        _user = user,
+        _content = content,
+        _parent=parent
+    )
+
+    # TODO: 댓글이 작성되었습니다. 메세지 띄우기
+    return redirect("hanmaum:show", article_id)

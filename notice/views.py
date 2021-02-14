@@ -2,9 +2,11 @@
 from copy import deepcopy as dp
 
 from django.shortcuts import render, redirect, get_object_or_404
-from helpers.default import default_response
+from django.contrib.auth.decorators import login_required
+
 
 from .models import Notice
+from helpers.default import default_response
 from comment.models import Comment
 
 comment_model = Comment()
@@ -38,6 +40,7 @@ def show(request, notice_id):
 
     return render(request, 'notice/show.dj.html', response)
 
+@login_required(login_url='/user/signin')
 def new_comment(request, notice_id):
 
     notice = get_object_or_404(Notice, pk=notice_id)
