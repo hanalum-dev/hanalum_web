@@ -14,7 +14,14 @@
                     {{ comment.updated_at }}
                 </p>
                 <div class="comment-action p-3">
-                    <a class="p-1 text-secondary"> 대댓글 쓰기 </a>
+                    <a class="p-1 text-secondary"
+                        data-bs-toggle="collapse"
+                        href="#inputRecomment{{comment.id}}"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="inputRecomment{{comment.id}}">
+                        대댓글 쓰기
+                    </a>
                     {% comment %} TODO: 댓글을 쓴 사람일때만 아래 메뉴 활성화하기 {% endcomment %}
                     <a class="p-1 text-secondary"> 수정 </a>
                     <a class="p-1 text-secondary"> 삭제 </a>
@@ -46,6 +53,29 @@
                         </div>
                     {% endfor %}
                 {% endif %}
+
+                <div class="row p-1 m-2 ml-5 bg-light-gray collapse" id="inputRecomment{{comment.id}}">
+                    <div class="col-12 p-2 pb-1 align-middle position-relative">
+                        <div class="d-inline">
+                            {% with avatar=request.user.avatar %}
+                                {% include 'notice/_circle_avatar.dj.html' %}
+                            {% endwith %}
+                        </div>
+                        <h5 class="commentor"> {{ request.user }}</h5>
+                        <form action="{% url 'notice:new_comment' notice.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group p-2">
+                                <div class="input-group comment-textarea-wrapper w-100">
+                                    <input type="hidden" name="parent_id" value="{{comment.id}}">
+                                    <textarea class="form-control" name="content" rows="3"></textarea>
+                                    <div class="comment-submit">
+                                        <button type="submit" class="btn btn-primary"> 작성 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     {% endfor %}

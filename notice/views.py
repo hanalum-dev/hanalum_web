@@ -44,10 +44,18 @@ def new_comment(request, notice_id):
     user = request.user
     content = request.POST.get('content')
 
+    parent_id = request.POST.get('parent_id')
+    if parent_id:
+        parent = get_object_or_404(Comment, pk=parent_id)
+    else:
+        parent = None
+
     comment_model.new_comment(
         _commented_object = notice,
         _user = user,
         _content = content,
+        _parent=parent
     )
 
+    # TODO: 댓글이 작성되었습니다. 메세지 띄우기
     return redirect("notice:show", notice_id)
