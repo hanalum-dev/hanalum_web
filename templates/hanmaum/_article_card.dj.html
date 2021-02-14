@@ -33,8 +33,7 @@
                         <a class = "dislike-button" data-article-id = "{{article.id}}"> 싫어요 </a>
                     {% endif %}
                 </div>
-                {% comment %} TODO: HNM-0068: 한글 날짜 형식 혹은 YYYY-MM-DD HH:mm:ss으로 바꾸기 {% endcomment %}
-                <p class="card-text"><small class="text-muted">Last updated {{article.updated_at}}</small></p>
+                <p class="card-text"><small class="text-muted">{{article.updated_at}}</small></p>
             </div>
         </div>
     </div>

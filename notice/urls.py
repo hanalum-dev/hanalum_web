@@ -2,7 +2,7 @@
 from django.urls import path
 
 from .views import (
-   index, show
+   index, show, new_comment
 )
 
 app_name = 'notice'
@@ -10,4 +10,5 @@ app_name = 'notice'
 urlpatterns = [
     path('', index, name="index"),
     path('<int:notice_id>', show, name="show"),
+    path('new_comment/<int:notice_id>', new_comment, name="new_comment")
 ]

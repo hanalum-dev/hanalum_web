@@ -1,10 +1,13 @@
 """ notice(공지사항) view 모듈 파일입니다. """
 from copy import deepcopy as dp
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from helpers.default import default_response
 
 from .models import Notice
+from comment.models import Comment
+
+comment_model = Comment()
 
 def index(request):
     response = dp(default_response)
@@ -16,6 +19,7 @@ def index(request):
 
     # TODO: HNM-0097: 공지사항 페이지네이션 추가
 
+
     return render(request, 'notice/index.dj.html', response)
 
 
@@ -24,9 +28,34 @@ def show(request, notice_id):
 
     notice = get_object_or_404(Notice, pk=notice_id)
 
+    comments = Comment().get_comments(notice)
+
     response.update({
         'banner_title' : "[공지사항] " + notice.title,
         'notice' : notice,
+        'comments' : comments,
     })
 
     return render(request, 'notice/show.dj.html', response)
+
+def new_comment(request, notice_id):
+
+    notice = get_object_or_404(Notice, pk=notice_id)
+    user = request.user
+    content = request.POST.get('content')
+
+    parent_id = request.POST.get('parent_id')
+    if parent_id:
+        parent = get_object_or_404(Comment, pk=parent_id)
+    else:
+        parent = None
+
+    comment_model.new_comment(
+        _commented_object = notice,
+        _user = user,
+        _content = content,
+        _parent=parent
+    )
+
+    # TODO: 댓글이 작성되었습니다. 메세지 띄우기
+    return redirect("notice:show", notice_id)
