@@ -55,6 +55,7 @@ class Comment(models.Model):
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)
         comments = Comment.objects.filter(
             commented_type=commented_type_obj,
+            commented_id=_commented_object.id,
             parent=None,
         ).order_by('updated_at')
         for comment in comments:
@@ -63,3 +64,15 @@ class Comment(models.Model):
                 parent=comment,
             ).order_by('updated_at')
         return comments
+
+    def new_comment(self, _commented_object, _user, _content, _parent=None):
+        # TODO: transaction 적용하고, logger 적용하기
+        # TODO: validation 추가하기 (user나 content가 비어있으면 안된다. commented_object가 댓글을 달 수 있는 상태인지 등)
+        commented_type_obj = ContentType.objects.get_for_model(_commented_object)
+        comment = Comment()
+        comment.commented_type = commented_type_obj
+        comment.commented_id = _commented_object.id
+        comment.user = _user
+        comment.content = _content
+        comment.parent = _parent
+        comment.save()

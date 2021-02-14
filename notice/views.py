@@ -1,11 +1,13 @@
 """ notice(공지사항) view 모듈 파일입니다. """
 from copy import deepcopy as dp
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from helpers.default import default_response
 
 from .models import Notice
 from comment.models import Comment
+
+comment_model = Comment()
 
 def index(request):
     response = dp(default_response)
@@ -35,3 +37,17 @@ def show(request, notice_id):
     })
 
     return render(request, 'notice/show.dj.html', response)
+
+def new_comment(request, notice_id):
+
+    notice = get_object_or_404(Notice, pk=notice_id)
+    user = request.user
+    content = request.POST.get('content')
+
+    comment_model.new_comment(
+        _commented_object = notice,
+        _user = user,
+        _content = content,
+    )
+
+    return redirect("notice:show", notice_id)
