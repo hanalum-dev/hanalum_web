@@ -9,6 +9,10 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'user',
+        'parent',
+        'commented_type',
+        'commented_id',
+        'commented_object',
         'content',
         'created_at',
         'updated_at',
