@@ -215,6 +215,19 @@ nav .board-menu-group a{
     height: auto;
 }
 
+/* article page */
+.card-header-author-menu {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.card-header-author-menu a{
+    padding: 0.5rem;
+    color: #6c757d!important;
+}
+
+
 /* components */
 
 .avatar-image-small-wrapper {

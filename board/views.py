@@ -21,7 +21,7 @@ def show(request, board_id):
         'board': board,
         'banner_title' : board.title
     })
-    articles = Article.objects.recent().filter(board= board).all()
+    articles = Article.objects.recent().filter(board= board).published().all()
 
     for article in articles:
         article.total_viewed_count = view_history.total_viewed_count(

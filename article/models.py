@@ -14,9 +14,20 @@ class ArticleQuerySet(models.QuerySet):
         """ 최신 게시글부터 담아서 리턴합니다. """
         return self.order_by("-created_at")
 
+    def published(self):
+        """ published 상태인 게시글만 리턴합니다. """
+        return self.filter(status='p')
+
 
 class Article(models.Model):
     """ 게시글 모델 """
+    objects = ArticleQuerySet.as_manager()
+
+    STATUS_CHOICES = (
+        ('d', 'draft'),
+        ('p', 'published'),
+        ('t', 'trash')
+    )
 
     board = models.ForeignKey(
         'board.board',
@@ -39,6 +50,13 @@ class Article(models.Model):
     content = SummernoteTextField(
         verbose_name="내용"
     )
+    status = models.CharField(
+        verbose_name='게시글 공개 상태',
+        max_length=2,
+        default='p',
+        null=False,
+        choices=STATUS_CHOICES
+    )
     created_at = models.DateTimeField(
         verbose_name="생성된 날짜",
         auto_now_add=True
@@ -47,8 +65,6 @@ class Article(models.Model):
         verbose_name="수정된 날짜",
         auto_now=True
     )
-
-    objects = ArticleQuerySet.as_manager()
 
     def __str__(self):
         return "[{}]{}".format(self.board, self.title)
