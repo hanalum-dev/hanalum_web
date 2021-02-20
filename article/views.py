@@ -26,6 +26,10 @@ def show(request, article_id):
     comments = Comment().get_comments(article)
     is_author = article.author == current_user
 
+    if article.status != 'p':
+        messages.error(request, '삭제된 글입니다.')
+        return redirect("board:show", article.board.id)
+
     response.update({
         'banner_title' : article.title,
         'article' : article,
@@ -105,7 +109,18 @@ def edit(request, article_id):
 
 @login_required(login_url='/user/signin')
 def delete(request, article_id):
-    return redirect("article:show", article_id)
+    current_user = request.user
+    article = get_object_or_404(Article, pk=article_id)
+
+    if article.author != current_user:
+        messages.error(request, '해당 글은 삭제하실 수 없습니다.')
+        return redirect("article:show", article_id)
+
+    article.status = 't'
+    article.save()
+    messages.success(request, '글이 삭제되었습니다.')
+
+    return redirect("board:show", article.board.id)
 
 
 @login_required(login_url='/user/signin')

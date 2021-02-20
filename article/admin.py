@@ -10,11 +10,13 @@ class ArticleAdmin(admin.ModelAdmin):
         'board',
         'author',
         'title',
+        'status',
         'created_at',
         'updated_at',
     ]
     list_filter = [
         'board',
+        'status',
         'author',
         'title',
     ]
