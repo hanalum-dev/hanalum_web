@@ -20,7 +20,7 @@
       <div class = "card p-3 m-3">
         <div class="card-header bg-white text-center">
           {% comment %} TODO: HNM-0071: 로고 클릭시 홈으로 이동 {% endcomment %}
-          <img class="main-icon" src= "{% static 'img/no-title-logo.png' %}" alt="" width="140" height="140">
+          <a href="/"><img class="main-icon" src= "{% static 'img/no-title-logo-new.png' %}" alt=""></a>
           <h4 class="mb-1 text-center text-muted">로그인</h4>
         </div>
         <div class = "card-content p-3">
@@ -43,7 +43,11 @@
             </div>
           {% endfor %}
         </div>
-        {% comment %} TODO: HNM-0072: 회원가입 링크 추가 {% endcomment %}
+        <div class="small px-3">
+          <a class="text-decoration-underline" href="/" style="float:left; color: #0d6efd;">메뉴 화면으로</a>
+          <a class="text-decoration-underline" href="{% url 'user:signup' %}" style="float:right; color: #0d6efd;">아직 회원이 아니신가요?</a>
+        </div>
+
         <hr class="mb-4">
         <button class="btn btn-primary btn-md" type="submit">로그인</button>
       </div>
