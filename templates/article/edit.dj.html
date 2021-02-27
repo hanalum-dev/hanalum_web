@@ -1,0 +1,32 @@
+{% extends 'base.dj.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block stylesheet %}
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="card row m-3 p-3">
+    <h2>
+      글 수정 : {{ article.title }}
+    </h2>
+    <form method = "POST" action = "{% url 'article:edit' article.id %}" class="align-middle">
+      {% csrf_token %}
+      <div class = "p-3 m-3">
+        <div class = "card-content p-3">
+          {% for field in form %}
+            <div class="m-1">
+              <label for="{{field.id_for_label}}" class = "m-1">{{field.label}}</label>
+              {{field}}
+            </div>
+          {% endfor %}
+        </div>
+        <hr class="mb-4">
+        <div class="d-grid d-md-flex justify-content-md-center">
+          <button class="btn btn-primary text-right" type="submit">글 수정</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

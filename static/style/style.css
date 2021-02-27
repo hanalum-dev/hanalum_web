@@ -215,6 +215,19 @@ nav .board-menu-group a{
     height: auto;
 }
 
+/* article page */
+.card-header-author-menu {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.card-header-author-menu a{
+    padding: 0.5rem;
+    color: #6c757d!important;
+}
+
+
 /* components */
 
 .avatar-image-small-wrapper {
@@ -294,4 +307,14 @@ nav .board-menu-group a{
     .comment .comment-textarea-wrapper .comment-submit {
         width: 20%;
     }
+}
+
+/*sign up*/
+.main-icon {
+    width:7rem;
+    padding-bottom: 0.5rem;
+}
+
+.color-blue {
+    color: #0d6efd;
 }

@@ -111,7 +111,7 @@ def signin(request):
 def signout(request):
     """로그아웃 뷰"""
     auth.logout(request)
-    # TODO: HNM-0074: 메세지 프레임워크 활용: 로그아웃되었습니다
+    messages.success(request, '로그아웃되었습니다.')
     return redirect('/')
 
 def me(request):
@@ -192,8 +192,7 @@ def activate_account(request, uidb64, token):
         user.is_active = True
         user.save()
         auth.login(request, user)
-        # TODO: HNM-0076: 메세지 프레임워크 적용하기
-        # 이메일 인증이 되었습니다.
+        messages.success(request, '이메일 인증이 완료되었습니다.')
         return redirect("user:signin")
     else:
         # TODO: HNM:0077: 메세지 프레임워크 적용하기
