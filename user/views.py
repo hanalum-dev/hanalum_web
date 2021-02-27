@@ -196,7 +196,6 @@ def activate_account(request, uidb64, token):
         # 이메일 인증이 되었습니다.
         return redirect("user:signin")
     else:
-        # TODO: HNM:0077: 메세지 프레임워크 적용하기
-        # 인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다.
-        # 계속해서 오류가 발생한다면, 한아름에 건의해주세요.
+        messages.error(request, '인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다.')
+        messages.error(request, '계속해서 오류가 발생한다면, 한아름에 건의해 주세요.')
         return redirect("user:signin")
