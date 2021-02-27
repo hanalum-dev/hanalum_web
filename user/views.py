@@ -111,7 +111,7 @@ def signin(request):
 def signout(request):
     """로그아웃 뷰"""
     auth.logout(request)
-    # TODO: HNM-0074: 메세지 프레임워크 활용: 로그아웃되었습니다
+    messages.success(request, '로그아웃되었습니다.')
     return redirect('/')
 
 def me(request):
