@@ -65,8 +65,7 @@ def signup(request):
             logger.error(e)
         except Exception as e:  # pylint: disable=broad-except
             logger.error(e)
-        # TODO: 라벨링 다시 하기
-        messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
+        messages.error(request, '인증 이메일을 발송하는 과정에서 오류가 발생하였습니다. 계속 해당 오류가 발생한다면, 한아름에 문의해주세요.')
         return redirect('user:signup')
     else:
         response['form'] = UserCreationForm()
@@ -196,6 +195,5 @@ def activate_account(request, uidb64, token):
         # 이메일 인증이 되었습니다.
         return redirect("user:signin")
     else:
-        messages.error(request, '인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다.')
-        messages.error(request, '계속해서 오류가 발생한다면, 한아름에 건의해 주세요.')
+        messages.error(request, '인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다. 계속해서 오류가 발생한다면, 한아름에 문의해 주세요.')
         return redirect("user:signin")
