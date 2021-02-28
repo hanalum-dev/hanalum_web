@@ -10,10 +10,12 @@ class HashTagAdmin(admin.ModelAdmin):
         "tagged_type",
         "tagged_id",
         "tagged_object",
+        "content",
         "created_at",
         "updated_at"
     ]
     list_filter = [
         "tagged_type",
         "tagged_id",
+        "content",
     ]

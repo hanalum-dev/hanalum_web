@@ -12,9 +12,19 @@ from .models import Article
 from .forms import ArticleCreationForm, ArticleEditionForm
 from helpers.default import default_response
 from history.models import ViewHistory, LikeActivity
+from hashtag.models import HashTag
 
 view_history = ViewHistory()
+hashtag_model = HashTag()
 comment_model = Comment()
+
+def get_hashtag_list(hashtags_str):
+    ret = []
+    for hashtag in hashtags_str.split("#"):
+        if len(hashtag) > 0:
+            ret.append("#" + hashtag)
+    return ret
+
 
 def show(request, article_id):
     """ 게시글 상세 페이지 """
@@ -63,7 +73,6 @@ def new(request, board_id):
 
         if form.is_valid():
             author = request.user
-
             if author is None:
                 # TODO: validation + error message 따로 빼기
                 messages.error(request, '로그인 후, 글을 작성해주세요.')
@@ -73,7 +82,16 @@ def new(request, board_id):
             article.author = author
             article.board  = current_board
             article.save()
-            messages.success(request, '글이 작성되었습니다.')
+
+            hashtags_str = request.POST.get('hashtags_str')
+            hashtags = get_hashtag_list(hashtags_str)
+            for hashtag in hashtags:
+                hashtag_model.add_hashtag(
+                    article,
+                    hashtag
+                )
+
+            messages.success(request, '글이 작성되었습니다.'+hashtags_str)
             return redirect("article:show", article.id)
         return redirect("/")
     else:
