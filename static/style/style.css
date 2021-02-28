@@ -360,3 +360,61 @@ nav .board-menu-group a{
         margin-left: 0;
     }
 }
+
+/* ----- chips ----- */
+
+.chips {
+    color: black;
+    background-color: white;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 0 0 8px 0;
+    min-height: 45px;
+    outline: none;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.chip {
+    display: inline-block;
+    height: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.6);
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #e4e4e4;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.input-field {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.chip .close {
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    line-height: 32px;
+    padding-left: 8px;
+}
+
+.chips .input {
+    background: none;
+    border: 0;
+    color: rgba(0,0,0,0.6);
+    display: inline-block;
+    font-size: 1rem;
+    height: 3rem;
+    line-height: 3rem;
+    outline: 0;
+    margin: 0 0 0 1rem;
+    padding: 0 !important;
+    width: 200px !important;
+}

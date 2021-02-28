@@ -33,7 +33,7 @@ SITE_ID = 1
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['34.220.59.114', '127.0.0.1', 'alpha.hanalum.kr']
 
@@ -155,21 +155,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'treebeard',
-    "bootstrap5",
-    "django_summernote",
-    "fontawesome_5",
-    "user",
-    "api",
-    "article",
-    "board",
-    "comment",
-    "hanmaum",
-    "main",
-    "menu",
-    "notice",
-    "policy",
-    "hashtag",
-    "history",
+    'bootstrap5',
+    'django_summernote',
+    'fontawesome_5',
+    'user',
+    'api',
+    'article',
+    'board',
+    'comment',
+    'hanmaum',
+    'main',
+    'menu',
+    'notice',
+    'policy',
+    'hashtag',
+    'history',
 ]
 
 MIDDLEWARE = [
