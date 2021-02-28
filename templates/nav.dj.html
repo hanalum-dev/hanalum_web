@@ -3,16 +3,16 @@
 
 <nav class = "navbar sticky-top m-0 p-0">
     <div class = "row w-100 p-3">
-        <div class = "col-4">
+        <div class = "col-lg-3 col-11">
             <a href = "/">
-                <h4 class = "nav-brand">
+                <h5 class = "nav-brand">
                     <img src = "{% static 'img/no-title-logo-new.png'%}" height = "30"/>
                     한민의 소리, 한아름
-                </h4>
+                </h5>
             </a>
         </div>
 
-        <div class = "col-4">
+        <div class = "col-lg-6 d-lg-block d-md-none d-none">
             <div class = "row w-100">
                 <div class = "col-3 text-center">
                     <a class="nav-menu-text align-middle" type="button"
@@ -32,27 +32,27 @@
                 </div>
             </div>
         </div>
-        <div class = "col-2"></div>
 
-        {% if user.is_authenticated %}
-            <div class="col-2 dropdown text-end">
-                <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
-                <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
+        <div class="col-lg-3 d-lg-block d-md-none d-none dropdown text-end">
+            <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
+            <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
+                {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href="{% url 'user:me' %}">내정보</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url 'user:signout' %}">
                             로그아웃
                     </a></li>
-                </div>
+                {% else %}
+                    <li><a class="dropdown-item" href="{% url 'user:signin' %}"> 로그인 </a></li>
+                    <li><a class="dropdown-item" href="{% url 'user:signup' %}"> 회원가입 </a></li>
+                {% endif %}
             </div>
-        {% else %}
-            <div class="col-1">
-                <a class="nav-menu-text" href="{% url 'user:signin' %}"> 로그인 </a>
-            </div>
-            <div class="col-1">
-                <a class="nav-menu-text" href="{% url 'user:signup' %}"> 회원가입 </a>
-            </div>
-        {% endif %}
+        </div>
+        <div class="col-1 d-md-blockd-none ">
+            <button class="btn nav-menu-text m-0 p-0" id="sidebarCollapse">
+                {% fa5_icon 'bars' 'fas' %}
+            </button>
+        </div>
     </div>
     <div class = "row board-menu-group w-80p">
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
@@ -69,4 +69,96 @@
             </div>
         </div>
     </div>
+</nav>
+
+
+<nav class="d-lg-none vertical-nav bg-white active" id="sidebar">
+  <div class="py-4 px-3 mb-4" style="background-color: #DCDCDC;">
+    <div class="media d-flex align-items-center">
+      <div class="media-body">
+        {% if user.is_authenticated %}
+          <h4 class="m-0">{{request.user.nickname}}</h4>
+          <p class="font-weight-light text-muted mb-0">님, 반갑습니다.</p>
+        {% else %}
+          <p class="font-weight-light text-muted mb-0">로그인을 하시면 더 많은 내용을 확인할 수 있습니다.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <button id="sidebarCollapseInner" type="button" class="btn btn-light bg-white rounded-pill shadow-sm">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class = "bg-white">
+    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">회원 정보</p>
+    <ul class="nav flex-column mb-0">
+      {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'user:me' %}">
+                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                    내정보
+                </a>
+            </li>
+            <li class="nav-item">
+                {% comment %} TODO: 회원정보 수정 링크 추가하기 {% endcomment %}
+                <a href="#" class="nav-link text-dark">
+                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                    회원 정보 수정
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'user:signout' %}" class="nav-link text-dark">
+                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                    로그아웃
+                </a>
+            </li>
+      {% else %}
+        <li class="nav-item">
+            <a href="{% url 'user:signin' %}" class="nav-link text-dark">
+            <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
+            로그인
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'user:signup' %}" class="nav-link text-dark">
+            <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+            회원가입
+            </a>
+        </li>
+      {% endif %}
+    </ul>
+
+    {% if user.is_authenticated %} {# 유저가 로그인 중이면 #}
+        <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">서비스</p>
+        <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+                <a href="/" class="nav-link text-dark">
+                <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                홈
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'notice:index' %}" class="nav-link text-dark">
+                <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                공지사항
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'hanmaum:index' %}" class="nav-link text-dark">
+                <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                한미음
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-dark">
+                <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                한미음
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+  </div>
 </nav>
