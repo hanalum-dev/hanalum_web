@@ -15,15 +15,26 @@ comment_model = Comment()
 
 def index(request):
     response = dp(default_response)
+    top_fixed_notices = Notice.objects.published().top_fixed().recent()
+    non_top_fixed_notices = Notice.objects.published().non_top_fixed().recent()
+
+
     response.update({
         'banner_title' : '공지사항',
-        'top_fixed_notices' : Notice.objects.published().top_fixed().recent(),
-        'non_top_fixed_notices' : Notice.objects.published().non_top_fixed().recent(),
+        'top_fixed_notices' : top_fixed_notices,
+        'non_top_fixed_notices' : non_top_fixed_notices,
     })
 
+    for notice in top_fixed_notices:
+        notice.total_viewed_count = view_history.total_viewed_count(
+            _viewed_obj=notice,
+        ) or 0
+    for notice in non_top_fixed_notices:
+        notice.total_viewed_count = view_history.total_viewed_count(
+            _viewed_obj=notice,
+        ) or 0
+
     # TODO: HNM-0097: 공지사항 페이지네이션 추가
-
-
     return render(request, 'notice/index.dj.html', response)
 
 

@@ -115,6 +115,10 @@
     text-underline-offset: 1.5px!important;
 }
 
+.font-size-half-rem {
+    font-size: 0.5rem;
+}
+
 /* ----- banner ----- */
 .background-banner {
     width: 100%;

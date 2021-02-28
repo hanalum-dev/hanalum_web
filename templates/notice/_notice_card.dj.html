@@ -1,0 +1,18 @@
+{% load fontawesome_5 %}
+
+<div class="card">
+
+    <div class="card-body position-relative">
+        <h5 class="card-title">
+            <a href = "{% url 'notice:show' notice.id %}">
+                {{notice.abstract_title}}
+            </a>
+            {% if notice.top_fixed %}
+                <span class="badge bg-success text-white font-size-half-rem">상단 고정</span>
+            {% endif %}
+        </h5>
+        <p class="card-text">{{notice.summary}}</p>
+        <span class="card-text">조회수: {{notice.total_viewed_count}}</span>
+        <p class="card-text"><small class="text-muted">{{notice.updated_at}}</small></p>
+    </div>
+</div>
