@@ -9,31 +9,35 @@
 {% comment %} top_banners, boards {% endcomment %}
 {% block content %}
   <main class="root row p-2 g-4">
-    <section class="col-lg-2 d-lg-block d-md-none d-none">
-      <div class="row">
-        <div class="col-12 gy-3">
-          <div class="card p-3">
-              {% if user.avatar %}
-                  <div class="avatar-image-wrapper">
-                      <img src = "{{ user.avatar.url }}">
-                  </div>
-              {% else %}
-                  <div class="avatar-image-wrapper">
-                      <img src="">
-                  </div>
-              {% endif %}
+    {% if user.is_authenticated %}
+      <section class="col-lg-2 d-lg-block d-md-none d-none">
+        <div class="row">
+          <div class="col-12 gy-3">
+            <div class="card p-3">
+                {% if user.avatar %}
+                    <div class="avatar-image-wrapper">
+                        <img src = "{{ user.avatar.url }}">
+                    </div>
+                {% else %}
+                    <div class="avatar-image-wrapper">
+                        <img src="">
+                    </div>
+                {% endif %}
+                <div class="text-center">
+                    <h2>
+                        {{user.nickname}}
+                    </h2>
 
-              <div class="text-center">
-                  <h2>
-                      {{user.nickname}}
-                  </h2>
-
-                  {{user.realname}}
-              </div>
+                    {{user.realname}}
+                </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    {% else %}
+      <section class="col-lg-2 d-lg-block d-md-none d-none">
+      </section>
+    {% endif %}
     <section class="col-lg-8 col-12">
       <div class="row">
         {% for main_board in main_boards %}
@@ -60,8 +64,6 @@
                       {% fa5_icon 'clock' 'fas ms-2' %}
                       {{ article.updated_at }}
                     </div>
-
-
                   </div>
                 {% endfor %}
               </div>
