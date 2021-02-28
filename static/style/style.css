@@ -75,8 +75,16 @@
     right: 0;
 }
 
+.right-10  {
+    right: 10%!important;
+}
+
 .top-0 {
     top: 0;
+}
+
+.top-30 {
+    top: 30%!important;
 }
 
 .bottom-0 {
