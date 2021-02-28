@@ -59,6 +59,14 @@
             </script>
         {% endif %}
         <script>
+            $(function () {
+                $('#sidebarCollapseInner').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                });
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                });
+            });
             function initLikeActivity() {
                 $(".like-button").click(function() {
                     var article_id = $(this).data("article-id");

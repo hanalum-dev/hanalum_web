@@ -85,6 +85,10 @@ class Board(models.Model):
         null=False,
         choices=STATUS_CHOICES
     )
+    visible_anonymous = models.BooleanField(
+        verbose_name="비로그인 유저의 확인 가능 여부",
+        default=True
+    )
     default_board_format = models.CharField(
         verbose_name='게시판 기본 형태',
         max_length=10,

@@ -13,6 +13,10 @@
     min-height: 100px;
 }
 
+.mn-height-px-200 {
+    min-height: 200px;
+}
+
 .mn-height-px-300 {
     min-height: 300px;
 }
@@ -71,8 +75,16 @@
     right: 0;
 }
 
+.right-10  {
+    right: 10%!important;
+}
+
 .top-0 {
     top: 0;
+}
+
+.top-30 {
+    top: 30%!important;
 }
 
 .bottom-0 {
@@ -107,7 +119,7 @@
 .background-banner {
     width: 100%;
     margin-top: -60px;
-    min-height: 400px;
+    min-height: 350px;
     max-height: 600px;
     background-position: top -400px center;
     background-attachment: fixed;
@@ -317,4 +329,30 @@ nav .board-menu-group a{
 
 .color-blue {
     color: #0d6efd;
+}
+
+/* ----- side-nav ----- */
+.vertical-nav {
+    min-width: 17rem;
+    width: 17rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+    z-index: 9999;
+}
+
+#sidebar.active {
+    margin-right: -17rem;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -17rem;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
 }

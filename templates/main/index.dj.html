@@ -1,10 +1,78 @@
 {% extends 'base.dj.html' %}
 {% load static %}
+{% load fontawesome_5 %}
 {% load bootstrap5 %}
 {% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'style/root.css' %}?v=2">
 {% endblock %}
 
+{% comment %} top_banners, boards {% endcomment %}
 {% block content %}
+  <main class="root row p-2 g-4">
+    <section class="col-lg-2 d-lg-block d-md-none d-none">
+      <div class="row">
+        <div class="col-12 gy-3">
+          <div class="card p-3">
+              {% if user.avatar %}
+                  <div class="avatar-image-wrapper">
+                      <img src = "{{ user.avatar.url }}">
+                  </div>
+              {% else %}
+                  <div class="avatar-image-wrapper">
+                      <img src="">
+                  </div>
+              {% endif %}
+
+              <div class="text-center">
+                  <h2>
+                      {{user.nickname}}
+                  </h2>
+
+                  {{user.realname}}
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="col-lg-7 col-12">
+      <div class="row">
+        {% for main_board in main_boards %}
+          <div class="main-board-container col-md-6 col-12 gy-3">
+            <div class="card">
+              <div class="board-title-container card-header">
+                <h5 class=" card-title p-1 pt-2">
+                  {{ main_board.board.title }}
+                </h5>
+              </div>
+              <div class="card-content p-2 mn-height-px-300">
+                {% for article in main_board.board.articles.recent.published.five %}
+                  <div class="p-2 border-bottom">
+                    <h6 class="pt-1">
+                      <a href="{% url 'article:show' article.id %}">
+                        {{ article.title }}
+                      </a>
+                    </h6>
+                    <div class="w-100 text-muted" style="font-size: 0.8rem;">
+                      {% fa5_icon 'user-alt' 'fas' %}
+                      <a href="{% url 'user:show' article.author.id %}">
+                        {{ article.author }}
+                      </a>
+                      {% fa5_icon 'clock' 'fas ms-2' %}
+                      {{ article.updated_at }}
+                    </div>
+
+
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="col-lg-3 d-lg-block d-md-none d-none">
+    </section>
+  </main>
 {% endblock %}
 
 {% block scripts %}

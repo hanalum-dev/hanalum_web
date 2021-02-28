@@ -2,17 +2,17 @@
 {% load fontawesome_5 %}
 
 <nav class = "navbar sticky-top m-0 p-0">
-    <div class = "row w-100 p-3">
-        <div class = "col-4">
+    <div class = "row w-100 m-3">
+        <div class = "col-lg-3 col-11">
             <a href = "/">
-                <h4 class = "nav-brand">
+                <h5 class = "nav-brand">
                     <img src = "{% static 'img/no-title-logo-new.png'%}" height = "30"/>
                     한민의 소리, 한아름
-                </h4>
+                </h5>
             </a>
         </div>
 
-        <div class = "col-4">
+        <div class = "col-lg-6 d-lg-block d-md-none d-none">
             <div class = "row w-100">
                 <div class = "col-3 text-center">
                     <a class="nav-menu-text align-middle" type="button"
@@ -32,27 +32,27 @@
                 </div>
             </div>
         </div>
-        <div class = "col-2"></div>
 
-        {% if user.is_authenticated %}
-            <div class="col-2 dropdown text-end">
-                <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
-                <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
+        <div class="col-lg-3 d-lg-block d-md-none d-none dropdown text-end">
+            <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
+            <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
+                {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href="{% url 'user:me' %}">내정보</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url 'user:signout' %}">
                             로그아웃
                     </a></li>
-                </div>
+                {% else %}
+                    <li><a class="dropdown-item" href="{% url 'user:signin' %}"> 로그인 </a></li>
+                    <li><a class="dropdown-item" href="{% url 'user:signup' %}"> 회원가입 </a></li>
+                {% endif %}
             </div>
-        {% else %}
-            <div class="col-1">
-                <a class="nav-menu-text" href="{% url 'user:signin' %}"> 로그인 </a>
-            </div>
-            <div class="col-1">
-                <a class="nav-menu-text" href="{% url 'user:signup' %}"> 회원가입 </a>
-            </div>
-        {% endif %}
+        </div>
+        <div class="col-1 d-md-block d-lg-none ">
+            <button class="btn nav-menu-text m-0 p-0" id="sidebarCollapse">
+                {% fa5_icon 'bars' 'fas' %}
+            </button>
+        </div>
     </div>
     <div class = "row board-menu-group w-80p">
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
@@ -70,3 +70,4 @@
         </div>
     </div>
 </nav>
+{% include 'sidemenu.dj.html' %}
