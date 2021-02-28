@@ -14,7 +14,6 @@ from helpers.default import default_response
 from history.models import ViewHistory, LikeActivity
 
 view_history = ViewHistory()
-ARTICLE = Article().classname()
 comment_model = Comment()
 
 def show(request, article_id):
