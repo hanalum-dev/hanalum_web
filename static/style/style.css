@@ -119,9 +119,9 @@
 .background-banner {
     width: 100%;
     margin-top: -60px;
-    min-height: 350px;
-    max-height: 600px;
-    background-position: top -400px center;
+    min-height: 400px;
+    max-height: 500px;
+    background-position: top -250px center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
