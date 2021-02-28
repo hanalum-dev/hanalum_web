@@ -168,6 +168,7 @@ INSTALLED_APPS = [
     "menu",
     "notice",
     "policy",
+    "hashtag",
     "history",
 ]
 
