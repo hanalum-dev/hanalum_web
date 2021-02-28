@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Notice
 from helpers.default import default_response
 from comment.models import Comment
+from history.models import ViewHistory
 
+view_history = ViewHistory()
 comment_model = Comment()
 
 def index(request):
@@ -26,6 +28,7 @@ def index(request):
 
 
 def show(request, notice_id):
+    current_user = request.user
     response = dp(default_response)
 
     notice = get_object_or_404(Notice, pk=notice_id)
@@ -37,6 +40,13 @@ def show(request, notice_id):
         'notice' : notice,
         'comments' : comments,
     })
+
+    # 사용자 접속 로그 추가
+    if current_user.is_authenticated:
+        view_history.add_history(
+            _viewed_obj=notice,
+            _viewer=current_user
+        )
 
     return render(request, 'notice/show.dj.html', response)
 
