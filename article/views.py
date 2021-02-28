@@ -39,11 +39,14 @@ def show(request, article_id):
         messages.error(request, '삭제된 글입니다.')
         return redirect("board:show", article.board.id)
 
+    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+
     response.update({
         'banner_title' : article.title,
         'article' : article,
         'comments' : comments,
         'is_author' : is_author,
+        'hashtags' : hashtags,
     })
 
     # 사용자 접속 로그 추가

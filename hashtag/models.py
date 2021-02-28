@@ -43,3 +43,11 @@ class HashTag(models.Model):
             content=content
         )
         hashtag.save()
+
+    def get_hashtag(self, tagged_object):
+        content_type_obj = ContentType.objects.get_for_model(tagged_object)
+        response = HashTag.objects.filter(
+            tagged_type=content_type_obj,
+            tagged_id=tagged_object.id,
+        ).order_by('updated_at')
+        return response
