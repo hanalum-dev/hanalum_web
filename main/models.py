@@ -28,13 +28,27 @@ class TopBanner(models.Model):
                 pass
         super().save(*args, **kwargs)
 
+class MainBoardQuerySet(models.QuerySet):
+    """ MainBoard 모델 쿼리셋 클래스입니다. """
+
+    def priority_order(self):
+        # FIXME: 가나다 순이 제대로 안 작동함.
+        """ 우선순위 높은 순서에 따라 정렬하고, 우선순위가 같다면 게시판 제목의 가나다 순으로 정렬합니다. """
+        return self.order_by('-priority', 'board__title')
 
 class MainBoard(models.Model):
     """ 메인화면에 보이는 게시판을 지정하는 모델입니다. """
+    objects = MainBoardQuerySet.as_manager()
 
-    board = models.ForeignKey(Board, related_name="board", on_delete=models.CASCADE, verbose_name="게시판")
-    priority = models.IntegerField(verbose_name="우선순위", default=0)
-    visible_anonymous = models.BooleanField(verbose_name="비로그인 유저의 확인 가능 여부", default=True)
+    board = models.ForeignKey(Board,
+        related_name="main_board",
+        on_delete=models.CASCADE,
+        verbose_name="게시판"
+    )
+    priority = models.IntegerField(
+        verbose_name="우선순위",
+        default=0
+    )
 
     def clean(self):
         """ published 되어있는 게시판만 메인 보드로 허용하는 메서드입니다. """
