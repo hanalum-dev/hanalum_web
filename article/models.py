@@ -18,9 +18,9 @@ class ArticleQuerySet(models.QuerySet):
         """ published 상태인 게시글만 리턴합니다. """
         return self.filter(status='p')
 
-    def ten(self):
-        """ 10개의 게시글만 리턴합니다. """
-        return self[:10]
+    def five(self):
+        """ 5개의 게시글만 리턴합니다. """
+        return self[:5]
 
 class Article(models.Model):
     """ 게시글 모델 """
