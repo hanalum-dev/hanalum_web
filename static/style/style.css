@@ -13,6 +13,10 @@
     min-height: 100px;
 }
 
+.mn-height-px-200 {
+    min-height: 200px;
+}
+
 .mn-height-px-300 {
     min-height: 300px;
 }

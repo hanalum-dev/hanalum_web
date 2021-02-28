@@ -18,6 +18,9 @@ class ArticleQuerySet(models.QuerySet):
         """ published 상태인 게시글만 리턴합니다. """
         return self.filter(status='p')
 
+    def ten(self):
+        """ 10개의 게시글만 리턴합니다. """
+        return self[:10]
 
 class Article(models.Model):
     """ 게시글 모델 """
@@ -35,6 +38,7 @@ class Article(models.Model):
         on_delete = models.DO_NOTHING,
         blank=True,
         null=True,
+        related_name='articles'
     )  # 게시판
     author = models.ForeignKey(
         'user.user',

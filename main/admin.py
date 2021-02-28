@@ -22,9 +22,7 @@ class MainBoardAdmin(admin.ModelAdmin):
     list_display = [
         'board',
         'priority',
-        'visible_anonymous',
     ]
     list_filter = [
         'priority',
-        'visible_anonymous',
     ]

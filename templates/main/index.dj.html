@@ -4,7 +4,40 @@
 {% block stylesheet %}
 {% endblock %}
 
+{% comment %} top_banners, boards {% endcomment %}
 {% block content %}
+  <main class="root row p-2 g-4">
+    <section class="col-xl-2 col-lg-2 col-md-2 d-md-block d-sm-none d-none">
+      <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-content mn-height-px-100">
+        </div>
+      </div>
+    </section>
+    <section class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+      <div class="row">
+        {% for main_board in main_boards %}
+          <div class="main-board-container col-md-6 col-12 gy-3">
+            <div class="card">
+              <div class="board-title-container card-header">
+                <h5 class=" card-title p-1 pt-2">
+                  {{ main_board.board.title }}
+                </h5>
+              </div>
+              <div class="cord-content p-2 mn-height-px-200">
+                {% for article in main_board.board.articles.ten  %}
+                  {{ article.title }}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="col-xl-2 col-lg-2 col-md-2 d-md-block d-sm-none d-none">
+    </section>
+  </main>
 {% endblock %}
 
 {% block scripts %}
