@@ -19,7 +19,7 @@ class BoardAdmin(admin.ModelAdmin):
         'use_bad',
         'use_anonymous',
         'status',
-        'default_board_format',
+        'board_format_category',
         'max_attachment_count'
     ]
     list_filter = [
@@ -32,7 +32,7 @@ class BoardAdmin(admin.ModelAdmin):
         'use_bad',
         'use_anonymous',
         'status',
-        'default_board_format',
+        'board_format_category',
         'max_attachment_count',
     ]
 

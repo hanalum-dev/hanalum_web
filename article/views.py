@@ -98,7 +98,7 @@ def new(request, board_id):
             return redirect("article:show", article.id)
         return redirect("/")
     else:
-        response['form'] = ArticleCreationForm()
+        response['form'] = ArticleCreationForm(content = current_board.default_article_format or None)
         return render(request, 'article/new.dj.html', response)
 
 
