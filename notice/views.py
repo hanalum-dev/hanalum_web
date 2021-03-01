@@ -44,7 +44,6 @@ def index(request):
             _viewed_obj=notice,
         ) or 0
 
-    # TODO: HNM-0097: 공지사항 페이지네이션 추가
     return render(request, 'notice/index.dj.html', response)
 
 
