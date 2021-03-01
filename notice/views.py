@@ -9,6 +9,7 @@ from .models import Notice
 from helpers.default import default_response
 from comment.models import Comment
 from history.models import ViewHistory
+from django.core.paginator import Paginator
 
 view_history = ViewHistory()
 comment_model = Comment()
@@ -18,11 +19,20 @@ def index(request):
     top_fixed_notices = Notice.objects.published().top_fixed().recent()
     non_top_fixed_notices = Notice.objects.published().non_top_fixed().recent()
 
+    paginator = Paginator(non_top_fixed_notices, 5)
+    page= request.GET.get('page')
+    if page == "" or page == None:
+        page = 1
+
+    non_top_fixed_notices = paginator.get_page(page)
+    start = max(int(page)-5, 1)
+    end = min(int(page)+5, paginator.num_pages)
 
     response.update({
         'banner_title' : '공지사항',
         'top_fixed_notices' : top_fixed_notices,
         'non_top_fixed_notices' : non_top_fixed_notices,
+        'range' : [i for i in range(start, end+1)]
     })
 
     for notice in top_fixed_notices:

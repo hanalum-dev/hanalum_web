@@ -23,6 +23,10 @@
                     {% include 'notice/_notice_card.dj.html' %}
                 {% endfor %}
             </div>
+            {% with current_page=non_top_fixed_notices%}
+                {% include '_pagination.dj.html' %}
+            {% endwith %}
+
         </div>
 
         <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">

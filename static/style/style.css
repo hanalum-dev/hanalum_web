@@ -418,3 +418,17 @@ nav .board-menu-group a{
     padding: 0 !important;
     width: 200px !important;
 }
+
+/* ----- pagination ----- */
+
+.pagination_wrapper {
+    text-align: center;
+}
+
+.pagination_wrapper ul {
+    display: inline-block;
+}
+
+.pagination_wrapper li {
+    display: inline-block;
+}
