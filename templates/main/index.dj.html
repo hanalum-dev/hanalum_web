@@ -45,7 +45,9 @@
             <div class="card">
               <div class="board-title-container card-header">
                 <h5 class=" card-title p-1 pt-2">
-                  {{ main_board.board.title }}
+                  <a href="{% url 'board:show'  main_board.board.id %}">
+                    {{ main_board.board.title }}
+                  </a>
                 </h5>
               </div>
               <div class="card-content p-2 mn-height-px-300">
