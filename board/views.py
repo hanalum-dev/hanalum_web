@@ -6,7 +6,9 @@ from copy import deepcopy as dp
 from .models import Board
 from history.models import ViewHistory, LikeActivity
 from article.models import Article
+from hashtag.models import HashTag
 
+hashtag_model = HashTag()
 view_history = ViewHistory()
 like_activity = LikeActivity()
 
@@ -27,6 +29,7 @@ def show(request, board_id):
         article.total_viewed_count = view_history.total_viewed_count(
             _viewed_obj=article,
         ) or 0
+        article.hashtags = hashtag_model.get_hashtag(tagged_object=article)
         article.like_count = like_activity.get_like_count(
             _content_object=article
         )

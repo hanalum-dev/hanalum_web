@@ -29,13 +29,13 @@ class UserCreationForm(forms.ModelForm):
         ]
         widgets = {
             "email": forms.EmailInput(
-                attrs={"class": "form-control", "placeholder": "example@hanalum.kr"}
+                attrs={"class": "form-control", "placeholder": "이메일"}
             ),
             "nickname": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "입력하세요"}
+                attrs={"class": "form-control", "placeholder": "닉네임"}
             ),
             "realname": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "입력하세요"}
+                attrs={"class": "form-control", "placeholder": "실명"}
             ),
             "gender": forms.Select(
                 attrs={

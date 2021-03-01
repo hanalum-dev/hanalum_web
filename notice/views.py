@@ -8,24 +8,38 @@ from django.contrib.auth.decorators import login_required
 from .models import Notice
 from helpers.default import default_response
 from comment.models import Comment
+from history.models import ViewHistory
 
+view_history = ViewHistory()
 comment_model = Comment()
 
 def index(request):
     response = dp(default_response)
+    top_fixed_notices = Notice.objects.published().top_fixed().recent()
+    non_top_fixed_notices = Notice.objects.published().non_top_fixed().recent()
+
+
     response.update({
         'banner_title' : '공지사항',
-        'top_fixed_notices' : Notice.objects.published().top_fixed().recent(),
-        'non_top_fixed_notices' : Notice.objects.published().non_top_fixed().recent(),
+        'top_fixed_notices' : top_fixed_notices,
+        'non_top_fixed_notices' : non_top_fixed_notices,
     })
 
+    for notice in top_fixed_notices:
+        notice.total_viewed_count = view_history.total_viewed_count(
+            _viewed_obj=notice,
+        ) or 0
+    for notice in non_top_fixed_notices:
+        notice.total_viewed_count = view_history.total_viewed_count(
+            _viewed_obj=notice,
+        ) or 0
+
     # TODO: HNM-0097: 공지사항 페이지네이션 추가
-
-
     return render(request, 'notice/index.dj.html', response)
 
 
 def show(request, notice_id):
+    current_user = request.user
     response = dp(default_response)
 
     notice = get_object_or_404(Notice, pk=notice_id)
@@ -37,6 +51,13 @@ def show(request, notice_id):
         'notice' : notice,
         'comments' : comments,
     })
+
+    # 사용자 접속 로그 추가
+    if current_user.is_authenticated:
+        view_history.add_history(
+            _viewed_obj=notice,
+            _viewer=current_user
+        )
 
     return render(request, 'notice/show.dj.html', response)
 

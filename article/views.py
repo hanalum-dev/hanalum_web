@@ -12,10 +12,19 @@ from .models import Article
 from .forms import ArticleCreationForm, ArticleEditionForm
 from helpers.default import default_response
 from history.models import ViewHistory, LikeActivity
+from hashtag.models import HashTag
 
 view_history = ViewHistory()
-ARTICLE = Article().classname()
+hashtag_model = HashTag()
 comment_model = Comment()
+
+def get_hashtag_list(hashtags_str):
+    ret = []
+    for hashtag in hashtags_str.split("\n"):
+        if len(hashtag) > 0:
+            ret.append(hashtag)
+    return ret
+
 
 def show(request, article_id):
     """ 게시글 상세 페이지 """
@@ -30,11 +39,14 @@ def show(request, article_id):
         messages.error(request, '삭제된 글입니다.')
         return redirect("board:show", article.board.id)
 
+    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+
     response.update({
         'banner_title' : article.title,
         'article' : article,
         'comments' : comments,
         'is_author' : is_author,
+        'hashtags' : hashtags,
     })
 
     # 사용자 접속 로그 추가
@@ -64,7 +76,6 @@ def new(request, board_id):
 
         if form.is_valid():
             author = request.user
-
             if author is None:
                 # TODO: validation + error message 따로 빼기
                 messages.error(request, '로그인 후, 글을 작성해주세요.')
@@ -74,6 +85,15 @@ def new(request, board_id):
             article.author = author
             article.board  = current_board
             article.save()
+
+            hashtags_str = request.POST.get('hashtags_str')
+            hashtags = get_hashtag_list(hashtags_str)
+            for hashtag in hashtags:
+                hashtag_model.add_hashtag(
+                    article,
+                    hashtag
+                )
+
             messages.success(request, '글이 작성되었습니다.')
             return redirect("article:show", article.id)
         return redirect("/")
@@ -95,14 +115,32 @@ def edit(request, article_id):
 
     form = ArticleEditionForm(request.POST or None, instance=article)
 
+    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+    hashtags_str = ""
+    for hashtag in hashtags:
+        hashtags_str += hashtag.content
+
     response.update({
         'form' : form,
         'article' : article,
         'banner_title' : "[수정] {}".format(article.title),
+        'hashtags_str' : hashtags_str,
     })
 
     if request.POST and form.is_valid():
         form.save()
+
+        hashtags_str = request.POST.get('hashtags_str')
+        hashtags = get_hashtag_list(hashtags_str)
+        hashtag_model.destroy_all_hashtag(
+            article
+        )
+        for hashtag in hashtags:
+            hashtag_model.add_hashtag(
+                article,
+                hashtag
+            )
+        messages.success(request, '글이 수정되었습니다.')
         return redirect("article:show", article_id)
 
     return render(request, 'article/edit.dj.html', response)
