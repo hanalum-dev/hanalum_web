@@ -23,7 +23,6 @@
           <input type="hidden" name="hashtags_str" id="hashtags_str">
           <div class="chips">
             <input class="chipsInput" id = "hashTagChipsInput">
-            <button type="submit" disabled style="display: none" aria-hidden="true"></button>
           </div>
         </div>
         <hr class="mb-4">
@@ -42,19 +41,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
 $(document).ready(function() {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
   var hashtags = []
   $('.chips').chips({
     placeholder: '해쉬태그를 입력해주세요.',
     onChipAdd: function(e, data) {
       let str = data.innerText.substr(0, data.innerText.length-5)
       hashtags.push(str)
-      $("#hashtags_str").val(hashtags.toString())
+      $("#hashtags_str").val(hashtags.reduce(reducer))
     },
     onChipDelete: function(e, data) {
       let str = data.innerText.substr(0, data.innerText.length-5)
       const idx = hashtags.indexOf(str+"\n")
       if(idx > -1) hashtags.splice(idx, 1)
-      $("#hashtags_str").val(hashtags.toString())
+      $("#hashtags_str").val(hashtags.reduce(reducer))
     }
   });
 

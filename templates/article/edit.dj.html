@@ -22,8 +22,7 @@
           {% endfor %}
           <input type="hidden" name="hashtags_str" id="hashtags_str">
           <div class="chips">
-            <input class="chipsInput" id = "hashTagChipsInput">
-            <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+            <input class="chipsInput" id="hashTagChipsInput">
           </div>
         </div>
         <hr class="mb-4">
@@ -41,22 +40,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
 $(document).ready(function() {
-  hashtags_str = `{{hashtags_str}}`
-  hashtags = []
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  var hashtags_str = `{{hashtags_str}}`
+  var hashtags=[]
+  var hashtag_data = []
   hashtags_str.split("\n").forEach(function(hashtag) {
     if(hashtag) {
-      hashtags.push({tag: hashtag})
+      hashtag_data.push({tag: hashtag+"\n"})
+      hashtags.push(hashtag+"\n")
     }
 
   });
 
   $('.chips').chips({
     placeholder: '해쉬태그를 입력해주세요.',
-    data: hashtags,
+    data: hashtag_data,
     onChipAdd: function(e, data) {
-      str = data.innerText.substr(0, data.innerText.length-5)
-      $("#hashtags_str").val($("#hashtags_str").val()+str)
-      console.log($("#hashtags_str").val())
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      hashtags.push(str)
+      $("#hashtags_str").val(hashtags.reduce(reducer))
+    },
+    onChipDelete: function(e, data) {
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      const idx = hashtags.indexOf(str)
+      if(idx > -1) hashtags.splice(idx, 1)
+      $("#hashtags_str").val(hashtags.reduce(reducer))
     }
   });
 

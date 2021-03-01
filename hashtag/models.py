@@ -51,3 +51,11 @@ class HashTag(models.Model):
             tagged_id=tagged_object.id,
         ).order_by('updated_at')
         return response
+
+    def destroy_all_hashtag(self, tagged_object):
+        content_type_obj = ContentType.objects.get_for_model(tagged_object)
+
+        HashTag.objects.filter(
+            tagged_type=content_type_obj,
+            tagged_id=tagged_object.id,
+        ).all().delete()

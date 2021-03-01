@@ -20,7 +20,7 @@ comment_model = Comment()
 
 def get_hashtag_list(hashtags_str):
     ret = []
-    for hashtag in hashtags_str.split("\n,"):
+    for hashtag in hashtags_str.split("\n"):
         if len(hashtag) > 0:
             ret.append(hashtag)
     return ret
@@ -132,11 +132,15 @@ def edit(request, article_id):
 
         hashtags_str = request.POST.get('hashtags_str')
         hashtags = get_hashtag_list(hashtags_str)
+        hashtag_model.destroy_all_hashtag(
+            article
+        )
         for hashtag in hashtags:
             hashtag_model.add_hashtag(
                 article,
                 hashtag
             )
+        messages.success(request, '글이 수정되었습니다.')
         return redirect("article:show", article_id)
 
     return render(request, 'article/edit.dj.html', response)
