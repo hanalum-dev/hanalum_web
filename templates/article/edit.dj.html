@@ -2,6 +2,7 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block stylesheet %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -19,14 +20,68 @@
               {{field}}
             </div>
           {% endfor %}
+          <input type="hidden" name="hashtags_str" id="hashtags_str">
+          <div class="chips">
+            <input class="chipsInput" id="hashTagChipsInput">
+          </div>
         </div>
         <hr class="mb-4">
         <div class="d-grid d-md-flex justify-content-md-center">
-          <button class="btn btn-primary text-right" type="submit">글 수정</button>
+          <button class="btn btn-primary text-right submit">글 수정</button>
         </div>
       </div>
     </form>
   </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+$(document).ready(function() {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  var hashtags_str = `{{hashtags_str}}`
+  var hashtags=[]
+  var hashtag_data = []
+  hashtags_str.split("\n").forEach(function(hashtag) {
+    if(hashtag) {
+      hashtag_data.push({tag: hashtag+"\n"})
+      hashtags.push(hashtag+"\n")
+    }
+
+  });
+
+  $('.chips').chips({
+    placeholder: '해쉬태그를 입력해주세요.',
+    data: hashtag_data,
+    onChipAdd: function(e, data) {
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      hashtags.push(str)
+      $("#hashtags_str").val(hashtags.reduce(reducer))
+    },
+    onChipDelete: function(e, data) {
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      const idx = hashtags.indexOf(str)
+      if(idx > -1) hashtags.splice(idx, 1)
+      $("#hashtags_str").val(hashtags.reduce(reducer))
+    }
+  });
+
+  var oldVal = ""
+  $("#hashTagChipsInput").on("propertychange change paste input", function() {
+    var currentVal = $(this).val();
+    if(currentVal == oldVal) {
+        return;
+    }
+    if(currentVal[0] != '#') {
+      currentVal = '#'+currentVal
+    }
+    currentVal=currentVal.replace(' ', '_')
+    $(this).val(currentVal)
+    oldVal = currentVal
+  });
+
+})
+</script>
 {% endblock %}

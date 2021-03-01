@@ -20,9 +20,9 @@ comment_model = Comment()
 
 def get_hashtag_list(hashtags_str):
     ret = []
-    for hashtag in hashtags_str.split("#"):
+    for hashtag in hashtags_str.split("\n"):
         if len(hashtag) > 0:
-            ret.append("#" + hashtag)
+            ret.append(hashtag)
     return ret
 
 
@@ -94,7 +94,7 @@ def new(request, board_id):
                     hashtag
                 )
 
-            messages.success(request, '글이 작성되었습니다.'+hashtags_str)
+            messages.success(request, '글이 작성되었습니다.')
             return redirect("article:show", article.id)
         return redirect("/")
     else:
@@ -115,14 +115,32 @@ def edit(request, article_id):
 
     form = ArticleEditionForm(request.POST or None, instance=article)
 
+    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+    hashtags_str = ""
+    for hashtag in hashtags:
+        hashtags_str += hashtag.content
+
     response.update({
         'form' : form,
         'article' : article,
         'banner_title' : "[수정] {}".format(article.title),
+        'hashtags_str' : hashtags_str,
     })
 
     if request.POST and form.is_valid():
         form.save()
+
+        hashtags_str = request.POST.get('hashtags_str')
+        hashtags = get_hashtag_list(hashtags_str)
+        hashtag_model.destroy_all_hashtag(
+            article
+        )
+        for hashtag in hashtags:
+            hashtag_model.add_hashtag(
+                article,
+                hashtag
+            )
+        messages.success(request, '글이 수정되었습니다.')
         return redirect("article:show", article_id)
 
     return render(request, 'article/edit.dj.html', response)
