@@ -115,14 +115,28 @@ def edit(request, article_id):
 
     form = ArticleEditionForm(request.POST or None, instance=article)
 
+    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+    hashtags_str = ""
+    for hashtag in hashtags:
+        hashtags_str += hashtag.content
+
     response.update({
         'form' : form,
         'article' : article,
         'banner_title' : "[수정] {}".format(article.title),
+        'hashtags_str' : hashtags_str,
     })
 
     if request.POST and form.is_valid():
         form.save()
+
+        hashtags_str = request.POST.get('hashtags_str')
+        hashtags = get_hashtag_list(hashtags_str)
+        for hashtag in hashtags:
+            hashtag_model.add_hashtag(
+                article,
+                hashtag
+            )
         return redirect("article:show", article_id)
 
     return render(request, 'article/edit.dj.html', response)
