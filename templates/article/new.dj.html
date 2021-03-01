@@ -2,6 +2,7 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block stylesheet %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -19,14 +20,52 @@
               {{field}}
             </div>
           {% endfor %}
+          <input type="hidden" name="hashtags_str" id="hashtags_str">
+          <div class="chips">
+            <input class="chipsInput" id = "hashTagChipsInput">
+            <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+          </div>
         </div>
         <hr class="mb-4">
         <div class="d-grid d-md-flex justify-content-md-center">
-          <button class="btn btn-primary text-right" type="submit">글 작성</button>
+          <button class="btn btn-primary text-right submit">글 작성</button>
         </div>
       </div>
     </form>
   </div>
 </div>
 
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  $(document).ready(function() {
+
+  $('.chips').chips({
+    placeholder: '해쉬태그를 입력해주세요.',
+    onChipAdd: function(e, data) {
+      str = data.innerText.substr(0, data.innerText.length-5)
+      $("#hashtags_str").val($("#hashtags_str").val()+str)
+      console.log($("#hashtags_str").val())
+    }
+  });
+
+  var oldVal = ""
+  $("#hashTagChipsInput").on("propertychange change paste input", function() {
+    var currentVal = $(this).val();
+    if(currentVal == oldVal) {
+        return;
+    }
+    if(currentVal[0] != '#') {
+      currentVal = '#'+currentVal
+    }
+    currentVal=currentVal.replace(' ', '_')
+    $(this).val(currentVal)
+    oldVal = currentVal
+  });
+
+})
+</script>
 {% endblock %}
