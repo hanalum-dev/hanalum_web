@@ -20,9 +20,9 @@ comment_model = Comment()
 
 def get_hashtag_list(hashtags_str):
     ret = []
-    for hashtag in hashtags_str.split("#"):
+    for hashtag in hashtags_str.split("\n,"):
         if len(hashtag) > 0:
-            ret.append("#" + hashtag)
+            ret.append(hashtag)
     return ret
 
 
@@ -94,7 +94,7 @@ def new(request, board_id):
                     hashtag
                 )
 
-            messages.success(request, '글이 작성되었습니다.'+hashtags_str)
+            messages.success(request, '글이 작성되었습니다.')
             return redirect("article:show", article.id)
         return redirect("/")
     else:

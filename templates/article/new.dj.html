@@ -41,14 +41,20 @@
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
-  $(document).ready(function() {
-
+$(document).ready(function() {
+  var hashtags = []
   $('.chips').chips({
     placeholder: '해쉬태그를 입력해주세요.',
     onChipAdd: function(e, data) {
-      str = data.innerText.substr(0, data.innerText.length-5)
-      $("#hashtags_str").val($("#hashtags_str").val()+str)
-      console.log($("#hashtags_str").val())
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      hashtags.push(str)
+      $("#hashtags_str").val(hashtags.toString())
+    },
+    onChipDelete: function(e, data) {
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      const idx = hashtags.indexOf(str+"\n")
+      if(idx > -1) hashtags.splice(idx, 1)
+      $("#hashtags_str").val(hashtags.toString())
     }
   });
 
