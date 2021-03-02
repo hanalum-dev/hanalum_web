@@ -236,12 +236,32 @@ nav .board-menu-group a{
 .card-header-author-menu {
     position: absolute;
     right: 10px;
-    top: 10px;
+    bottom: 10px;
 }
 
 .card-header-author-menu a{
     padding: 0.5rem;
     color: #6c757d!important;
+}
+
+.article .card-header {
+    padding: 1rem;
+}
+
+@media only screen and (max-width: 576px) {
+    .card-header-author-menu {
+        position: absolute;
+        left: 10px;
+    }
+
+    .card-header-author-menu a{
+        padding: 0.5rem;
+        color: #6c757d!important;
+    }
+
+    .article .card-header {
+        padding: 1rem 1rem 3rem 1rem!important;
+    }
 }
 
 

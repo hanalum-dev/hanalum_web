@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "row m-3 gx-lg-5 gy-3">
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+    <div class = "article row m-3 gx-lg-5 gy-3">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card m-3">
-                <div class="card-header p-3 position-relative">
+                <div class="card-header position-relative">
                     <h3 class="card-title">
                         {{ article.title }}
                     </h3>
@@ -40,6 +40,9 @@
                             </span>
                         {% endfor %}
                     </div>
+                </div>
+                <div class="card-footer mn-height-px-100">
+
                 </div>
                 {% include 'article/_comment_list.dj.html' %}
             </div>
