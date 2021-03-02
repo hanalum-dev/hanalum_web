@@ -17,6 +17,7 @@ from hashtag.models import HashTag
 view_history = ViewHistory()
 hashtag_model = HashTag()
 comment_model = Comment()
+like_activity = LikeActivity()
 
 def get_hashtag_list(hashtags_str):
     ret = []
@@ -33,6 +34,23 @@ def show(request, article_id):
     current_user = request.user
     article = get_object_or_404(Article, pk=article_id)
     comments = Comment().get_comments(article)
+
+    article.like_count = like_activity.get_like_count(
+        _content_object=article
+    )
+    article.dislike_count = like_activity.get_dislike_count(
+        _content_object=article
+    )
+
+    if current_user.is_authenticated:
+        article.is_user_in_like = like_activity.is_user_in_like(
+            _content_object=article,
+            _user=current_user
+        )
+        article.is_user_in_dislike = like_activity.is_user_in_dislike(
+            _content_object=article,
+            _user=current_user
+        )
     is_author = article.author == current_user
 
     if article.status != 'p':
