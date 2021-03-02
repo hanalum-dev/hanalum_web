@@ -44,25 +44,25 @@
                 <div class="card-footer mn-height-px-100">
                     <div class="row w-100 justify-content-center">
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
-                            <button class="btn">
+                            <a href="{% url 'article:like' article.id %}" class="btn">
                                 {% if article.is_user_in_like %}
                                     {% fa5_icon 'thumbs-up' 'fas text-blue' %}
                                 {% else %}
                                     {% fa5_icon 'thumbs-up' 'far text-blue' %}
                                 {% endif %}
-                            </button>
+                            </a>
                             <p>
                                 {{article.like_count}}
                             </p>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
-                            <button class="btn">
-                                {% if article.is_user_in_like %}
+                            <a href="{% url 'article:dislike' article.id %}" class="btn">
+                                {% if article.is_user_in_dislike %}
                                     {% fa5_icon 'thumbs-down' 'fas text-red' %}
                                 {% else %}
                                     {% fa5_icon 'thumbs-down' 'far text-red' %}
                                 {% endif %}
-                            </button>
+                            </a>
                             <p>
                                 {{article.dislike_count}}
                             </p>

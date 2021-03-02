@@ -201,3 +201,56 @@ def new_comment(request, article_id):
 
     # TODO: 댓글이 작성되었습니다. 메세지 띄우기
     return redirect("article:show", article_id)
+
+@login_required(login_url='/user/signin')
+def like(request, article_id):
+    """ 좋아요 view"""
+
+    article = get_object_or_404(Article, pk=article_id)
+    # TODO: validation 추가하기
+
+    user = request.user
+    if like_activity.is_user_in_like(_content_object=article, _user=user):
+        activity_result = like_activity.set_user_in_none(
+            _content_object=article,
+            _user=user
+        )
+    else:
+        activity_result = like_activity.set_user_in_like(
+            _content_object=article,
+            _user=user
+        )
+
+    if activity_result.status:
+        messages.success(request, activity_result.msg)
+    else:
+        messages.error(request, activity_result.msg)
+
+    return redirect("article:show", article_id)
+
+@login_required(login_url='/user/signin')
+def dislike(request, article_id):
+    """ 싫어요 view """
+
+    article = get_object_or_404(Article, pk=article_id)
+    # TODO: validation 추가하기
+
+    user = request.user
+
+    if like_activity.is_user_in_dislike(_content_object=article, _user=user):
+        activity_result = like_activity.set_user_in_none(
+            _content_object=article,
+            _user=user
+        )
+    else:
+        activity_result = like_activity.set_user_in_dislike(
+            _content_object=article,
+            _user=user
+        )
+
+    if activity_result.status:
+        messages.success(request, activity_result.msg)
+    else:
+        messages.error(request, activity_result.msg)
+
+    return redirect("article:show", article_id)

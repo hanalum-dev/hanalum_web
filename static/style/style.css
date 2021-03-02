@@ -467,3 +467,8 @@ nav .board-menu-group a{
 .pagination_wrapper li {
     display: inline-block;
 }
+
+/* ---- toast ----- */
+.toast-container {
+    z-index: 10000;
+}
