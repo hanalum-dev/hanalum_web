@@ -1,3 +1,17 @@
+:root {
+    --hanalum-blue: #5060AD;
+    --hanalum-red: #ff5f5f;
+}
+
+.text-blue {
+    color: var(--hanalum-blue);
+}
+
+.text-red {
+    color: var(--hanalum-red);
+}
+
+
 /* ----- background-color ----- */
 .bg-black {
     background-color: black;
@@ -236,12 +250,32 @@ nav .board-menu-group a{
 .card-header-author-menu {
     position: absolute;
     right: 10px;
-    top: 10px;
+    bottom: 10px;
 }
 
 .card-header-author-menu a{
     padding: 0.5rem;
     color: #6c757d!important;
+}
+
+.article .card-header {
+    padding: 1rem;
+}
+
+@media only screen and (max-width: 576px) {
+    .card-header-author-menu {
+        position: absolute;
+        left: 10px;
+    }
+
+    .card-header-author-menu a{
+        padding: 0.5rem;
+        color: #6c757d!important;
+    }
+
+    .article .card-header {
+        padding: 1rem 1rem 3rem 1rem!important;
+    }
 }
 
 
@@ -432,4 +466,9 @@ nav .board-menu-group a{
 
 .pagination_wrapper li {
     display: inline-block;
+}
+
+/* ---- toast ----- */
+.toast-container {
+    z-index: 10000;
 }

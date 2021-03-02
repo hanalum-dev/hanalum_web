@@ -8,9 +8,9 @@
 
 {% block content %}
     <div class = "row p-3 gx-lg-5">
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 col-12">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12 col-12">
             <div class="board-header w-100 position-relative">
-                <h3 style="display:inline-block">
+                <h3 class="d-inline-block p-2">
                     {{ board.title }} : 최신 글
                 </h3>
                 <a href="{% url 'article:new' board.id %}" class="text-right btn btn-success" style="position:absolute; right:0;">

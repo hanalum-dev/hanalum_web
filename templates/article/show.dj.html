@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "row m-3 gx-lg-5 gy-3">
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+    <div class = "article row m-3 gx-lg-5 gy-3">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card m-3">
-                <div class="card-header p-3 position-relative">
+                <div class="card-header position-relative">
                     <h3 class="card-title">
                         {{ article.title }}
                     </h3>
@@ -39,6 +39,34 @@
                                 {{hashtag.content}}
                             </span>
                         {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer mn-height-px-100">
+                    <div class="row w-100 justify-content-center">
+                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
+                            <a href="{% url 'article:like' article.id %}" class="btn">
+                                {% if article.is_user_in_like %}
+                                    {% fa5_icon 'thumbs-up' 'fas text-blue' %}
+                                {% else %}
+                                    {% fa5_icon 'thumbs-up' 'far text-blue' %}
+                                {% endif %}
+                            </a>
+                            <p>
+                                {{article.like_count}}
+                            </p>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
+                            <a href="{% url 'article:dislike' article.id %}" class="btn">
+                                {% if article.is_user_in_dislike %}
+                                    {% fa5_icon 'thumbs-down' 'fas text-red' %}
+                                {% else %}
+                                    {% fa5_icon 'thumbs-down' 'far text-red' %}
+                                {% endif %}
+                            </a>
+                            <p>
+                                {{article.dislike_count}}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 {% include 'article/_comment_list.dj.html' %}

@@ -34,12 +34,12 @@
             {% include '_banner.dj.html' %}
         {% endif %}
         <div class = "row h-100">
-            <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
-            <div class = "col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-10 col-10">
+            <div class = "col-xl-1 col-lg-1 col-md-1 d-md-block d-sm-none d-none"></div>
+            <div class = "col-xl-10 col-lg-10 col-md-10 col-12">
                 {% block content %}
                 {% endblock %}
             </div>
-            <div class = "col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1 col-1"></div>
+            <div class = "col-xl-1 col-lg-1 col-md-1 d-md-block d-sm-none d-none"></div>
         </div>
         {% include '_toasts.dj.html' %}
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
