@@ -9,45 +9,39 @@
 {% comment %} top_banners, boards {% endcomment %}
 {% block content %}
   <main class="root row p-2 g-4">
-    {% if user.is_authenticated %}
-      <section class="col-lg-2 d-lg-block d-md-none d-none">
-        <div class="row">
-          <div class="col-12 gy-3">
-            <div class="card p-3">
-                {% if user.avatar %}
-                    <div class="avatar-image-wrapper">
-                        <img src = "{{ user.avatar.url }}">
-                    </div>
-                {% else %}
-                    <div class="avatar-image-wrapper">
-                        <img src="">
-                    </div>
-                {% endif %}
-                <div class="text-center">
-                    <h2>
-                        {{user.nickname}}
-                    </h2>
+    <section class="col-lg-2 d-lg-block d-md-none d-none">
+      <div class="row">
+        <div class="col-12 gy-3">
+          <div class="card p-3">
+              {% if user.avatar %}
+                  <div class="avatar-image-wrapper">
+                      <img src = "{{ user.avatar.url }}">
+                  </div>
+              {% else %}
+                  <div class="avatar-image-wrapper">
+                      <img src="">
+                  </div>
+              {% endif %}
 
-                    {{user.realname}}
-                </div>
-            </div>
+              <div class="text-center">
+                  <h2>
+                      {{user.nickname}}
+                  </h2>
+
+                  {{user.realname}}
+              </div>
           </div>
         </div>
-      </section>
-    {% else %}
-      <section class="col-lg-2 d-lg-block d-md-none d-none">
-      </section>
-    {% endif %}
-    <section class="col-lg-8 col-12">
+      </div>
+    </section>
+    <section class="col-lg-7 col-12">
       <div class="row">
         {% for main_board in main_boards %}
           <div class="main-board-container col-md-6 col-12 gy-3">
             <div class="card">
               <div class="board-title-container card-header">
                 <h5 class=" card-title p-1 pt-2">
-                  <a href="{% url 'board:show'  main_board.board.id %}">
-                    {{ main_board.board.title }}
-                  </a>
+                  {{ main_board.board.title }}
                 </h5>
               </div>
               <div class="card-content p-2 mn-height-px-300">
@@ -60,16 +54,14 @@
                     </h6>
                     <div class="w-100 text-muted" style="font-size: 0.8rem;">
                       {% fa5_icon 'user-alt' 'fas' %}
-                      {% if article.anonymous_author %}
-                        익명
-                      {% else %}
-                        <a href="{% url 'user:show' article.author.id %}">
-                          {{ article.author }}
-                        </a>
-                      {% endif %}
-                      {% fa5_icon 'clock' 'far ms-2' %}
+                      <a href="{% url 'user:show' article.author.id %}">
+                        {{ article.author }}
+                      </a>
+                      {% fa5_icon 'clock' 'fas ms-2' %}
                       {{ article.updated_at }}
                     </div>
+
+
                   </div>
                 {% endfor %}
               </div>
@@ -78,7 +70,7 @@
         {% endfor %}
       </div>
     </section>
-    <section class="col-lg-2 d-lg-block d-md-none d-none">
+    <section class="col-lg-3 d-lg-block d-md-none d-none">
     </section>
   </main>
 {% endblock %}

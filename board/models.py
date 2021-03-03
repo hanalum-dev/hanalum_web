@@ -1,6 +1,5 @@
 """ Board 모델을 정의하는 모듈입니다. """
 from django.db import models
-from django_summernote.fields import SummernoteTextField
 
 
 class BoardQuerySet(models.QuerySet):
@@ -26,7 +25,7 @@ class Board(models.Model):
         ('user', '일반유저')
     )
 
-    BOARD_FORAMT_CATEGORY_CHOICES = (
+    DEFAULT_BOARD_FORAMT_CHOICES = (
         ('text', '텍스트 중심'),
         ('gallery', '이미지 중심')
     )
@@ -90,17 +89,12 @@ class Board(models.Model):
         verbose_name="비로그인 유저의 확인 가능 여부",
         default=True
     )
-    default_article_format = SummernoteTextField(
-        verbose_name="기본 작성 포맷",
-        null=True,
-        default="",
-    )
-    board_format_category = models.CharField(
+    default_board_format = models.CharField(
         verbose_name='게시판 기본 형태',
         max_length=10,
         default='text',
         null=False,
-        choices=BOARD_FORAMT_CATEGORY_CHOICES
+        choices=DEFAULT_BOARD_FORAMT_CHOICES
     )
     max_attachment_count = models.IntegerField(
         verbose_name="첨부 파일 최대 개수",

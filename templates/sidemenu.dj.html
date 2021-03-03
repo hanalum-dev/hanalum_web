@@ -57,51 +57,35 @@
         </li>
       {% endif %}
     </ul>
-    <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">서비스</p>
-    <ul class="nav flex-column bg-white mb-0">
-        <li class="nav-item">
-            <a href="/" class="nav-link text-dark">
-            {% fa5_icon 'home' 'fas me-2' %}
-            홈
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" type="button"
-                data-bs-toggle="collapse" data-bs-target="#collapseSideNavBoard"
-                aria-expanded="true" aria-controls="collapseSideNavBoard">
-                {% fa5_icon 'scroll' 'fas me-2' %}
-                게시판
-            </a>
-        </li>
-        <div id="collapseSideNavBoard" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
-            <div class="accordion-body">
-                {% for board in nav_board_list%}
-                    <li class="nav-item p-2 ms-2">
-                        <a href = "{% url 'board:show' board.id %}">
-                            {{ board.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </div>
-        </div>
-        <li class="nav-item">
-            <a href="{% url 'notice:index' %}" class="nav-link text-dark">
-            {% fa5_icon 'flag' 'fas me-2' %}
-            공지사항
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'hanmaum:index' %}" class="nav-link text-dark">
-            {% fa5_icon 'heart' 'fas me-2' %}
-            한마음
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-dark">
-            {% fa5_icon 'question' 'fas me-2' %}
-            FAQ
-            </a>
-        </li>
-    </ul>
+
+    {% if user.is_authenticated %} {# 유저가 로그인 중이면 #}
+        <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">서비스</p>
+        <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+                <a href="/" class="nav-link text-dark">
+                {% fa5_icon 'home' 'fas me-2' %}
+                홈
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'notice:index' %}" class="nav-link text-dark">
+                {% fa5_icon 'flag' 'fas me-2' %}
+                공지사항
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'hanmaum:index' %}" class="nav-link text-dark">
+                {% fa5_icon 'heart' 'fas me-2' %}
+                한마음
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-dark">
+                {% fa5_icon 'question' 'fas me-2' %}
+                FAQ
+                </a>
+            </li>
+        </ul>
+    {% endif %}
   </div>
 </nav>

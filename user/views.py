@@ -178,22 +178,21 @@ def update(request):
 def delete(request):
     """사용자 회원 탈퇴 반영 뷰"""
 
-@transaction.atomic
+
 def activate_account(request, uidb64, token):
     """사용자 인증 메일 활성화 뷰"""
+    # TODO: HNM-0075: transaction 적용하기
     try:
-        with transaction.atomic():
-            uid = urlsafe_base64_decode(uidb64).decode()
-            user = User.objects.get(pk=uid)
-            if user is not None and account_activation_token.check_token(user, token):
-                user.is_active = True
-                user.save()
-                auth.login(request, user)
-                messages.success(request, '이메일 인증이 완료되었습니다.')
-                return redirect("user:signin")
-            else:
-                messages.error(request, '인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다. 계속해서 오류가 발생한다면, 한아름에 문의해 주세요.')
-                return redirect("user:signin")
-    except(TypeError, ValueError, OverflowError) as e:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError):
         user = None
-        logger.error(e)
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth.login(request, user)
+        messages.success(request, '이메일 인증이 완료되었습니다.')
+        return redirect("user:signin")
+    else:
+        messages.error(request, '인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다. 계속해서 오류가 발생한다면, 한아름에 문의해 주세요.')
+        return redirect("user:signin")

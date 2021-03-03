@@ -15,7 +15,7 @@
 {% comment %} TODO: HNM-0073: 아이디 및 비밀번호 저장 기능 {% endcomment %}
 <div class="container h-100">
   <div class="row h-100 justify-content-center align-items-center">
-    <form method = "POST" action = "{% url 'user:signin' %}" class="align-middle col-12 col-md-8 col-lg-8 col-xl-6">
+    <form method = "POST" action = "{% url 'user:signin' %}" class="align-middle col-10 col-sm-8 col-md-8 col-lg-8 col-xl-6">
       {% csrf_token %}
       <div class = "card p-3 m-3">
         <div class="card-header bg-white text-center">
@@ -25,7 +25,7 @@
         <div class = "card-content p-3">
           {% for field in form %}
             <div class="m-1">
-              <label for="{{field.id_for_label}}" class = "sm-1">{{field.label}}</label>
+              <label for="{{field.id_for_label}}" class = "m-1">{{field.label}}</label>
               {{field}}
               {% if field.id_for_label == "id_email" and not msg.email.status and msg.email.status is not None %}
                   <div class="text-error ml-3 mb-2">{{msg.email.msg}}</div>
