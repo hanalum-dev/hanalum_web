@@ -21,6 +21,8 @@
             <div class="row g-2">
                 {% for article in articles %}
                     {% include 'article/_article_card.dj.html' %}
+                    {% empty %}
+                    {% include '_none_items.dj.html' with msg="게시글이 없습니다. :("%}
                 {% endfor %}
             </div>
 
