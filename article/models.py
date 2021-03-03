@@ -103,11 +103,12 @@ class Article(models.Model):
         """ 클래스명 """
         return self.__class__.__name__
 
-    def clean(self):
+    def save(self, *args, **kwargs):  # pylint: disable=signature-differs
         """ article record는 아래 조건이 성립해야 합니다. """
         # board가 익명 사용가능할 때, 익명 저자가 허용된다.
         if self.anonymous_author and not self.board.use_anonymous:
             raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
+        super().save(*args, **kwargs)
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """

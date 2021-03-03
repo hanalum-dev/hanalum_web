@@ -114,9 +114,10 @@ def new(request, board_id):
 
             messages.success(request, '글이 작성되었습니다.')
             return redirect("article:show", article.id)
-        return redirect("/")
+        messages.error(request, "글 작성 중 오류가 발생하였습니다.")
+        return redirect("board:show", board_id)
     else:
-        response['form'] = ArticleCreationForm(content = current_board.default_article_format or None)
+        response['form'] = ArticleCreationForm(initial={'content': (current_board.default_article_format or "")})
         return render(request, 'article/new.dj.html', response)
 
 
