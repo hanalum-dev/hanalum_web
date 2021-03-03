@@ -41,6 +41,21 @@
             </span>
         </div>
         {% comment %} TODO: 좋아요 버튼, 좋아요 여부에따라 색상 표시하기 {% endcomment %}
-        <p class="card-text"><small class="text-muted">{{article.updated_at}}</small></p>
+        <p class="card-text">
+            <small class="text-muted">
+                <span class="me-2">
+                    {% fa5_icon 'user-alt' 'fas' %}
+                    {% if article.anonymous_author %}
+                        익명
+                    {% else %}
+                        {{ article.author}}
+                    {% endif %}
+                </span>
+                <span>
+                    {% fa5_icon 'clock' 'far' %}
+                    {{article.updated_at}}
+                </span>
+            </small>
+        </p>
     </div>
 </div>

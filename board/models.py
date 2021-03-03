@@ -93,6 +93,7 @@ class Board(models.Model):
     default_article_format = SummernoteTextField(
         verbose_name="기본 작성 포맷",
         null=True,
+        default="",
     )
     board_format_category = models.CharField(
         verbose_name='게시판 기본 형태',
