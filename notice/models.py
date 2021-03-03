@@ -18,7 +18,7 @@ class NoticeQuerySet(models.QuerySet):
 
     def top_fixed(self):
         """ top_fixed 상태인 게시글만 리턴합니다. """
-        return self.filter(top_fixed=True)
+        return self.filter(top_fixed=True).order_by('-priority', '-updated_at')
 
     def non_top_fixed(self):
         """ top_fixed 상태가 아닌 게시글만 리턴합니다. """
@@ -54,6 +54,11 @@ class Notice(models.Model):
         null=False,
         choices=STATUS_CHOICES
     )
+    priority = models.IntegerField(
+        verbose_name="우선순위",
+        default=0
+    )
+
     created_at = models.DateTimeField(
         verbose_name="생성된 날짜",
         auto_now_add=True

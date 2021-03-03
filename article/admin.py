@@ -9,6 +9,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = [
         'board',
         'author',
+        'anonymous_author',
         'title',
         'status',
         'created_at',
@@ -16,6 +17,7 @@ class ArticleAdmin(admin.ModelAdmin):
     ]
     list_filter = [
         'board',
+        'anonymous_author',
         'status',
         'author',
         'title',

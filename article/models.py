@@ -3,6 +3,7 @@ import html2text
 from bs4 import BeautifulSoup
 from markdown import markdown
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 
@@ -54,6 +55,11 @@ class Article(models.Model):
     content = SummernoteTextField(
         verbose_name="내용"
     )
+    anonymous_author = models.BooleanField(
+        verbose_name='익명 여부',
+        default=False,
+        null=False
+    )
     status = models.CharField(
         verbose_name='게시글 공개 상태',
         max_length=2,
@@ -97,6 +103,12 @@ class Article(models.Model):
         """ 클래스명 """
         return self.__class__.__name__
 
+    def save(self, *args, **kwargs):  # pylint: disable=signature-differs
+        """ article record는 아래 조건이 성립해야 합니다. """
+        # board가 익명 사용가능할 때, 익명 저자가 허용된다.
+        if self.anonymous_author and not self.board.use_anonymous:
+            raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
+        super().save(*args, **kwargs)
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """
