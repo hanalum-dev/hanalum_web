@@ -21,8 +21,12 @@
                         </div>
                     {% endif %}
                     <span class="m-1">
-                        {% fa5_icon 'user' 'far' %}
-                        {{ article.author}}
+                        {% fa5_icon 'user-alt' 'fas' %}
+                        {% if article.anonymous_author %}
+                            익명
+                        {% else %}
+                            {{ article.author}}
+                        {% endif %}
                     </span>
                     <span class="m-1">
                         {% fa5_icon 'clock' 'far' %}

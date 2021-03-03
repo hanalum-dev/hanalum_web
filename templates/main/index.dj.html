@@ -60,10 +60,14 @@
                     </h6>
                     <div class="w-100 text-muted" style="font-size: 0.8rem;">
                       {% fa5_icon 'user-alt' 'fas' %}
-                      <a href="{% url 'user:show' article.author.id %}">
-                        {{ article.author }}
-                      </a>
-                      {% fa5_icon 'clock' 'fas ms-2' %}
+                      {% if article.anonymous_author %}
+                        익명
+                      {% else %}
+                        <a href="{% url 'user:show' article.author.id %}">
+                          {{ article.author }}
+                        </a>
+                      {% endif %}
+                      {% fa5_icon 'clock' 'far ms-2' %}
                       {{ article.updated_at }}
                     </div>
                   </div>

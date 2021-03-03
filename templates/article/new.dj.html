@@ -16,8 +16,10 @@
         <div class = "card-content">
           {% for field in form %}
             <div class="m-1">
-              <label for="{{field.id_for_label}}" class = "m-1">{{field.label}}</label>
-              {{field}}
+              {% if field.id_for_label != 'id_anonymous_author' or board.use_anonymous %}
+                <label for="{{field.id_for_label}}" class = "m-1">{{field.label}}</label>
+                {{field}}
+              {% endif %}
             </div>
           {% endfor %}
           <input type="hidden" name="hashtags_str" id="hashtags_str">

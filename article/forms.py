@@ -8,16 +8,13 @@ from .models import Article
 
 class ArticleCreationForm(forms.ModelForm):
     """ 게시글 생성 폼 클래스 입니다. """
-    def __init__(self, content = None, *args, **kwargs):
-            super(ArticleCreationForm, self).__init__(*args, **kwargs)
-            if content:
-                self.fields['content'].initial = content
     class Meta:
         """ArticleCreationForm meta 클래스"""
         model = Article
         fields = [
             "title",
             "content",
+            "anonymous_author",
         ]
         widgets = {
             "content": SummernoteWidget(
@@ -31,7 +28,8 @@ class ArticleCreationForm(forms.ModelForm):
         }
         labels = {
             "title" : "제목",
-            "content": "내용"
+            "content": "내용",
+            "anonymous_author": "익명"
         }
 
 
@@ -44,6 +42,7 @@ class ArticleEditionForm(forms.ModelForm):
         fields = [
             "title",
             "content",
+            "anonymous_author",
         ]
         widgets = {
             "content": SummernoteWidget(
@@ -57,5 +56,6 @@ class ArticleEditionForm(forms.ModelForm):
         }
         labels = {
             "title" : "제목",
-            "content": "내용"
+            "content": "내용",
+            "anonymous_author": "익명"
         }
