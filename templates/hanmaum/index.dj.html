@@ -10,19 +10,21 @@
             <section class="article-group">
                 <div class="gallery" id="gallery">
                     {% for article in articles %}
-                        <div class="gallery-item mb-3 pics animation all" src="{{article.thumbnail.url}}" >
-                            {% if article.thumbnail %}
-                                <img src="{{article.thumbnail.url}}" class="img-fluid card-img" alt="...">
-                            {% else%}
-                                <img src="#" class="img-fluid" alt="...">
-                            {% endif %}
-                            <div class="card-img-overlay bg-transparent-gray w-100 h-100">
-                                <div class="position-relative w-100 h-100">
-                                <h5 class="card-title gallery-title p-1">{{ article.title }}</h5>
-                                <small class="card-text position-absolute p-1 bottom-0 right-0 text-white">{{article.updated_at}} </small>
+                        <a href="{% url 'hanmaum:show' article.id %}">
+                            <div class="gallery-item mb-3 pics animation all" src="{{article.thumbnail.url}}" >
+                                {% if article.thumbnail %}
+                                    <img src="{{article.thumbnail.url}}" class="img-fluid card-img" alt="...">
+                                {% else%}
+                                    <img src="#" class="img-fluid" alt="...">
+                                {% endif %}
+                                <div class="card-img-overlay bg-transparent-gray w-100 h-100">
+                                    <div class="position-relative w-100 h-100">
+                                    <h5 class="card-title gallery-title p-1">{{ article.title }}</h5>
+                                    <small class="card-text position-absolute p-1 bottom-0 right-0 text-white">{{article.updated_at}} </small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     {% endfor %}
                 </div>
             </section>
