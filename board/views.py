@@ -21,15 +21,16 @@ def show(request, board_id):
     """ 게시판 페이지 """
     response = dp(default_response)
     board = get_object_or_404(Board, pk=board_id)
+    top_fixed_articles = Article.objects.recent().filter(board=board).published().top_fixed()
 
-    articles = Article.objects.recent().filter(board= board).published().all()
+    articles = Article.objects.recent().filter(board=board).published().non_top_fixed()
 
     paginator = Paginator(articles, 5)
     page= request.GET.get('page')
     if page == "" or page == None:
         page = 1
 
-    articles = paginator.get_page(page)
+    articles = list(top_fixed_articles) + list(paginator.get_page(page))
     start = max(int(page)-5, 1)
     end = min(int(page)+5, paginator.num_pages)
 
