@@ -51,6 +51,12 @@ class Comment(models.Model):
         auto_now=True
     )
 
+    def editable(self, current_user):
+        return current_user == self.user
+
+    def destroyable(self, current_user):
+        return self.editable(current_user) or current_user.is_admin
+
     def get_comments(self, _commented_object):
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)
         comments = Comment.objects.filter(
