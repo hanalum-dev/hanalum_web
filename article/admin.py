@@ -11,12 +11,14 @@ class ArticleAdmin(admin.ModelAdmin):
         'author',
         'anonymous_author',
         'title',
+        'top_fixed',
         'status',
         'created_at',
         'updated_at',
     ]
     list_filter = [
         'board',
+        'top_fixed',
         'anonymous_author',
         'status',
         'author',
