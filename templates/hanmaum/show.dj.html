@@ -29,7 +29,8 @@
                         {{article.content | safe }}
                     </div>
                 </div>
-                {% include 'hanmaum/_comment_list.dj.html' %}
+                {% url 'hanmaum:new_comment' article.id as new_comment_url%}
+                {% include 'comment/_comment_list.dj.html' with article=article comments=comments new_comment_url=new_comment_url %}
             </div>
         </div>
 
