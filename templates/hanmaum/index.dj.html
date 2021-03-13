@@ -5,10 +5,20 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "row p-3 gx-lg-5">
-        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12 col-12">
+    <div class = "row p-3 gx-lg-5 justify-content-center">
+        <div class="col-12">
             <section class="article-group">
                 <div class="gallery" id="gallery">
+                    <a href="{% url 'hanmaum:introduce'%}">
+                        <div class="gallery-item mb-3 pics animation all" src="{{article.thumbnail.url}}" >
+                            <img src="{% static 'img/hanmaum.jpg' %}" class="img-fluid card-img" alt="...">
+                            <div class="card-img-overlay bg-transparent-gray w-100 h-100">
+                                <div class="position-relative w-100 h-100">
+                                <h5 class="card-title gallery-title p-3">한마음은 어떤 이야기를 들려주나요?</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     {% for article in articles %}
                         <a href="{% url 'hanmaum:show' article.id %}">
                             <div class="gallery-item mb-3 pics animation all" src="{{article.thumbnail.url}}" >
@@ -28,12 +38,6 @@
                     {% endfor %}
                 </div>
             </section>
-        </div>
-
-        <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card mn-height-px-300">
-                {% comment %} TODO: HNM-0069: 추가 컨텐츠{% endcomment %}
-            </div>
         </div>
     </div>
 

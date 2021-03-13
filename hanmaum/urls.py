@@ -2,7 +2,7 @@
 from django.urls import path
 
 from .views import (
-    edit, index, new, show, like, dislike, cancle, new_comment
+    edit, index, new, show, introduce, like, dislike, cancle, new_comment
 )
 
 app_name = 'hanmaum'
@@ -13,6 +13,7 @@ urlpatterns = [
     path('show/<int:article_id>', show, name="show"),
     path('new', new, name="new"),
     path('edit', edit, name="edit"),
+    path('introduce', introduce, name="introduce"),
     path('like', like, name="like"),
     path('dislike', dislike, name="dislike"),
     path('cancle', cancle, name="cancle"),

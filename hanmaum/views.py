@@ -19,10 +19,7 @@ comment_model = Comment()
 def index(request):
     """ index """
     response = dp(default_response)
-    response.update({
-        'banner_title' : '한민 마을의 소리, 한마음',
-        'articles': HanmaumArticle.objects.published()
-    })
+    response['articles'] = HanmaumArticle.objects.published()
 
     for article in response['articles']:
         article.total_viewed_count = view_history.total_viewed_count(
@@ -37,6 +34,10 @@ def index(request):
                 _content_object=article,
                 _user=request.user
             )
+
+    response.update({
+        'banner_title' : '한민 마을의 소리, 한마음',
+    })
     return render(request, 'hanmaum/index.dj.html', response)
 
 
@@ -77,6 +78,17 @@ def new(request):
     response = dp(default_response)
 
     return render(request, 'hanmaum/new.dj.html', response)
+
+def introduce(request):
+    response = dp(default_response)
+
+    response.update({
+        'banner_title': '한민 마을의 소리, 한마음',
+        'banner_sub_title': '여러분들에게 한민의 소리를 전해드립니다.'
+    })
+
+    return render(request, 'hanmaum/introduce.dj.html', response)
+
 
 @login_required(login_url='/user/signin')
 def like(request):
