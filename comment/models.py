@@ -71,6 +71,10 @@ class Comment(models.Model):
         auto_now=True
     )
 
+    @property
+    def is_updated(self):
+        return self.created_at != self.updated_at
+
     def editable(self, current_user):
         return current_user == self.user
 

@@ -10,11 +10,27 @@
                     {% endwith %}
                     {% comment %} TODO: HNM-0140 유저 페이지로 연결하는 링크 추가하기 {% endcomment %}
                     <h5 class="commentor"> {{ comment.user }}</h5>
-                    <p class="p-2 m-0">
+                    <p class="p-2 m-0 editCommentCollape{{comment.id}} collapse show" id="commentContent{{comment.id}}">
                         {{ comment.content }}
                     </p>
+                    <div class="editCommentCollape{{comment.id}} collapse" id="editContainer{{comment.id}}">
+                        <form action="{% url 'comment:update' comment.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group p-2">
+                                <div class="input-group comment-textarea-wrapper w-100">
+                                    <textarea class="form-control" name="content" rows="3">{{ comment.content }}</textarea>
+                                    <div class="comment-submit">
+                                        <button type="submit" class="btn btn-primary"> 작성 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <p class="updated_at">
                         {{ comment.updated_at }}
+                        {% if comment.is_updated %}
+                            (수정됨)
+                        {% endif %}
                     </p>
                     <div class="comment-action p-3">
                         <a class="p-1 text-secondary"
@@ -27,7 +43,15 @@
                         </a>
                         {% editable comment request.user as editable %}
                         {% if editable %}
-                            <a class="p-1 text-secondary"> 수정 </a>
+                            <a class="p-1 text-secondary"
+                                data-bs-toggle="collapse"
+                                data-bs-target=".editCommentCollape{{comment.id}}"
+                                href="#editContainer{{comment.id}}"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="editContainer{{comment.id}} commentContent{{comment.id}}">
+                                    수정
+                            </a>
                         {% endif %}
 
                         {% destroyable comment request.user as destroyable %}
@@ -52,7 +76,7 @@
                                         {% endwith %}
                                     </div>
                                     <h5 class="commentor"> {{ recomment.user }}</h5>
-                                    <p class="p-2 m-0">
+                                    <p class="p-2 m-0" id="content-{{recomment.id}}">
                                         {{ recomment.content }}
                                     </p>
                                     <p class="updated_at">
@@ -61,7 +85,7 @@
                                     <div class="comment-action p-3">
                                         {% editable recomment request.user as editable %}
                                         {% if editable %}
-                                            <a class="p-1 text-secondary"> 수정 </a>
+                                            <a class="p-1 text-secondary edit-comment" data-comment-id="{{recomment.id}}"> 수정 </a>
                                         {% endif %}
 
                                         {% destroyable recomment request.user as destroyable %}

@@ -2,11 +2,12 @@
 from django.urls import path
 
 from .views import (
-    destroy
+    update, destroy
 )
 
 app_name = 'comment'
 
 urlpatterns = [
+    path('update/<int:comment_id>', update, name="update"),
     path('destroy/<int:comment_id>', destroy, name="destroy"),
 ]
