@@ -21,6 +21,10 @@
     background-color: rgba(0, 0, 0, 0.031);
 }
 
+.bg-transparent-gray {
+    background-color: rgba(96, 96, 96, 0.479);
+}
+
 /* min-height */
 
 .mn-height-px-100 {
@@ -99,10 +103,6 @@
 
 .top-30 {
     top: 30%!important;
-}
-
-.bottom-0 {
-    bottom: 0;
 }
 
 /* ----- line-height ----- */
@@ -470,4 +470,62 @@ nav .board-menu-group a{
 /* ---- toast ----- */
 .toast-container {
     z-index: 10000;
+}
+
+
+.gallery {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+    -webkit-column-width: 33%;
+    -moz-column-width: 33%;
+    column-width: 33%;
+}
+.gallery .pics {
+    -webkit-transition: all 350ms ease;
+    transition: all 350ms ease;
+}
+.gallery .animation {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+}
+
+@media (max-width: 1600px) {
+    .gallery {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-width: 50%;
+        -moz-column-width: 50%;
+        column-width: 50%;
+    }
+}
+
+@media (max-width: 580px) {
+    .gallery {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+        -webkit-column-width: 100%;
+        -moz-column-width: 100%;
+        column-width: 100%;
+    }
+}
+
+.card-img-overlay {
+    display: none;
+}
+
+.gallery-title {
+    filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+    color: #ffffff;
+    font-family: 'Raleway',sans-serif;
+    font-weight: 800;
+    line-height: 72px;
+    text-decoration: solid 2px;
+}
+
+.gallery-item:hover .card-img-overlay {
+    display: block;
 }
