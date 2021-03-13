@@ -6,6 +6,9 @@
             <a href = "{{ show_url }}">
                 {{article.abstract_title}}
             </a>
+            {% if article.top_fixed %}
+                <span class="badge bg-success text-white font-size-half-rem">상단 고정</span>
+            {% endif %}
         </h5>
         <p class="card-text">{{article.summary}}</p>
         

@@ -19,6 +19,14 @@ class ArticleQuerySet(models.QuerySet):
         """ published 상태인 게시글만 리턴합니다. """
         return self.filter(status='p')
 
+    def top_fixed(self):
+        """ 상단 고정 게시글만 리턴합니다. """
+        return self.filter(top_fixed=True)
+
+    def non_top_fixed(self):
+        """ 상단 고정이 아닌 게시글만 리턴합니다. """
+        return self.filter(top_fixed=False)
+
     def five(self):
         """ 5개의 게시글만 리턴합니다. """
         return self[:5]
@@ -66,6 +74,11 @@ class Article(models.Model):
         default='p',
         null=False,
         choices=STATUS_CHOICES
+    )
+    top_fixed = models.BooleanField(
+        verbose_name="상단 고정 게시물",
+        default=False,
+        null=False
     )
     created_at = models.DateTimeField(
         verbose_name="생성된 날짜",
