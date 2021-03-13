@@ -3,9 +3,22 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
+class CommentQuerySet(models.QuerySet):
+    """ Comment 모델 쿼리셋 클래스입니다. """
+
+    def published(self):
+        """ published 상태인 댓글만 리턴합니다. """
+        return self.filter(status='p')
+
 class Comment(models.Model):
     """ comment 클래스입니다. """
-    objects = models.Manager()
+    objects = CommentQuerySet.as_manager()
+
+    STATUS_CHOICES = (
+        ('d', 'draft'),
+        ('p', 'published'),
+        ('t', 'trash')
+    )
 
     commented_type = models.ForeignKey(
         ContentType,
@@ -42,6 +55,13 @@ class Comment(models.Model):
         null=True,
         blank=True,
     )
+    status = models.CharField(
+        verbose_name='댓글 상태',
+        max_length=2,
+        default='p',
+        null=False,
+        choices=STATUS_CHOICES
+    )
     created_at = models.DateTimeField(
         verbose_name="생성된 날짜",
         auto_now_add=True
@@ -56,6 +76,10 @@ class Comment(models.Model):
 
     def destroyable(self, current_user):
         return self.editable(current_user) or current_user.is_admin
+
+    def destroy(self):
+        self.status = 't'
+        self.save()
 
     def get_comments(self, _commented_object):
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)

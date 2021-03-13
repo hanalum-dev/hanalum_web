@@ -1,7 +1,3 @@
 <div class="avatar-image-small-wrapper">
-    {% if user.avatar %}
-        <img src = "{{ avatar.url }}">
-    {% else %}
-        <img src="#" alt="프로필">
-    {% endif %}
+    <img src = "{{ avatar_image_url }}" alt="프로필">
 </div>

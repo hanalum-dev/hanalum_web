@@ -119,6 +119,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         """user 객체 -> str"""
         return "{}".format(self.nickname)
 
+    @property
+    def avatar_image_url(self):
+        if self.avatar:
+            return self.avatar.url
+        return '#'
+
     class Meta:
         """user meta class"""
 

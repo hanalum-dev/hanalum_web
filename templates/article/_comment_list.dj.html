@@ -1,40 +1,45 @@
 {% load comment_policy_tags %}
 <div class="comment">
     {% for comment in comments %}
-        <div class="row m-1 p-1 border-top">
-            <div class="col-12 p-2 pb-1 align-middle position-relative">
-                {% with avatar=comment.user.avatar %}
-                    {% include 'article/_circle_avatar.dj.html' %}
-                {% endwith %}
-                {% comment %} TODO: HNM-0140 유저 페이지로 연결하는 링크 추가하기 {% endcomment %}
-                <h5 class="commentor"> {{ comment.user }}</h5>
-                <p class="p-2 m-0">
-                    {{ comment.content }}
-                </p>
-                <p class="updated_at">
-                    {{ comment.updated_at }}
-                </p>
-                <div class="comment-action p-3">
-                    <a class="p-1 text-secondary"
-                        data-bs-toggle="collapse"
-                        href="#inputRecomment{{comment.id}}"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="inputRecomment{{comment.id}}">
-                        대댓글 쓰기
-                    </a>
-                    {% comment %} TODO: 댓글을 쓴 사람일때만 아래 메뉴 활성화하기 {% endcomment %}
-                    {% editable comment request.user as editable %}
-                    {% if editable %}
-                        <a class="p-1 text-secondary"> 수정 </a>
-                    {% endif %}
+        {% published comment as published %}
+        {% if published %}
+            <div class="row m-1 p-1 border-top">
+                <div class="col-12 p-2 pb-1 align-middle position-relative">
+                    {% with avatar_image_url=comment.user.avatar_image_url %}
+                        {% include 'article/_circle_avatar.dj.html' %}
+                    {% endwith %}
+                    {% comment %} TODO: HNM-0140 유저 페이지로 연결하는 링크 추가하기 {% endcomment %}
+                    <h5 class="commentor"> {{ comment.user }}</h5>
+                    <p class="p-2 m-0">
+                        {{ comment.content }}
+                    </p>
+                    <p class="updated_at">
+                        {{ comment.updated_at }}
+                    </p>
+                    <div class="comment-action p-3">
+                        <a class="p-1 text-secondary"
+                            data-bs-toggle="collapse"
+                            href="#inputRecomment{{comment.id}}"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="inputRecomment{{comment.id}}">
+                            대댓글 쓰기
+                        </a>
+                        {% comment %} TODO: 댓글을 쓴 사람일때만 아래 메뉴 활성화하기 {% endcomment %}
+                        {% editable comment request.user as editable %}
+                        {% if editable %}
+                            <a class="p-1 text-secondary"> 수정 </a>
+                        {% endif %}
 
-                    {% destroyable comment request.user as destroyable %}
-                    {% if destroyable %}
-                        <a class="p-1 text-secondary"> 삭제 </a>
-                    {% endif %}
+                        {% destroyable comment request.user as destroyable %}
+                        {% if destroyable %}
+                            <a class="p-1 text-secondary" href="{% url 'comment:destroy' comment.id %}" onclick="return confirm('댓글을 삭제하시겠습니까?')"> 삭제 </a>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                {% include 'comment/_destroyed_comment.dj.html' %}
+            {% endif %}
             <div class="col-12">
                 {% if comment.recomments %}
                     {% for recomment in comment.recomments %}
@@ -71,7 +76,7 @@
                 <div class="row p-1 m-2 ml-5 bg-light-gray collapse" id="inputRecomment{{comment.id}}">
                     <div class="col-12 p-2 pb-1 align-middle position-relative">
                         <div class="d-inline">
-                            {% with avatar=request.user.avatar %}
+                            {% with avatar_image_url=request.user.avatar_image_url %}
                                 {% include 'article/_circle_avatar.dj.html' %}
                             {% endwith %}
                         </div>
