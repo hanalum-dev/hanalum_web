@@ -26,12 +26,12 @@
         {% endblock %}
     </head>
     <body>
-        {% include '_top_banner.dj.html' %}
+        {% include 'components/_top_banner.dj.html' %}
         {% if not non_nav %}
             {% include 'nav.dj.html' %}
         {% endif %}
         {% if not non_banner %}
-            {% include '_banner.dj.html' %}
+            {% include 'components/_banner.dj.html' %}
         {% endif %}
         <div class = "row h-100">
             <div class = "col-xl-1 col-lg-1 col-md-1 d-md-block d-sm-none d-none"></div>
@@ -41,7 +41,7 @@
             </div>
             <div class = "col-xl-1 col-lg-1 col-md-1 d-md-block d-sm-none d-none"></div>
         </div>
-        {% include '_toasts.dj.html' %}
+        {% include 'components/_toasts.dj.html' %}
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
             integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"

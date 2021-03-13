@@ -25,12 +25,12 @@
                     {% url 'article:show' article.id as show_url %}
                     {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
                     {% empty %}
-                    {% include '_none_items.dj.html' with msg="게시글이 없습니다. :("%}
+                    {% include 'components/_none_items.dj.html' with msg="게시글이 없습니다. :("%}
                 {% endfor %}
             </div>
 
             {% with current_page=articles%}
-                {% include '_pagination.dj.html' %}
+                {% include 'components/_pagination.dj.html' %}
             {% endwith %}
 
         </div>
