@@ -36,10 +36,12 @@ def index(request):
     })
 
     for notice in top_fixed_notices:
+        notice.author='한아름'
         notice.total_viewed_count = view_history.total_viewed_count(
             _viewed_obj=notice,
         ) or 0
     for notice in non_top_fixed_notices:
+        notice.author='한아름'
         notice.total_viewed_count = view_history.total_viewed_count(
             _viewed_obj=notice,
         ) or 0
