@@ -29,12 +29,12 @@
                             </form>
                         </div>
                     {% endif %}
-                    <p class="updated_at">
+                    <small class="text-muted">
                         {{ comment.updated_at }}
                         {% if comment.is_updated %}
                             (수정됨)
                         {% endif %}
-                    </p>
+                    </small>
                     <div class="comment-action p-3">
                         <a class="p-1 text-secondary"
                             data-bs-toggle="collapse"
@@ -98,12 +98,12 @@
                                             </form>
                                         </div>
                                     {% endif %}
-                                    <p class="updated_at">
+                                    <small class="text-muted">
                                         {{ recomment.updated_at }}
                                         {% if recomment.is_updated %}
                                             (수정됨)
                                         {% endif %}
-                                    </p>
+                                    </small>
                                     <div class="comment-action p-3">
                                         {% editable recomment request.user as editable %}
                                         {% if editable %}
