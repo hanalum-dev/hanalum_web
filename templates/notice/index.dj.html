@@ -16,11 +16,13 @@
             </div>
             <div class="row g-2">
                 {% for notice in top_fixed_notices %}
-                    {% include 'notice/_notice_card.dj.html' %}
+                    {% url 'notice:show' notice.id as show_url %}
+                    {% include 'components/_article_card.dj.html' with show_url=show_url article=notice show_like_activity=False%}
                 {% endfor %}
 
                 {% for notice in non_top_fixed_notices %}
-                    {% include 'notice/_notice_card.dj.html' %}
+                    {% url 'notice:show' notice.id as show_url %}
+                    {% include 'components/_article_card.dj.html' with show_url=show_url article=notice show_like_activity=False %}
                 {% endfor %}
             </div>
             {% with current_page=non_top_fixed_notices%}
