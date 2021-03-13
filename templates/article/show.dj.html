@@ -20,18 +20,20 @@
                             <a href="{% url 'article:delete' article.id %}" onclick="return confirm('삭제하시겠습니까?');"> 글 삭제 </a>
                         </div>
                     {% endif %}
-                    <span class="m-1">
-                        {% fa5_icon 'user-alt' 'fas' %}
-                        {% if article.anonymous_author %}
-                            익명
-                        {% else %}
-                            {{ article.author}}
-                        {% endif %}
-                    </span>
-                    <span class="m-1">
-                        {% fa5_icon 'clock' 'far' %}
-                        {{ article.updated_at }}
-                    </span>
+                    <small class="text-muted fw-light">
+                        <span class="m-1">
+                            {% fa5_icon 'user-alt' 'fas' %}
+                            {% if article.anonymous_author %}
+                                익명
+                            {% else %}
+                                {{ article.author}}
+                            {% endif %}
+                        </span>
+                        <span class="m-1">
+                            {% fa5_icon 'clock' 'far' %}
+                            {{ article.updated_at }}
+                        </span>
+                    </small>
                 </div>
                 <div class="card-body mn-height-px-200 position-relative">
                     <div class="card-text p-3">
