@@ -13,19 +13,22 @@
                     <p class="p-2 m-0 editCommentCollape{{comment.id}} collapse show" id="commentContent{{comment.id}}">
                         {{ comment.content }}
                     </p>
-                    <div class="editCommentCollape{{comment.id}} collapse" id="editContainer{{comment.id}}">
-                        <form action="{% url 'comment:update' comment.id %}" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group p-2">
-                                <div class="input-group comment-textarea-wrapper w-100">
-                                    <textarea class="form-control" name="content" rows="3">{{ comment.content }}</textarea>
-                                    <div class="comment-submit">
-                                        <button type="submit" class="btn btn-primary"> 작성 </button>
+                    {% editable comment request.user as editable %}
+                    {% if editable %}
+                        <div class="editCommentCollape{{comment.id}} collapse" id="editContainer{{comment.id}}">
+                            <form action="{% url 'comment:update' comment.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group p-2">
+                                    <div class="input-group comment-textarea-wrapper w-100">
+                                        <textarea class="form-control" name="content" rows="3">{{ comment.content }}</textarea>
+                                        <div class="comment-submit">
+                                            <button type="submit" class="btn btn-primary"> 작성 </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    {% endif %}
                     <p class="updated_at">
                         {{ comment.updated_at }}
                         {% if comment.is_updated %}
@@ -76,16 +79,43 @@
                                         {% endwith %}
                                     </div>
                                     <h5 class="commentor"> {{ recomment.user }}</h5>
-                                    <p class="p-2 m-0" id="content-{{recomment.id}}">
+                                    <p class="p-2 m-0 editCommentCollape{{recomment.id}} collapse show" id="editContainer{{recomment.id}}">
                                         {{ recomment.content }}
                                     </p>
+                                    {% editable recomment request.user as editable %}
+                                    {% if editable %}
+                                        <div class="editCommentCollape{{recomment.id}} collapse" id="editContainer{{recomment.id}}">
+                                            <form action="{% url 'comment:update' recomment.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="form-group p-2">
+                                                    <div class="input-group comment-textarea-wrapper w-100">
+                                                        <textarea class="form-control" name="content" rows="3">{{ recomment.content }}</textarea>
+                                                        <div class="comment-submit">
+                                                            <button type="submit" class="btn btn-primary"> 작성 </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    {% endif %}
                                     <p class="updated_at">
                                         {{ recomment.updated_at }}
+                                        {% if recomment.is_updated %}
+                                            (수정됨)
+                                        {% endif %}
                                     </p>
                                     <div class="comment-action p-3">
                                         {% editable recomment request.user as editable %}
                                         {% if editable %}
-                                            <a class="p-1 text-secondary edit-comment" data-comment-id="{{recomment.id}}"> 수정 </a>
+                                            <a class="p-1 text-secondary edit-comment"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target=".editCommentCollape{{recomment.id}}"
+                                                href="#editContainer{{recomment.id}}"
+                                                role="button"
+                                                aria-expanded="false"
+                                                aria-controls="editContainer{{recomment.id}} commentContent{{recomment.id}}">
+                                                    수정
+                                            </a>
                                         {% endif %}
 
                                         {% destroyable recomment request.user as destroyable %}

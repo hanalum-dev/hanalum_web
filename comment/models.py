@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-
+import datetime
 class CommentQuerySet(models.QuerySet):
     """ Comment 모델 쿼리셋 클래스입니다. """
 
@@ -73,7 +73,7 @@ class Comment(models.Model):
 
     @property
     def is_updated(self):
-        return self.created_at != self.updated_at
+        return self.updated_at - self.created_at >= datetime.timedelta(seconds=1)
 
     def editable(self, current_user):
         return current_user == self.user
@@ -91,12 +91,12 @@ class Comment(models.Model):
             commented_type=commented_type_obj,
             commented_id=_commented_object.id,
             parent=None,
-        ).order_by('updated_at')
+        ).order_by('created_at')
         for comment in comments:
             comment.recomments = Comment.objects.filter(
                 commented_type=commented_type_obj,
                 parent=comment,
-            ).order_by('updated_at')
+            ).order_by('created_at')
         return comments
 
     def new_comment(self, _commented_object, _user, _content, _parent=None):
