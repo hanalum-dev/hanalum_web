@@ -6,7 +6,7 @@
             <div class="row m-1 p-1 border-top">
                 <div class="col-12 p-2 pb-1 align-middle position-relative">
                     {% with avatar_image_url=comment.user.avatar_image_url %}
-                        {% include 'article/_circle_avatar.dj.html' %}
+                        {% include 'comment/_circle_avatar.dj.html' %}
                     {% endwith %}
                     {% comment %} TODO: HNM-0140 유저 페이지로 연결하는 링크 추가하기 {% endcomment %}
                     <h5 class="commentor"> {{ comment.user }}</h5>
@@ -25,7 +25,6 @@
                             aria-controls="inputRecomment{{comment.id}}">
                             대댓글 쓰기
                         </a>
-                        {% comment %} TODO: 댓글을 쓴 사람일때만 아래 메뉴 활성화하기 {% endcomment %}
                         {% editable comment request.user as editable %}
                         {% if editable %}
                             <a class="p-1 text-secondary"> 수정 </a>
@@ -43,33 +42,38 @@
             <div class="col-12">
                 {% if comment.recomments %}
                     {% for recomment in comment.recomments %}
-                        <div class="row p-1 m-2 ml-5 bg-light-gray">
-                            <div class="col-12 p-2 pb-1 align-middle position-relative">
-                                <div class="d-inline">
-                                    {% with avatar=recomment.user.avatar %}
-                                        {% include 'article/_circle_avatar.dj.html' %}
-                                    {% endwith %}
-                                </div>
-                                <h5 class="commentor"> {{ recomment.user }}</h5>
-                                <p class="p-2 m-0">
-                                    {{ recomment.content }}
-                                </p>
-                                <p class="updated_at">
-                                    {{ recomment.updated_at }}
-                                </p>
-                                <div class="comment-action p-3">
-                                    {% editable recomment request.user as editable %}
-                                    {% if editable %}
-                                        <a class="p-1 text-secondary"> 수정 </a>
-                                    {% endif %}
+                        {% published recomment as published %}
+                        {% if published %}
+                            <div class="row p-1 m-2 ml-5 bg-light-gray">
+                                <div class="col-12 p-2 pb-1 align-middle position-relative">
+                                    <div class="d-inline">
+                                        {% with avatar_image_url=recomment.user.avatar_image_url %}
+                                            {% include 'comment/_circle_avatar.dj.html' %}
+                                        {% endwith %}
+                                    </div>
+                                    <h5 class="commentor"> {{ recomment.user }}</h5>
+                                    <p class="p-2 m-0">
+                                        {{ recomment.content }}
+                                    </p>
+                                    <p class="updated_at">
+                                        {{ recomment.updated_at }}
+                                    </p>
+                                    <div class="comment-action p-3">
+                                        {% editable recomment request.user as editable %}
+                                        {% if editable %}
+                                            <a class="p-1 text-secondary"> 수정 </a>
+                                        {% endif %}
 
-                                    {% destroyable recomment request.user as destroyable %}
-                                    {% if destroyable %}
-                                        <a class="p-1 text-secondary"> 삭제 </a>
-                                    {% endif %}
+                                        {% destroyable recomment request.user as destroyable %}
+                                        {% if destroyable %}
+                                            <a class="p-1 text-secondary" href="{% url 'comment:destroy' recomment.id %}" onclick="return confirm('댓글을 삭제하시겠습니까?')"> 삭제 </a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% else %}
+                            {% include 'comment/_destroyed_recomment.dj.html' %}
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
 
@@ -77,11 +81,11 @@
                     <div class="col-12 p-2 pb-1 align-middle position-relative">
                         <div class="d-inline">
                             {% with avatar_image_url=request.user.avatar_image_url %}
-                                {% include 'article/_circle_avatar.dj.html' %}
+                                {% include 'comment/_circle_avatar.dj.html' %}
                             {% endwith %}
                         </div>
                         <h5 class="commentor"> {{ request.user }}</h5>
-                        <form action="{% url 'article:new_comment' article.id %}" method="POST">
+                        <form action="{{ new_comment_url }}" method="POST">
                             {% csrf_token %}
                             <div class="form-group p-2">
                                 <div class="input-group comment-textarea-wrapper w-100">
@@ -99,7 +103,7 @@
         </div>
     {% endfor %}
     <div class="row m-1 p-1 border-top">
-        <form action="{% url 'article:new_comment' article.id %}" method="POST">
+        <form action="{{ new_comment_url }}" method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <label class="p-2 w-100"> 댓글 쓰기 </label>
