@@ -152,7 +152,6 @@
     color: #ffffff;
     font-family: 'Raleway',sans-serif;
     font-weight: 800;
-    line-height: 72px;
     margin: 0 0 24px;
     text-align: center;
     text-decoration: solid 2px;
@@ -161,6 +160,22 @@
     transform: translate(-50%,-50%);
     position: absolute;
     top: 200px;
+    left: 50%;
+}
+
+.banner-sub-title {
+    filter: drop-shadow(0 0 1rem rgb(0, 0, 0));
+    color: #ffffff;
+    font-family: 'Raleway',sans-serif;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: solid 2px;
+    font-size: 1.2rem;
+
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    top: 260px;
     left: 50%;
 }
 
@@ -474,12 +489,12 @@ nav .board-menu-group a{
 
 
 .gallery {
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    column-count: 3;
-    -webkit-column-width: 33%;
-    -moz-column-width: 33%;
-    column-width: 33%;
+    -webkit-column-count: 34;
+    -moz-column-count: 4;
+    column-count: 4;
+    -webkit-column-width: 25%;
+    -moz-column-width: 25%;
+    column-width: 25%;
 }
 .gallery .pics {
     -webkit-transition: all 350ms ease;
@@ -491,7 +506,22 @@ nav .board-menu-group a{
     transform: scale(1);
 }
 
-@media (max-width: 1600px) {
+.gallery img {
+    border-radius: 10px;
+}
+
+@media (max-width: 2000px) {
+    .gallery {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+        -webkit-column-width: 33%;
+        -moz-column-width: 33%;
+        column-width: 33%;
+    }
+}
+
+@media (max-width: 1200px) {
     .gallery {
         -webkit-column-count: 2;
         -moz-column-count: 2;
@@ -514,6 +544,7 @@ nav .board-menu-group a{
 }
 
 .card-img-overlay {
+    border-radius: 10px;
     display: none;
 }
 

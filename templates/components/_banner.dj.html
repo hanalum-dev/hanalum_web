@@ -8,4 +8,17 @@
             한아름
         {% endif %}
     </h1>
+    {% if banner_sub_title %}
+        {% if banner_sub_title_link %}
+            <a href="{{banner_sub_title_link}}">
+                <h4 class="banner-sub-title">
+                {{ banner_sub_title }}
+                </h4>
+            </a>
+        {% else %}
+            <h4 class="banner-sub-title">
+                {{ banner_sub_title }}
+            </h4>
+        {% endif %}
+    {% endif %}
 </div>
