@@ -510,7 +510,12 @@ nav .board-menu-group a{
     border-radius: 10px;
 }
 
-@media (max-width: 2000px) {
+.gallery .card-img-overlay {
+    border-radius: 10px;
+    display: none;
+}
+
+@media (max-width: 1500px) {
     .gallery {
         -webkit-column-count: 3;
         -moz-column-count: 3;
@@ -530,6 +535,9 @@ nav .board-menu-group a{
         -moz-column-width: 50%;
         column-width: 50%;
     }
+    .gallery .card-img-overlay {
+        display:inherit;
+    }
 }
 
 @media (max-width: 580px) {
@@ -543,10 +551,6 @@ nav .board-menu-group a{
     }
 }
 
-.card-img-overlay {
-    border-radius: 10px;
-    display: none;
-}
 
 .gallery-title {
     filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
@@ -557,5 +561,6 @@ nav .board-menu-group a{
 }
 
 .gallery-item:hover .card-img-overlay {
-    display: block;
+    border-radius: 10px;
+    display: inherit;
 }
