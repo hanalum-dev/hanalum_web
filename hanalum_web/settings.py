@@ -88,9 +88,6 @@ SUMMERNOTE_CONFIG = {
         'width': '100%',
         'height': '480',
 
-        # Use proper language setting automatically (default)
-        'lang': None,
-
         # Or, set editor language/locale forcely
         'lang': 'ko-KR',
 
@@ -158,6 +155,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_summernote',
     'fontawesome_5',
+    'markdownify.apps.MarkdownifyConfig',
     'user',
     'api',
     'article',
