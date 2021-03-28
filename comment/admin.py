@@ -9,6 +9,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'user',
+        'status',
         'parent',
         'commented_type',
         'commented_id',
@@ -18,5 +19,6 @@ class CommentAdmin(admin.ModelAdmin):
         'updated_at',
     ]
     list_filter = [
+        'status',
         'user',
     ]

@@ -33,7 +33,7 @@ SITE_ID = 1
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['34.220.59.114', '127.0.0.1', 'alpha.hanalum.kr']
 
@@ -87,9 +87,6 @@ SUMMERNOTE_CONFIG = {
         # Change editor size
         'width': '100%',
         'height': '480',
-
-        # Use proper language setting automatically (default)
-        'lang': None,
 
         # Or, set editor language/locale forcely
         'lang': 'ko-KR',
@@ -155,20 +152,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'treebeard',
-    "bootstrap5",
-    "django_summernote",
-    "fontawesome_5",
-    "user",
-    "api",
-    "article",
-    "board",
-    "comment",
-    "hanmaum",
-    "main",
-    "menu",
-    "notice",
-    "policy",
-    "history",
+    'bootstrap5',
+    'django_summernote',
+    'fontawesome_5',
+    'markdownify.apps.MarkdownifyConfig',
+    'user',
+    'api',
+    'article',
+    'board',
+    'comment',
+    'hanmaum',
+    'main',
+    'menu',
+    'notice',
+    'policy',
+    'hashtag',
+    'history',
 ]
 
 MIDDLEWARE = [
@@ -195,6 +194,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            "libraries": {
+                "comment_policy_tags": "comment.templatetags.comment_policy_tags",
+            }
         },
     },
 ]

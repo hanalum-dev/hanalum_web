@@ -1,0 +1,14 @@
+.root .avatar-image-wrapper {
+    overflow: hidden;
+    width: 6rem;
+    height: 6rem;
+    box-shadow: 1px 1px #cbcbcb;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.root .avatar-image-wrapper img {
+    width: 100%;
+    height: auto;
+}

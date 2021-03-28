@@ -14,7 +14,7 @@
                         {{ notice.title }}
                     </h3>
                     <span class="m-1">
-                        {% fa5_icon 'user' 'far' %}
+                        {% fa5_icon 'user-alt' 'fas' %}
                         한아름
                     </span>
                     <span class="m-1">
@@ -27,7 +27,8 @@
                         {{notice.content | safe }}
                     </div>
                 </div>
-                {% include 'notice/_comment_list.dj.html' %}
+                {% url 'notice:new_comment' notice.id as new_comment_url%}
+                {% include 'comment/_comment_list.dj.html' with article=notice comments=comments new_comment_url=new_comment_url %}
             </div>
         </div>
 

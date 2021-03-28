@@ -1,12 +1,16 @@
 """ 게시판(board) views """
-from django.shortcuts import get_object_or_404, render
-from helpers.default import default_response
 from copy import deepcopy as dp
+
+from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
 
 from .models import Board
 from history.models import ViewHistory, LikeActivity
 from article.models import Article
+from hashtag.models import HashTag
+from helpers.default import default_response
 
+hashtag_model = HashTag()
 view_history = ViewHistory()
 like_activity = LikeActivity()
 
@@ -17,16 +21,24 @@ def show(request, board_id):
     """ 게시판 페이지 """
     response = dp(default_response)
     board = get_object_or_404(Board, pk=board_id)
-    response.update({
-        'board': board,
-        'banner_title' : board.title
-    })
-    articles = Article.objects.recent().filter(board= board).published().all()
+    top_fixed_articles = Article.objects.recent().filter(board=board).published().top_fixed()
+
+    articles = Article.objects.recent().filter(board=board).published().non_top_fixed()
+
+    paginator = Paginator(articles, 5)
+    page= request.GET.get('page')
+    if page == "" or page == None:
+        page = 1
+
+    articles = list(top_fixed_articles) + list(paginator.get_page(page))
+    start = max(int(page)-5, 1)
+    end = min(int(page)+5, paginator.num_pages)
 
     for article in articles:
         article.total_viewed_count = view_history.total_viewed_count(
             _viewed_obj=article,
         ) or 0
+        article.hashtags = hashtag_model.get_hashtag(tagged_object=article)
         article.like_count = like_activity.get_like_count(
             _content_object=article
         )
@@ -44,9 +56,11 @@ def show(request, board_id):
                 _user=request.user
             )
 
-
-    # TODO: pagination
-
-    response['articles'] = articles
+    response.update({
+        'board': board,
+        'banner_title' : board.title,
+        'articles': articles,
+        'range': [i for i in range(start, end+1)]
+    })
 
     return render(request, 'board/show.dj.html', response)

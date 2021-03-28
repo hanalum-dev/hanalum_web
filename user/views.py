@@ -65,8 +65,7 @@ def signup(request):
             logger.error(e)
         except Exception as e:  # pylint: disable=broad-except
             logger.error(e)
-        # TODO: 라벨링 다시 하기
-        messages.error(request, '정보 입력이 제대로 되지 않았습니다.')
+        messages.error(request, '인증 이메일을 발송하는 과정에서 오류가 발생하였습니다. 계속 해당 오류가 발생한다면, 한아름에 문의해주세요.')
         return redirect('user:signup')
     else:
         response['form'] = UserCreationForm()
@@ -179,23 +178,22 @@ def update(request):
 def delete(request):
     """사용자 회원 탈퇴 반영 뷰"""
 
-
+@transaction.atomic
 def activate_account(request, uidb64, token):
     """사용자 인증 메일 활성화 뷰"""
-    # TODO: HNM-0075: transaction 적용하기
     try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError):
+        with transaction.atomic():
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+            if user is not None and account_activation_token.check_token(user, token):
+                user.is_active = True
+                user.save()
+                auth.login(request, user)
+                messages.success(request, '이메일 인증이 완료되었습니다.')
+                return redirect("user:signin")
+            else:
+                messages.error(request, '인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다. 계속해서 오류가 발생한다면, 한아름에 문의해 주세요.')
+                return redirect("user:signin")
+    except(TypeError, ValueError, OverflowError) as e:
         user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        auth.login(request, user)
-        messages.success(request, '이메일 인증이 완료되었습니다.')
-        return redirect("user:signin")
-    else:
-        # TODO: HNM:0077: 메세지 프레임워크 적용하기
-        # 인증링크가 올바르지 않거나, 인증 기간이 만료되었습니다.
-        # 계속해서 오류가 발생한다면, 한아름에 건의해주세요.
-        return redirect("user:signin")
+        logger.error(e)
