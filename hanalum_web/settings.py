@@ -155,7 +155,6 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_summernote',
     'fontawesome_5',
-    'markdownify.apps.MarkdownifyConfig',
     'user',
     'api',
     'article',
