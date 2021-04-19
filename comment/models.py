@@ -1,14 +1,18 @@
 """ 댓글(comemnt) 모델 모듈 파일입니다. """
-from django.db import models
+import datetime
+
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-import datetime
+from django.db import models
+
+
 class CommentQuerySet(models.QuerySet):
     """ Comment 모델 쿼리셋 클래스입니다. """
 
     def published(self):
         """ published 상태인 댓글만 리턴합니다. """
         return self.filter(status='p')
+
 
 class Comment(models.Model):
     """ comment 클래스입니다. """
@@ -73,19 +77,24 @@ class Comment(models.Model):
 
     @property
     def is_updated(self):
+        """수정된 댓글인지 여부를 리턴합니다."""
         return self.updated_at - self.created_at >= datetime.timedelta(seconds=1)
 
     def editable(self, current_user):
-        return current_user == self.user
+        """현재 유저가 해당 댓글을 수정할 수 있는지 여부를 리턴합니다."""
+        return current_user.is_authenticated and current_user == self.user
 
     def destroyable(self, current_user):
-        return self.editable(current_user) or current_user.is_admin
+        """현재 유저가 해당 댓글을 삭제할 수 있는지 여부를 리턴합니다."""
+        return current_user.is_authenticated and (self.editable(current_user) or current_user.is_admin)
 
     def destroy(self):
+        """현재 댓글을 삭제합니다."""
         self.status = 't'
         self.save()
 
     def get_comments(self, _commented_object):
+        """특정 객체에 달린 댓글을 리턴합니다."""
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)
         comments = Comment.objects.filter(
             commented_type=commented_type_obj,
@@ -100,6 +109,7 @@ class Comment(models.Model):
         return comments
 
     def new_comment(self, _commented_object, _user, _content, _parent=None):
+        """새로운 댓글을 추가합니다."""
         # TODO: transaction 적용하고, logger 적용하기
         # TODO: validation 추가하기 (user나 content가 비어있으면 안된다. commented_object가 댓글을 달 수 있는 상태인지 등)
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)
