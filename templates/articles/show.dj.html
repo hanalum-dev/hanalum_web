@@ -16,8 +16,8 @@
                     </h3>
                     {% if is_author %}
                         <div class="card-header-author-menu">
-                            <a href="{% url 'article:edit' article.id %}"> 글 수정 </a>
-                            <a href="{% url 'article:delete' article.id %}" onclick="return confirm('삭제하시겠습니까?');"> 글 삭제 </a>
+                            <a href="{% url 'articles:edit' article.id %}"> 글 수정 </a>
+                            <a href="{% url 'articles:delete' article.id %}" onclick="return confirm('삭제하시겠습니까?');"> 글 삭제 </a>
                         </div>
                     {% endif %}
                     <small class="text-muted fw-light">
@@ -50,7 +50,7 @@
                 <div class="card-footer mn-height-px-100">
                     <div class="row w-100 justify-content-center">
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
-                            <a href="{% url 'article:like' article.id %}" class="btn">
+                            <a href="{% url 'articles:like' article.id %}" class="btn">
                                 {% if article.is_user_in_like %}
                                     {% fa5_icon 'thumbs-up' 'fas text-blue' %}
                                 {% else %}
@@ -62,7 +62,7 @@
                             </p>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
-                            <a href="{% url 'article:dislike' article.id %}" class="btn">
+                            <a href="{% url 'articles:dislike' article.id %}" class="btn">
                                 {% if article.is_user_in_dislike %}
                                     {% fa5_icon 'thumbs-down' 'fas text-red' %}
                                 {% else %}
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                {% url 'article:new_comment' article.id as new_comment_url%}
+                {% url 'articles:new_comment' article.id as new_comment_url%}
                 {% include 'comment/_comment_list.dj.html' with article=article comments=comments new_comment_url=new_comment_url %}
             </div>
         </div>

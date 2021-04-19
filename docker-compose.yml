@@ -4,15 +4,15 @@ services:
   db:
     image: postgres
     expose:
-    - "5433"
+    - "5432"
     ports:
-      - "5433:5433"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./backups:/home/backups
-    command: -p 5433
+    command: -p 5432
   web:
     build: .
     command: >

@@ -4,7 +4,7 @@ from copy import deepcopy as dp
 from django.shortcuts import render
 from board.models import Board
 
-from article.models import Article
+from articles.models import Article
 from .models import TopBanner, MainBoard
 from helpers.default import default_response
 

@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('attachment', models.FileField(upload_to='files/%Y/%m/%d/', verbose_name='첨부파일')),
-                ('article', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='article', to='article.article')),
+                ('article', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='article', to='articles.article')),
             ],
         ),
     ]

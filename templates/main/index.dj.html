@@ -54,7 +54,7 @@
                 {% for article in main_board.board.articles.recent.published.five %}
                   <div class="p-2 border-bottom">
                     <h6 class="pt-1">
-                      <a href="{% url 'article:show' article.id %}">
+                      <a href="{% url 'articles:show' article.id %}">
                         {{ article.title }}
                       </a>
                     </h6>

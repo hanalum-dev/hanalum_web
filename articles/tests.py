@@ -1,4 +1,4 @@
-"""article test 모듈입니다."""
+"""articles test 모듈입니다."""
 
 # from django.test import TestCase
 

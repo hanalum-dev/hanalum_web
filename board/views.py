@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 
 from .models import Board
 from history.models import ViewHistory, LikeActivity
-from article.models import Article
+from articles.models import Article
 from hashtag.models import HashTag
 from helpers.default import default_response
 

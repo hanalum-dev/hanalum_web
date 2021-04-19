@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('board', '0007_board_default_board_format'),
-        ('article', '0003_auto_20210220_1542'),
+        ('articles', '0003_auto_20210220_1542'),
     ]
 
     operations = [

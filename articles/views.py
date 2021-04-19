@@ -1,4 +1,4 @@
-""" 게시글(article) views """
+""" 게시글(articles) views """
 from copy import deepcopy as dp
 
 from django.contrib import messages
@@ -74,7 +74,7 @@ def show(request, article_id):
             _viewer=current_user
         )
 
-    return render(request, 'article/show.dj.html', response)
+    return render(request, 'articles/show.dj.html', response)
 
 @login_required(login_url='/user/signin')
 def new(request, board_id):
@@ -113,7 +113,7 @@ def new(request, board_id):
                 )
 
             messages.success(request, '글이 작성되었습니다.')
-            return redirect("article:show", article.id)
+            return redirect("articles:show", article.id)
         messages.error(request, "글 작성 중 오류가 발생하였습니다.")
         return redirect("board:show", board_id)
     else:
@@ -130,7 +130,7 @@ def edit(request, article_id):
 
     if article.author != current_user:
         messages.error(request, '해당 글은 수정하실 수 없습니다.')
-        return redirect("article:show", article_id)
+        return redirect("articles:show", article_id)
 
     form = ArticleEditionForm(request.POST or None, instance=article)
 
@@ -160,7 +160,7 @@ def edit(request, article_id):
                 hashtag
             )
         messages.success(request, '글이 수정되었습니다.')
-        return redirect("article:show", article_id)
+        return redirect("articles:show", article_id)
 
     return render(request, 'article/edit.dj.html', response)
 
@@ -171,7 +171,7 @@ def delete(request, article_id):
 
     if article.author != current_user:
         messages.error(request, '해당 글은 삭제하실 수 없습니다.')
-        return redirect("article:show", article_id)
+        return redirect("articles:show", article_id)
 
     article.status = 't'
     article.save()
@@ -201,7 +201,7 @@ def new_comment(request, article_id):
     )
 
     # TODO: 댓글이 작성되었습니다. 메세지 띄우기
-    return redirect("article:show", article_id)
+    return redirect("articles:show", article_id)
 
 @login_required(login_url='/user/signin')
 def like(request, article_id):
@@ -227,7 +227,7 @@ def like(request, article_id):
     else:
         messages.error(request, activity_result.msg)
 
-    return redirect("article:show", article_id)
+    return redirect("articles:show", article_id)
 
 @login_required(login_url='/user/signin')
 def dislike(request, article_id):
@@ -254,4 +254,4 @@ def dislike(request, article_id):
     else:
         messages.error(request, activity_result.msg)
 
-    return redirect("article:show", article_id)
+    return redirect("articles:show", article_id)

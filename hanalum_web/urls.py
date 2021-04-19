@@ -13,7 +13,7 @@ urlpatterns = [
     path("user/", include('user.urls', 'user')),
     path("main/", include('main.urls', 'main')),
     path("notice/", include('notice.urls', 'notice')),
-    path("article/", include('article.urls', 'article')),
+    path("articles/", include('articles.urls', 'articles')),
     path("board/", include('board.urls', 'board')),
     path("comment/", include('comment.urls', 'comment')),
     path("hanmaum/", include('hanmaum.urls', 'hanmaum')),

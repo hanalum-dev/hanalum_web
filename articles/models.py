@@ -1,4 +1,4 @@
-""" article 모델 파일입니다. """
+""" articles 모델 파일입니다. """
 import html2text
 from bs4 import BeautifulSoup
 from markdown import markdown
@@ -9,7 +9,7 @@ from django_summernote.fields import SummernoteTextField
 
 
 class ArticleQuerySet(models.QuerySet):
-    """ article 모델 쿼리셋 클래스입니다. """
+    """ articles 모델 쿼리셋 클래스입니다. """
 
     def recent(self):
         """ 최신 게시글부터 담아서 리턴합니다. """
@@ -117,7 +117,7 @@ class Article(models.Model):
         return self.__class__.__name__
 
     def save(self, *args, **kwargs):  # pylint: disable=signature-differs
-        """ article record는 아래 조건이 성립해야 합니다. """
+        """ articles record는 아래 조건이 성립해야 합니다. """
         # board가 익명 사용가능할 때, 익명 저자가 허용된다.
         if self.anonymous_author and not self.board.use_anonymous:
             raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
@@ -126,8 +126,8 @@ class Article(models.Model):
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """
     article = models.ForeignKey(
-        'article.article',
-        related_name='article',
+        'articles.article',
+        related_name='articles',
         on_delete=models.DO_NOTHING
     )
     attachment = models.FileField(

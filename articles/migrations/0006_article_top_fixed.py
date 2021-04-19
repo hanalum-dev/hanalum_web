@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('article', '0005_article_anonymous_author'),
+        ('articles', '0005_article_anonymous_author'),
     ]
 
     operations = [

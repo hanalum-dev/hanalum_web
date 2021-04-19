@@ -14,7 +14,7 @@
                     {{ board.title }} : 최신 글
                 </h3>
                 <div class="position-absolute right-0 top-0 m-1">
-                    <a href="{% url 'article:new' board.id %}" class="text-right btn btn-success">
+                    <a href="{% url 'articles:new' board.id %}" class="text-right btn btn-success">
                             {% fa5_icon 'pencil-alt' 'fas' %} 글 작성
                     </a>
                 </div>
@@ -22,7 +22,7 @@
             </div>
             <div class="row g-2">
                 {% for article in articles %}
-                    {% url 'article:show' article.id as show_url %}
+                    {% url 'articles:show' article.id as show_url %}
                     {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
                     {% empty %}
                     {% include 'components/_none_items.dj.html' with msg="게시글이 없습니다. :("%}

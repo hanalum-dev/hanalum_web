@@ -14,7 +14,7 @@ from .models import User
 from .tokens import account_activation_token
 from .validators import UserCreationValidator
 from history.models import LikeActivity, ViewHistory
-from article.models import Article
+from articles.models import Article
 from hanmaum.models import HanmaumArticle
 
 logger = logging.getLogger(__name__)
