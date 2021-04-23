@@ -1,0 +1,95 @@
+{% extends 'base.dj.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% load fontawesome_5 %}
+{% block stylesheet %}
+{% fontawesome_5_static %}
+{% endblock %}
+
+{% block content %}
+<div class = "container p-3 user-page">
+    <div class="row g-2">
+        <div class="col-md-4 col-12">
+            <div class="card p-3">
+                {% if user.avatar %}
+                    <div class="avatar-image-wrapper">
+                        <img src = "{{ user.avatar.url }}">
+                    </div>
+                {% else %}
+                    <div class="avatar-image-wrapper">
+                        <img src="">
+                    </div>
+                {% endif %}
+
+                <div class="text-center p-2">
+                    <h2>
+                        {{user.nickname}}
+                    </h2>
+
+                    {{user.realname}}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-12">
+            <div class="card p-3">
+                <div class="p-3">
+                    <h4>
+                        좋아요한 게시물
+                    </h4>
+                    <hr>
+                    {% if like_articles is None or like_articles.count is 0 %}
+                        {% comment %} TOTO: 메세지 예쁘게 바꾸기 {% endcomment %}
+                        {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
+                    {% else %}
+                        {% for article in like_articles %}
+                            {{ article.title }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="p-3">
+                    <h4>
+                        좋아요를 누른 한마음 게시물
+                    </h4>
+                    <hr>
+                    {% if like_hanmaum_activities is None or like_hanmaum_activities.count is 0 %}
+                        {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
+                    {% else %}
+                        {% for activity in like_hanmaum_activities %}
+                            {% with article=activity.article %}
+                                <div class = "p-2">
+                                    {% include 'users/_article_card.dj.html'%}
+                                </div>
+                            {% endwith %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="p-3">
+                    <h4>
+                        최근에 단 댓글
+                    </h4>
+                    <hr>
+                    {% comment %} TODO: HNM-0070: comment 기능 {% endcomment %}
+                    {% if comment is None or comments.count is 0 %}
+                        {% include 'components/_none_items.dj.html' with msg="최근에 단 댓글이 없습니다.<br>게시글에 댓글을 달아보는 것은 어떤가요?"%}
+                    {% else %}
+                        {% for commet in comments %}
+                            <div class = "p-2">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        initLikeActivity();
+    })
+</script>
+{% endblock %}

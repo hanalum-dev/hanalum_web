@@ -42,7 +42,7 @@ class Article(models.Model):
     )
 
     board = models.ForeignKey(
-        'board.board',
+        'boards.board',
         verbose_name="게시판",
         on_delete = models.DO_NOTHING,
         blank=True,
@@ -50,7 +50,7 @@ class Article(models.Model):
         related_name='articles'
     )  # 게시판
     author = models.ForeignKey(
-        'user.user',
+        'users.user',
         verbose_name="글쓴이",
         on_delete = models.DO_NOTHING,
         blank=True,

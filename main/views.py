@@ -2,7 +2,7 @@
 from copy import deepcopy as dp
 
 from django.shortcuts import render
-from board.models import Board
+from boards.models import Board
 
 from articles.models import Article
 from .models import TopBanner, MainBoard

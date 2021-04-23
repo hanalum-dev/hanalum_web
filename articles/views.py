@@ -6,13 +6,13 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 
-from board.models import Board
-from comment.models import Comment
+from boards.models import Board
+from comments.models import Comment
 from .models import Article
 from .forms import ArticleCreationForm, ArticleEditionForm
 from helpers.default import default_response
 from history.models import ViewHistory, LikeActivity
-from hashtag.models import HashTag
+from hashtags.models import HashTag
 
 view_history = ViewHistory()
 hashtag_model = HashTag()
@@ -55,7 +55,7 @@ def show(request, article_id):
 
     if article.status != 'p':
         messages.error(request, '삭제된 글입니다.')
-        return redirect("board:show", article.board.id)
+        return redirect("boards:show", article.board.id)
 
     hashtags = hashtag_model.get_hashtag(tagged_object=article)
 
@@ -76,7 +76,7 @@ def show(request, article_id):
 
     return render(request, 'articles/show.dj.html', response)
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def new(request, board_id):
     response = dp(default_response)
     response.update({
@@ -97,7 +97,7 @@ def new(request, board_id):
             if author is None:
                 # TODO: validation + error message 따로 빼기
                 messages.error(request, '로그인 후, 글을 작성해주세요.')
-                return redirect("user:signin")
+                return redirect("users:signin")
 
             article = form.save(commit=False)
             article.author = author
@@ -115,13 +115,13 @@ def new(request, board_id):
             messages.success(request, '글이 작성되었습니다.')
             return redirect("articles:show", article.id)
         messages.error(request, "글 작성 중 오류가 발생하였습니다.")
-        return redirect("board:show", board_id)
+        return redirect("boards:show", board_id)
     else:
         response['form'] = ArticleCreationForm(initial={'content': (current_board.default_article_format or "")})
-        return render(request, 'article/new.dj.html', response)
+        return render(request, 'articles/new.dj.html', response)
 
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def edit(request, article_id):
     response = dp(default_response)
 
@@ -162,9 +162,9 @@ def edit(request, article_id):
         messages.success(request, '글이 수정되었습니다.')
         return redirect("articles:show", article_id)
 
-    return render(request, 'article/edit.dj.html', response)
+    return render(request, 'articles/edit.dj.html', response)
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def delete(request, article_id):
     current_user = request.user
     article = get_object_or_404(Article, pk=article_id)
@@ -177,10 +177,10 @@ def delete(request, article_id):
     article.save()
     messages.success(request, '글이 삭제되었습니다.')
 
-    return redirect("board:show", article.board.id)
+    return redirect("boards:show", article.board.id)
 
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def new_comment(request, article_id):
 
     article = get_object_or_404(Article, pk=article_id)
@@ -203,7 +203,7 @@ def new_comment(request, article_id):
     # TODO: 댓글이 작성되었습니다. 메세지 띄우기
     return redirect("articles:show", article_id)
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def like(request, article_id):
     """ 좋아요 view"""
 
@@ -229,7 +229,7 @@ def like(request, article_id):
 
     return redirect("articles:show", article_id)
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def dislike(request, article_id):
     """ 싫어요 view """
 

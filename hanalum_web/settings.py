@@ -38,7 +38,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['34.220.59.114', '127.0.0.1', 'alpha.hanalum.kr']
 
 # 유저모델 재설정
-AUTH_USER_MODEL = "user.User"
+AUTH_USER_MODEL = "users.User"
 
 # 로그인 실패시 URL
 LOGIN_URL = "/"
@@ -155,17 +155,15 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_summernote',
     'fontawesome_5',
-    'user',
+    'users',
     'api',
     'articles',
-    'board',
-    'comment',
+    'boards',
+    'comments',
     'hanmaum',
     'main',
-    'menu',
-    'notice',
-    'policy',
-    'hashtag',
+    'notices',
+    'hashtags',
     'history',
 ]
 
@@ -194,7 +192,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
             "libraries": {
-                "comment_policy_tags": "comment.templatetags.comment_policy_tags",
+                "comment_policy_tags": "comments.templatetags.comment_policy_tags",
             }
         },
     },

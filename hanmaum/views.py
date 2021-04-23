@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
-from comment.models import Comment
+from comments.models import Comment
 
 like_activity = LikeActivity()
 view_history = ViewHistory()
@@ -64,7 +64,7 @@ def show(request, article_id):
 
     return render(request, 'hanmaum/show.dj.html', response)
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def edit(request):
     """ edit """
     response = {
@@ -72,7 +72,7 @@ def edit(request):
     }
     return render(request, 'hanmaum/edit.dj.html', response)
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def new(request):
     """ new """
     response = dp(default_response)
@@ -90,7 +90,7 @@ def introduce(request):
     return render(request, 'hanmaum/introduce.dj.html', response)
 
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def like(request):
     """ 좋아요 view""" 
     response = {
@@ -119,7 +119,7 @@ def like(request):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def dislike(request):
     """ 싫어요 view """
     response = {
@@ -147,7 +147,7 @@ def dislike(request):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def cancle(request):
 
     """ 좋아요/싫어요 취소 view """
@@ -175,7 +175,7 @@ def cancle(request):
 
     return HttpResponse(json.dumps(response), content_type="application/json")
 
-@login_required(login_url='/user/signin')
+@login_required(login_url='/users/signin')
 def new_comment(request, article_id):
 
     hanmaum_article = get_object_or_404(HanmaumArticle, pk=article_id)

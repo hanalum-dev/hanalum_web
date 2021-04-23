@@ -6,6 +6,6 @@
 </head>
 <body>
     <div><span style="font-size: 20px;font-weight: bold;">{{user.nickname}}</span>님, 아래 링크를 클릭하여 계정을 활성화하세요</div>
-    <a href="http://{{domain}}{% url 'user:activate_account' uid token %}" style="font-size: 20px;text-decoration: none;">링크</a>
+    <a href="http://{{domain}}{% url 'users:activate_account' uid token %}" style="font-size: 20px;text-decoration: none;">링크</a>
 </body>
 </html>

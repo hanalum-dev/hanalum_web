@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div class = "col-3 text-center">
-                    <a class="nav-menu-text align-middle" href="{% url 'notice:index' %}"> 공지사항 </a>
+                    <a class="nav-menu-text align-middle" href="{% url 'notices:index' %}"> 공지사항 </a>
                 </div>
                 <div class = "col-3 text-center">
                     <a class="nav-menu-text align-middle" href="{% url 'hanmaum:index' %}"> 한마음 </a>
@@ -37,14 +37,14 @@
             <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
             <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
                 {% if user.is_authenticated %}
-                    <li><a class="dropdown-item" href="{% url 'user:me' %}">내정보</a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:me' %}">내정보</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{% url 'user:signout' %}">
+                    <li><a class="dropdown-item" href="{% url 'users:signout' %}">
                             로그아웃
                     </a></li>
                 {% else %}
-                    <li><a class="dropdown-item" href="{% url 'user:signin' %}"> 로그인 </a></li>
-                    <li><a class="dropdown-item" href="{% url 'user:signup' %}"> 회원가입 </a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:signin' %}"> 로그인 </a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:signup' %}"> 회원가입 </a></li>
                 {% endif %}
             </div>
         </div>
@@ -60,7 +60,7 @@
                 <div class = "row">
                     {% for board in nav_board_list%}
                         <div class = "col-4 p-2 text-center">
-                            <a href = "{% url 'board:show' board.id %}">
+                            <a href = "{% url 'boards:show' board.id %}">
                                 {{board.title}}
                             </a>
                         </div>

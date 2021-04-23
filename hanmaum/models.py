@@ -6,7 +6,7 @@ from markdown import markdown
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 
-from user.models import User
+from users.models import User
 
 class HanmaumArticleQuerySet(models.QuerySet):
     """ 한마음 모델 쿼리셋 클래스입니다. """
@@ -29,7 +29,7 @@ class HanmaumArticle(models.Model):
     title = models.CharField(verbose_name="인터뷰 제목", max_length=100, default='')
     interviewer = models.CharField(verbose_name="인터뷰어", max_length=10, default='')
     interviewee = models.CharField(verbose_name="인터뷰이", max_length=10, default='')
-    uploader = models.ForeignKey("user.User", verbose_name="업로더", related_name='uploader', on_delete=models.DO_NOTHING, null=True, db_column="uploader_id")
+    uploader = models.ForeignKey("users.User", verbose_name="업로더", related_name='uploader', on_delete=models.DO_NOTHING, null=True, db_column="uploader_id")
     content = SummernoteTextField(verbose_name="내용")
     thumbnail = models.ImageField(verbose_name="대표 이미지", null=True, blank=True, upload_to="hanmaum/%Y/%m/%d")
     created_at = models.DateTimeField(verbose_name="생성된 시각", auto_now_add=True)

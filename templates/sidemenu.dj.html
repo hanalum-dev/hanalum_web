@@ -24,7 +24,7 @@
     <ul class="nav flex-column mb-0">
       {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link text-dark" href="{% url 'user:me' %}">
+                <a class="nav-link text-dark" href="{% url 'users:me' %}">
                     {% fa5_icon 'user-alt' 'fas me-2' %}
                     내정보
                 </a>
@@ -37,20 +37,20 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'user:signout' %}" class="nav-link text-dark">
+                <a href="{% url 'users:signout' %}" class="nav-link text-dark">
                     {% fa5_icon 'sign-out-alt' 'fas me-2' %}
                     로그아웃
                 </a>
             </li>
       {% else %}
         <li class="nav-item">
-            <a href="{% url 'user:signin' %}" class="nav-link text-dark">
+            <a href="{% url 'users:signin' %}" class="nav-link text-dark">
             {% fa5_icon 'sign-in-alt' 'fas me-2' %}
             로그인
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'user:signup' %}" class="nav-link text-dark">
+            <a href="{% url 'users:signup' %}" class="nav-link text-dark">
             {% fa5_icon 'user-plus' 'fas me-2' %}
             회원가입
             </a>
@@ -77,7 +77,7 @@
             <div class="accordion-body">
                 {% for board in nav_board_list%}
                     <li class="nav-item p-2 ms-2">
-                        <a href = "{% url 'board:show' board.id %}">
+                        <a href = "{% url 'boards:show' board.id %}">
                             {{ board.title }}
                         </a>
                     </li>
@@ -85,7 +85,7 @@
             </div>
         </div>
         <li class="nav-item">
-            <a href="{% url 'notice:index' %}" class="nav-link text-dark">
+            <a href="{% url 'notices:index' %}" class="nav-link text-dark">
             {% fa5_icon 'flag' 'fas me-2' %}
             공지사항
             </a>
