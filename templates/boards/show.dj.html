@@ -35,7 +35,19 @@
         </div>
 
         <div class = "col-xl-3 col-lg-3 d-lg-block d-md-none d-sm-none d-none">
-            <div class="card m-0 mn-height-px-300">
+            <form>
+                <div class="m-1 position-relative">
+                    {% fa5_icon 'search' 'fas position-absolute text-gray right-10-px top-center-50' %}
+                    <input placeholder="{{ board.title }}에서 글을 검색해보세요!" class="w-100 p-3 h-50-px border-solid-light-gray bg-light-gray">
+                </div>
+            </form>
+
+            <div class="card p-3 m-1 mn-height-px-300" style="background-color: #F7F7FB;">
+                <h5>
+                    실시간 인기글
+                </h5>
+                <hr>
+
                 {% comment %} TODO: 추가 컨텐츠{% endcomment %}
             </div>
         </div>
