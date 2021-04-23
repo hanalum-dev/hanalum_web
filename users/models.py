@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
+from django.templatetags.static import static
 
 
 # 모델 migrate 할 때 setting의 'django.contrib.admin', urls의 path('admin/', admin.site.urls) 주석처리하기
@@ -121,9 +122,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def avatar_image_url(self):
+        """유저의 아바타 이미지 url helper"""
         if self.avatar:
-            return self.avatar.url
-        return '#'
+            return self.avatar.url  # pylint: disable=E1101
+        return static('img/no-title-logo.png')
 
     class Meta:
         """user meta class"""

@@ -1,6 +1,8 @@
+{% load static %}
 <div class="row m-1 p-1 border-top">
     <div class="col-12 p-2 pb-1 align-middle position-relative">
-        {% with avatar_image_url='#' %}
+        {% static 'img/no-title-logo.png' as avatar_image_url %}
+        {% with avatar_image_url=avatar_image_url %}
             {% include 'comments/_circle_avatar.dj.html' %}
         {% endwith %}
         <h5 class="commentor"> OOO </h5>
