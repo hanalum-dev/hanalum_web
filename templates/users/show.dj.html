@@ -11,15 +11,9 @@
     <div class="row g-2">
         <div class="col-md-4 col-12">
             <div class="card p-3">
-                {% if user.avatar %}
-                    <div class="avatar-image-wrapper">
-                        <img src = "{{ user.avatar.url }}">
-                    </div>
-                {% else %}
-                    <div class="avatar-image-wrapper">
-                        <img src="">
-                    </div>
-                {% endif %}
+                <div class="avatar-image-wrapper">
+                    <img src = "{{ user.avatar_image_url }}">
+                </div>
 
                 <div class="text-center p-2">
                     <h2>
