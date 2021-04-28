@@ -4,47 +4,20 @@
     <div class="card-body position-relative">
         <h5 class="card-title">
             <a href = "{{ show_url }}">
-                {{article.abstract_title}}
+                {{ article.abstract_title }}
             </a>
             {% if article.top_fixed %}
                 <span class="badge bg-success text-white font-size-half-rem">상단 고정</span>
             {% endif %}
         </h5>
-        <p class="card-text">{{article.summary}}</p>
+        <p class="card-text">{{ article.summary }}</p>
         
-        <div class="card-text">
+        <div class="card-text pb-2">
             {% for hashtag in article.hashtags%}
-                <span class="fw-bold">
-                    {{hashtag.content}}
+                <span class="badge bg-light text-dark pe-2">
+                    {{ hashtag.content }}
                 </span>
             {% endfor %}
-        </div>
-        <div class="like-activity-group pb-2 pt-3">
-            <span class="card-text">
-                {% fa5_icon 'eye' 'far' %} {{article.total_viewed_count}}
-            </span>
-            {% if show_like_activity %}
-                <span class="card-text ps-2 text-blue">
-                    <span>
-                        {% if user.is_user_in_like %}
-                                {% fa5_icon 'thumbs-up' 'fas' %}
-                        {% else %}
-                                {% fa5_icon 'thumbs-up' 'far' %}
-                        {% endif %}
-                    </span>
-                    {{article.like_count}}
-                </span>
-                <span class="card-text ps-2 text-red" >
-                    <span>
-                        {% if user.is_user_in_dislike %}
-                            {% fa5_icon 'thumbs-down' 'fas' %}
-                        {% else %}
-                            {% fa5_icon 'thumbs-down' 'far' %}
-                        {% endif %}
-                    </span>
-                    {{article.dislike_count}}
-                </span>
-            {% endif %}
         </div>
         <p class="card-text">
             <small class="text-muted">
@@ -56,7 +29,26 @@
                         {{ article.author}}
                     {% endif %}
                 </span>
-                <span>
+                {% fa5_icon 'eye' 'far' %} {{article.total_viewed_count}}
+                {% if show_like_activity %}
+                    <span class="card-text ps-2 text-blue">
+                        {% if user.is_user_in_like %}
+                                {% fa5_icon 'thumbs-up' 'fas' %}
+                        {% else %}
+                                {% fa5_icon 'thumbs-up' 'far' %}
+                        {% endif %}
+                        {{article.like_count}}
+                    </span>
+                    <span class="card-text ps-2 text-red" >
+                        {% if user.is_user_in_dislike %}
+                            {% fa5_icon 'thumbs-down' 'fas' %}
+                        {% else %}
+                            {% fa5_icon 'thumbs-down' 'far' %}
+                        {% endif %}
+                        {{article.dislike_count}}
+                    </span>
+                {% endif %}
+                <span class="ps-2">
                     {% fa5_icon 'clock' 'far' %}
                     {{article.updated_at}}
                 </span>

@@ -14,15 +14,9 @@
         <div class="row">
           <div class="col-12 gy-3">
             <div class="card p-3">
-                {% if user.avatar %}
-                    <div class="avatar-image-wrapper">
-                        <img src = "{{ user.avatar.url }}">
-                    </div>
-                {% else %}
-                    <div class="avatar-image-wrapper">
-                        <img src="">
-                    </div>
-                {% endif %}
+                <div class="avatar-image-wrapper text-center">
+                    <img src = "{{ user.avatar_image_url }}">
+                </div>
                 <div class="text-center">
                     <h2>
                         {{user.nickname}}
@@ -45,7 +39,7 @@
             <div class="card">
               <div class="board-title-container card-header">
                 <h5 class=" card-title p-1 pt-2">
-                  <a href="{% url 'board:show'  main_board.board.id %}">
+                  <a href="{% url 'boards:show'  main_board.board.id %}">
                     {{ main_board.board.title }}
                   </a>
                 </h5>
@@ -54,7 +48,7 @@
                 {% for article in main_board.board.articles.recent.published.five %}
                   <div class="p-2 border-bottom">
                     <h6 class="pt-1">
-                      <a href="{% url 'article:show' article.id %}">
+                      <a href="{% url 'articles:show' article.id %}">
                         {{ article.title }}
                       </a>
                     </h6>
@@ -63,7 +57,7 @@
                       {% if article.anonymous_author %}
                         익명
                       {% else %}
-                        <a href="{% url 'user:show' article.author.id %}">
+                        <a href="{% url 'users:show' article.author.id %}">
                           {{ article.author }}
                         </a>
                       {% endif %}

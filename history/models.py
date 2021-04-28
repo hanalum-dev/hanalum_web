@@ -26,7 +26,7 @@ class ViewHistory(models.Model):
         'viewed_id',
     )
     viewer = models.ForeignKey(
-        "user.User",
+        "users.User",
         verbose_name="유저",
         on_delete=models.DO_NOTHING,
         null=True,
@@ -109,7 +109,7 @@ class Activity(models.Model):
         'content_id',
     )
     user = models.ForeignKey(
-        "user.User",
+        "users.User",
         verbose_name="유저",
         on_delete=models.DO_NOTHING,
         null=True,

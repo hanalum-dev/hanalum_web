@@ -2,7 +2,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from board.models import Board
+from boards.models import Board
 
 
 class TopBanner(models.Model):

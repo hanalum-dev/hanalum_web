@@ -1,0 +1,79 @@
+{% extends 'base.dj.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block stylesheet %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="card row m-3 p-3">
+    <h2>
+      {{ board.title }} : 글 쓰기
+    </h2>
+    <form method = "POST" action = "{% url 'articles:new' board_id %}" class="align-middle">
+      {% csrf_token %}
+      <div class = "p-3">
+        <div class = "card-content">
+          {% for field in form %}
+            <div class="m-1">
+              {% if field.id_for_label != 'id_anonymous_author' or board.use_anonymous %}
+                <label for="{{field.id_for_label}}" class = "m-1">{{field.label}}</label>
+                {{field}}
+              {% endif %}
+            </div>
+          {% endfor %}
+          <input type="hidden" name="hashtags_str" id="hashtags_str">
+          <div class="chips">
+            <input class="chipsInput" id = "hashTagChipsInput">
+          </div>
+        </div>
+        <hr class="mb-4">
+        <div class="d-grid d-md-flex justify-content-md-center">
+          <button class="btn btn-primary text-right submit">글 작성</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+$(document).ready(function() {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  var hashtags = []
+  $('.chips').chips({
+    placeholder: '해쉬태그를 입력해주세요.',
+    onChipAdd: function(e, data) {
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      hashtags.push(str)
+      $("#hashtags_str").val(hashtags.reduce(reducer))
+    },
+    onChipDelete: function(e, data) {
+      let str = data.innerText.substr(0, data.innerText.length-5)
+      const idx = hashtags.indexOf(str+"\n")
+      if(idx > -1) hashtags.splice(idx, 1)
+      $("#hashtags_str").val(hashtags.reduce(reducer))
+    }
+  });
+
+  var oldVal = ""
+  $("#hashTagChipsInput").on("propertychange change paste input", function() {
+    var currentVal = $(this).val();
+    if(currentVal == oldVal) {
+        return;
+    }
+    if(currentVal[0] != '#') {
+      currentVal = '#'+currentVal
+    }
+    currentVal=currentVal.replace(' ', '_')
+    $(this).val(currentVal)
+    oldVal = currentVal
+  });
+
+})
+</script>
+{% endblock %}

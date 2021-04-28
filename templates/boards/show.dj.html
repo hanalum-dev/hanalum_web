@@ -1,0 +1,55 @@
+{% extends 'base.dj.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% load fontawesome_5 %}
+{% block stylesheet %}
+{% fontawesome_5_static %}
+{% endblock %}
+
+{% block content %}
+    <div class = "row p-3">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="board-header w-100 position-relative">
+                <h3 class="d-inline-block p-2 w-100">
+                    {{ board.title }} : 최신 글
+                </h3>
+                <div class="position-absolute right-0 top-0 m-1">
+                    <a href="{% url 'articles:new' board.id %}" class="text-right btn btn-success">
+                            {% fa5_icon 'pencil-alt' 'fas' %} 글 작성
+                    </a>
+                </div>
+                <hr>
+            </div>
+            <div class="row g-2">
+                {% for article in articles %}
+                    {% url 'articles:show' article.id as show_url %}
+                    {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+                    {% empty %}
+                    {% include 'components/_none_items.dj.html' with msg="게시글이 없습니다. :("%}
+                {% endfor %}
+            </div>
+
+            {% with current_page=articles%}
+                {% include 'components/_pagination.dj.html' %}
+            {% endwith %}
+        </div>
+
+        <div class = "col-xl-3 col-lg-3 d-lg-block d-md-none d-sm-none d-none">
+            <form>
+                <div class="m-1 position-relative">
+                    {% fa5_icon 'search' 'fas position-absolute text-gray right-10-px top-center-50' %}
+                    <input placeholder="{{ board.title }}에서 글을 검색해보세요!" class="w-100 p-3 h-50-px border-solid-light-gray bg-light-gray">
+                </div>
+            </form>
+
+            <div class="card p-3 m-1 mn-height-px-300" style="background-color: #F7F7FB;">
+                <h5>
+                    실시간 인기글
+                </h5>
+                <hr>
+
+                {% comment %} TODO: 추가 컨텐츠{% endcomment %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
