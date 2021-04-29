@@ -30,7 +30,7 @@ class TopBanner(BaseModel):
                 pass
         super().save(*args, **kwargs)
 
-class MainBoardQueryManager(BaseModelManager):
+class MainBoardQuerySet(models.QuerySet):
     """ MainBoard 모델 쿼리셋 클래스입니다. """
 
     def priority_order(self):
@@ -40,7 +40,7 @@ class MainBoardQueryManager(BaseModelManager):
 
 class MainBoard(BaseModel):
     """ 메인화면에 보이는 게시판을 지정하는 모델입니다. """
-    objects = MainBoardQueryManager()
+    objects = BaseModelManager.from_queryset(MainBoardQuerySet)()
 
     board = models.ForeignKey(Board,
         related_name="main_board",

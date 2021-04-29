@@ -8,7 +8,7 @@ from django.db import models
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
 
-class CommentQueryManager(BaseModelManager):
+class CommentQuerySet(models.QuerySet):
     """ Comment 모델 쿼리셋 클래스입니다. """
 
     def published(self):
@@ -18,7 +18,7 @@ class CommentQueryManager(BaseModelManager):
 
 class Comment(BaseModel):
     """ comment 클래스입니다. """
-    objects = CommentQueryManager()
+    objects = BaseModelManager.from_queryset(CommentQuerySet)()
 
     STATUS_CHOICES = (
         ('d', 'draft'),
