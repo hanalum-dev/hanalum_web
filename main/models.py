@@ -4,17 +4,19 @@ from django.db import models
 
 from boards.models import Board
 
+from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class TopBanner(models.Model):
+class TopBanner(BaseModel):
     """ 탑 배너 모델입니다. """
-    content = models.TextField(verbose_name='내용', max_length=100)
-    is_active = models.BooleanField(default=False, )
-    created_at = models.DateTimeField(verbose_name='생성된 시각', auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name='수정된 시각', auto_now=True)
+    content = models.TextField(
+        verbose_name='내용',
+        max_length=100
+    )
+    is_active = models.BooleanField(
+        default=False
+    )
     # TODO: HNM-0061 탑 배너 배경 색상코드 선택하는 필드 추가
     # TODO: 탑 배너에 이미지 필드 추가
-
-    objects = models.Manager()
 
     def save(self, *args, **kwargs):  # pylint: disable=signature-differs
         """ 탑 배너는 1개만 허용하는 메서드입니다. """
@@ -28,7 +30,7 @@ class TopBanner(models.Model):
                 pass
         super().save(*args, **kwargs)
 
-class MainBoardQuerySet(models.QuerySet):
+class MainBoardQueryManager(BaseModelManager):
     """ MainBoard 모델 쿼리셋 클래스입니다. """
 
     def priority_order(self):
@@ -36,9 +38,9 @@ class MainBoardQuerySet(models.QuerySet):
         """ 우선순위 높은 순서에 따라 정렬하고, 우선순위가 같다면 게시판 제목의 가나다 순으로 정렬합니다. """
         return self.order_by('-priority', 'board__title')
 
-class MainBoard(models.Model):
+class MainBoard(BaseModel):
     """ 메인화면에 보이는 게시판을 지정하는 모델입니다. """
-    objects = MainBoardQuerySet.as_manager()
+    objects = MainBoardQueryManager()
 
     board = models.ForeignKey(Board,
         related_name="main_board",

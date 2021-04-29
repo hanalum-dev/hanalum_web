@@ -173,11 +173,11 @@ def delete(request, article_id):
         messages.error(request, '해당 글은 삭제하실 수 없습니다.')
         return redirect("articles:show", article_id)
 
-    article.status = 't'
-    article.save()
+    board_id = article.board.id
+    article.delete()
     messages.success(request, '글이 삭제되었습니다.')
 
-    return redirect("boards:show", article.board.id)
+    return redirect("boards:show", board_id)
 
 
 @login_required(login_url='/users/signin')

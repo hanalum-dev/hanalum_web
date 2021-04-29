@@ -5,8 +5,10 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class CommentQuerySet(models.QuerySet):
+
+class CommentQueryManager(BaseModelManager):
     """ Comment 모델 쿼리셋 클래스입니다. """
 
     def published(self):
@@ -14,9 +16,9 @@ class CommentQuerySet(models.QuerySet):
         return self.filter(status='p')
 
 
-class Comment(models.Model):
+class Comment(BaseModel):
     """ comment 클래스입니다. """
-    objects = CommentQuerySet.as_manager()
+    objects = CommentQueryManager()
 
     STATUS_CHOICES = (
         ('d', 'draft'),
@@ -65,14 +67,6 @@ class Comment(models.Model):
         default='p',
         null=False,
         choices=STATUS_CHOICES
-    )
-    created_at = models.DateTimeField(
-        verbose_name="생성된 날짜",
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="수정된 날짜",
-        auto_now=True
     )
 
     @property

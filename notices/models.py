@@ -5,7 +5,9 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 from markdown import markdown
 
-class NoticeQuerySet(models.QuerySet):
+from hanalum_web.base_model import BaseModel, BaseModelManager
+
+class NoticeQueryManager(BaseModelManager):
     """ notice 모델 쿼리셋 클래스입니다. """
 
     def recent(self):
@@ -24,9 +26,9 @@ class NoticeQuerySet(models.QuerySet):
         """ top_fixed 상태가 아닌 게시글만 리턴합니다. """
         return self.filter(top_fixed=False)
 
-class Notice(models.Model):
+class Notice(BaseModel):
     """ 공지사항 모델 """
-    objects = NoticeQuerySet.as_manager()
+    objects = NoticeQueryManager()
 
     STATUS_CHOICES = (
         ('d', 'draft'),
@@ -57,15 +59,6 @@ class Notice(models.Model):
     priority = models.IntegerField(
         verbose_name="우선순위",
         default=0
-    )
-
-    created_at = models.DateTimeField(
-        verbose_name="생성된 날짜",
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="수정된 날짜",
-        auto_now=True
     )
 
     def __str__(self):

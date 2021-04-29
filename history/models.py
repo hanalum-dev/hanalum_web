@@ -10,7 +10,9 @@ from helpers.activity_sucesses import(
     LikeSuccess, DisLikeSuccess, LikeCancleSuccess, DisLikeCancleSuccess
 )
 
-class ViewHistory(models.Model):
+from hanalum_web.base_model import BaseModel
+
+class ViewHistory(BaseModel):
     """ 사용자 모델 뷰 로그 모델입니다. """
     viewed_type = models.ForeignKey(
         ContentType,
@@ -37,16 +39,6 @@ class ViewHistory(models.Model):
         null=False,
         default=0
     )
-    created_at = models.DateTimeField(
-        verbose_name="생성된 날짜",
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="수정된 날짜",
-        auto_now=True
-    )
-
-    objects = models.Manager()
 
     def viewed_at(self):
         """ created_at 과 viewed_at을 동일시하기 위한 메서드"""
@@ -93,7 +85,7 @@ class ViewHistory(models.Model):
             new_history.save()
 
 
-class Activity(models.Model):
+class Activity(BaseModel):
     """ 사용자 액티비티 관련 베이스 모델입니다. """
     content_type = models.ForeignKey(
         ContentType,
@@ -115,17 +107,6 @@ class Activity(models.Model):
         null=True,
         blank=True
     )
-    created_at = models.DateTimeField(
-        verbose_name="생성된 날짜",
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="수정된 날짜",
-        auto_now=True
-    )
-
-    objects = models.Manager()
-
 
 class LikeActivity(Activity):
     """ 좋아요/싫어요 등의 액션 모델입니다."""
