@@ -7,7 +7,7 @@ from markdown import markdown
 
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class NoticeQueryManager(BaseModelManager):
+class NoticeQuerySet(models.QuerySet):
     """ notice 모델 쿼리셋 클래스입니다. """
 
     def recent(self):
@@ -28,7 +28,7 @@ class NoticeQueryManager(BaseModelManager):
 
 class Notice(BaseModel):
     """ 공지사항 모델 """
-    objects = NoticeQueryManager()
+    objects = BaseModelManager.from_queryset(NoticeQuerySet)()
 
     STATUS_CHOICES = (
         ('d', 'draft'),

@@ -9,7 +9,7 @@ from django_summernote.fields import SummernoteTextField
 
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class ArticleQueryManager(BaseModelManager):
+class ArticleQuerySet(models.QuerySet):
     """ articles 모델 쿼리셋 클래스입니다. """
 
     def recent(self):
@@ -34,7 +34,7 @@ class ArticleQueryManager(BaseModelManager):
 
 class Article(BaseModel):
     """ 게시글 모델 """
-    objects = ArticleQueryManager()
+    objects = BaseModelManager.from_queryset(ArticleQuerySet)()
 
     STATUS_CHOICES = (
         ('d', 'draft'),

@@ -9,7 +9,7 @@ from django_summernote.fields import SummernoteTextField
 from users.models import User
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class HanmaumArticleQueryManager(BaseModelManager):
+class HanmaumArticleQuerySet(models.QuerySet):
     """ 한마음 모델 쿼리셋 클래스입니다. """
 
     def published(self):
@@ -19,7 +19,7 @@ class HanmaumArticleQueryManager(BaseModelManager):
 
 class HanmaumArticle(BaseModel):
     """한마음 게시글 모델입니다."""
-    objects = HanmaumArticleQueryManager()
+    objects = BaseModelManager.from_queryset(HanmaumArticleQuerySet)()
 
     STATUS_CHOICES = (
         ('d', 'draft'),
