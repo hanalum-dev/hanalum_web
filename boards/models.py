@@ -2,8 +2,9 @@
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 
+from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class BoardQuerySet(models.QuerySet):
+class BoardQueryManager(BaseModelManager):
     """ Board 모델 쿼리셋 클래스입니다. """
 
     def published(self):
@@ -11,9 +12,9 @@ class BoardQuerySet(models.QuerySet):
         return self.filter(status='p')
 
 
-class Board(models.Model):
+class Board(BaseModel):
     """ 게시판 모델 클래스입니다."""
-    objects = BoardQuerySet.as_manager()
+    objects = BoardQueryManager()
 
     STATUS_CHOICES = (
         ('d', 'draft'),

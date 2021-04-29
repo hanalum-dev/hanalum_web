@@ -8,10 +8,11 @@ check_timeout = os.getenv("POSTGRES_CHECK_TIMEOUT", 30)
 check_interval = os.getenv("POSTGRES_CHECK_INTERVAL", 1)
 interval_unit = "second" if check_interval == 1 else "seconds"
 config = {
-    "dbname": os.getenv("POSTGRES_DB", "db"),
-    "user": os.getenv("POSTGRES_USER", "db"),
-    "password": os.getenv("POSTGRES_PASSWORD", ""),
-    "host": os.getenv("DATABASE_URL", "db")
+    "dbname": os.getenv("POSTGRES_DB", "postgres"),
+    "user": os.getenv("POSTGRES_USER", "postgres"),
+    "password": os.getenv("POSTGRES_PASSWORD", "postgres"),
+    "host": os.getenv("DATABASE_URL", "db"),
+    "port": os.getenv("POSTGRES_PORT", "5433")
 }
 
 start_time = time()
@@ -20,7 +21,7 @@ logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
 
 
-def pg_isready(host, user, password, dbname):
+def pg_isready(host, user, password, dbname, port):
     while time() - start_time < check_timeout:
         try:
             conn = psycopg2.connect(**vars())

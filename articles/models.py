@@ -7,8 +7,9 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 
+from hanalum_web.base_model import BaseModel, BaseModelManager
 
-class ArticleQuerySet(models.QuerySet):
+class ArticleQueryManager(BaseModelManager):
     """ articles 모델 쿼리셋 클래스입니다. """
 
     def recent(self):
@@ -31,9 +32,9 @@ class ArticleQuerySet(models.QuerySet):
         """ 5개의 게시글만 리턴합니다. """
         return self[:5]
 
-class Article(models.Model):
+class Article(BaseModel):
     """ 게시글 모델 """
-    objects = ArticleQuerySet.as_manager()
+    objects = ArticleQueryManager()
 
     STATUS_CHOICES = (
         ('d', 'draft'),
@@ -80,14 +81,6 @@ class Article(models.Model):
         default=False,
         null=False
     )
-    created_at = models.DateTimeField(
-        verbose_name="생성된 날짜",
-        auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="수정된 날짜",
-        auto_now=True
-    )
 
     def __str__(self):
         return "[{}]{}".format(self.board, self.title)
@@ -122,6 +115,10 @@ class Article(models.Model):
         if self.anonymous_author and not self.board.use_anonymous:
             raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
         super().save(*args, **kwargs)
+    
+    
+    def get_next_article(self):
+        Article.objects.filter(pk_gt)
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """
