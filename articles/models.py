@@ -93,17 +93,23 @@ class Article(BaseModel):
 
     def summary(self, length=50):
         """ content 일부 표기"""
+        plain_text = self.plain_content()
 
+        if len(plain_text) >= length:
+            return plain_text[:length] + "..."
+
+        return plain_text[:length]
+
+    def plain_content(self):
+        """html, markdown 양식 제외한 content 텍스트를 반환합니다."""
         converter = html2text.HTML2Text()
         converter.ignore_links = False
         markdown_text = converter.handle(self.content)
         html = markdown(markdown_text)
         plain_text = ''.join(BeautifulSoup(html).findAll(text=True))
 
-        if len(plain_text) >= length:
-            return plain_text[:length] + "..."
+        return plain_text
 
-        return plain_text[:length]
 
     def classname(self):
         """ 클래스명 """

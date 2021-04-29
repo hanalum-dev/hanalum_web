@@ -21,6 +21,24 @@
     color: var(--hanalum-gray);
 }
 
+.text-small {
+    font-size: 0.9rem;
+}
+
+.text-xsmall {
+    font-size: 0.8rem;
+}
+
+.text-xxsmall {
+    font-size: 0.7rem;
+}
+
+.text-overflow-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 /* ----- background-color ----- */
 

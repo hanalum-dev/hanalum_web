@@ -2,57 +2,58 @@
 
 <div class="card">
     <div class="card-body position-relative">
-        <h5 class="card-title">
+        <div class="p-1">
             <a href = "{{ show_url }}">
-                {{ article.abstract_title }}
+                <h6 class="card-title w-100 text-overflow-ellipsis">
+                    {{ article.title }}
+                </h6>
+                {% if article.top_fixed %}
+                    <span class="badge bg-success text-white font-size-half-rem">상단 고정</span>
+                {% endif %}
             </a>
-            {% if article.top_fixed %}
-                <span class="badge bg-success text-white font-size-half-rem">상단 고정</span>
-            {% endif %}
-        </h5>
-        <p class="card-text">{{ article.summary }}</p>
-        
-        <div class="card-text pb-2">
+            <p class="card-text fw-light text-gray text-small text-overflow-ellipsis pb-1 mb-0">
+                {{ article.plain_content }}
+            </p>
+        </div>
+        <div class="card-text pb-1">
             {% for hashtag in article.hashtags%}
-                <span class="badge bg-light text-dark pe-2">
+                <span class="badge bg-light text-gray pe-2 text-xxsmall">
                     {{ hashtag.content }}
                 </span>
             {% endfor %}
         </div>
-        <p class="card-text">
-            <small class="text-muted">
-                <span class="me-2">
-                    {% fa5_icon 'user-alt' 'fas' %}
-                    {% if article.anonymous_author %}
-                        익명
-                    {% else %}
-                        {{ article.author}}
-                    {% endif %}
-                </span>
-                {% fa5_icon 'eye' 'far' %} {{article.total_viewed_count}}
-                {% if show_like_activity %}
-                    <span class="card-text ps-2 text-blue">
-                        {% if user.is_user_in_like %}
-                                {% fa5_icon 'thumbs-up' 'fas' %}
-                        {% else %}
-                                {% fa5_icon 'thumbs-up' 'far' %}
-                        {% endif %}
-                        {{article.like_count}}
-                    </span>
-                    <span class="card-text ps-2 text-red" >
-                        {% if user.is_user_in_dislike %}
-                            {% fa5_icon 'thumbs-down' 'fas' %}
-                        {% else %}
-                            {% fa5_icon 'thumbs-down' 'far' %}
-                        {% endif %}
-                        {{article.dislike_count}}
-                    </span>
+        <div class="p-1 card-text text-muted text-xxsmall">
+            <span class="me-2">
+                {% fa5_icon 'user-alt' 'fas' %}
+                {% if article.anonymous_author %}
+                    익명
+                {% else %}
+                    {{ article.author}}
                 {% endif %}
-                <span class="ps-2">
-                    {% fa5_icon 'clock' 'far' %}
-                    {{article.updated_at}}
+            </span>
+            {% fa5_icon 'eye' 'far' %} {{article.total_viewed_count}}
+            {% if show_like_activity %}
+                <span class="card-text ps-2 text-blue">
+                    {% if user.is_user_in_like %}
+                            {% fa5_icon 'thumbs-up' 'fas' %}
+                    {% else %}
+                            {% fa5_icon 'thumbs-up' 'far' %}
+                    {% endif %}
+                    {{article.like_count}}
                 </span>
-            </small>
-        </p>
+                <span class="card-text ps-2 text-red" >
+                    {% if user.is_user_in_dislike %}
+                        {% fa5_icon 'thumbs-down' 'fas' %}
+                    {% else %}
+                        {% fa5_icon 'thumbs-down' 'far' %}
+                    {% endif %}
+                    {{article.dislike_count}}
+                </span>
+            {% endif %}
+            <span class="ps-2">
+                {% fa5_icon 'clock' 'far' %}
+                {{article.updated_at}}
+            </span>
+        </div>
     </div>
 </div>
