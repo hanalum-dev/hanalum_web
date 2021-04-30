@@ -12,7 +12,6 @@ from helpers.default import default_response
 
 hashtag_model = HashTag()
 view_history = ViewHistory()
-like_activity = LikeActivity()
 
 # def index(request):
 #     return render('')
@@ -39,19 +38,19 @@ def show(request, board_id):
             _viewed_obj=article,
         ) or 0
         article.hashtags = hashtag_model.get_hashtag(tagged_object=article)
-        article.like_count = like_activity.get_like_count(
+        article.like_count = LikeActivity.get_like_count(
             _content_object=article
         )
-        article.dislike_count = like_activity.get_dislike_count(
+        article.dislike_count = LikeActivity.get_dislike_count(
             _content_object=article
         )
 
         if request.user.is_authenticated:
-            article.is_user_in_like = like_activity.is_user_in_like(
+            article.is_user_in_like = LikeActivity.is_user_in_like(
                 _content_object=article,
                 _user=request.user
             )
-            article.is_user_in_dislike = like_activity.is_user_in_dislike(
+            article.is_user_in_dislike = LikeActivity.is_user_in_dislike(
                 _content_object=article,
                 _user=request.user
             )

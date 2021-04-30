@@ -17,15 +17,6 @@ from hashtags.models import HashTag
 view_history = ViewHistory()
 hashtag_model = HashTag()
 comment_model = Comment()
-like_activity = LikeActivity()
-
-def get_hashtag_list(hashtags_str):
-    ret = []
-    for hashtag in hashtags_str.split("\n"):
-        if len(hashtag) > 0:
-            ret.append(hashtag)
-    return ret
-
 
 def show(request, article_id):
     """ 게시글 상세 페이지 """
@@ -35,19 +26,19 @@ def show(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     comments = Comment().get_comments(article)
 
-    article.like_count = like_activity.get_like_count(
+    article.like_count = LikeActivity.get_like_count(
         _content_object=article
     )
-    article.dislike_count = like_activity.get_dislike_count(
+    article.dislike_count = LikeActivity.get_dislike_count(
         _content_object=article
     )
 
     if current_user.is_authenticated:
-        article.is_user_in_like = like_activity.is_user_in_like(
+        article.is_user_in_like = LikeActivity.is_user_in_like(
             _content_object=article,
             _user=current_user
         )
-        article.is_user_in_dislike = like_activity.is_user_in_dislike(
+        article.is_user_in_dislike = LikeActivity.is_user_in_dislike(
             _content_object=article,
             _user=current_user
         )
@@ -211,13 +202,13 @@ def like(request, article_id):
     # TODO: validation 추가하기
 
     user = request.user
-    if like_activity.is_user_in_like(_content_object=article, _user=user):
-        activity_result = like_activity.set_user_in_none(
+    if LikeActivity.is_user_in_like(_content_object=article, _user=user):
+        activity_result = LikeActivity.set_user_in_none(
             _content_object=article,
             _user=user
         )
     else:
-        activity_result = like_activity.set_user_in_like(
+        activity_result = LikeActivity.set_user_in_like(
             _content_object=article,
             _user=user
         )
@@ -228,6 +219,7 @@ def like(request, article_id):
         messages.error(request, activity_result.msg)
 
     return redirect("articles:show", article_id)
+
 
 @login_required(login_url='/users/signin')
 def dislike(request, article_id):
@@ -238,13 +230,13 @@ def dislike(request, article_id):
 
     user = request.user
 
-    if like_activity.is_user_in_dislike(_content_object=article, _user=user):
-        activity_result = like_activity.set_user_in_none(
+    if LikeActivity.is_user_in_dislike(_content_object=article, _user=user):
+        activity_result = LikeActivity.set_user_in_none(
             _content_object=article,
             _user=user
         )
     else:
-        activity_result = like_activity.set_user_in_dislike(
+        activity_result = LikeActivity.set_user_in_dislike(
             _content_object=article,
             _user=user
         )
@@ -255,3 +247,18 @@ def dislike(request, article_id):
         messages.error(request, activity_result.msg)
 
     return redirect("articles:show", article_id)
+
+def get_hashtag_list(hashtags_str):
+    ret = []
+    for hashtag in hashtags_str.split("\n"):
+        if len(hashtag) > 0:
+            ret.append(hashtag)
+    return ret
+
+
+def get_recent_popular_articles(board_id):
+
+    if board_id:
+        Article.objects.filter(board_id=board_id).popular_order()
+    else:
+        Article.objects.recent().popular()

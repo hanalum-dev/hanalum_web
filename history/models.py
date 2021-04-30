@@ -124,6 +124,7 @@ class LikeActivity(Activity):
         choices=ACTIVITY_CATEGORY
     )
 
+    @classmethod
     def is_user_in_activity(self, _content_object, _user, _category):
         """ 사용자가 특정 액티비티를 수행하였는지 확인하는 메서드"""
         content_type_obj = ContentType.objects.get_for_model(_content_object)
@@ -140,6 +141,7 @@ class LikeActivity(Activity):
             return False
         return False
 
+    @classmethod
     def is_user_in_like(self, _content_object, _user):
         """ 사용자가 좋아요가 되어있는지 확인하는 메서드"""
         return self.is_user_in_activity(
@@ -147,7 +149,8 @@ class LikeActivity(Activity):
             _user,
             'like'
         )
-    
+
+    @classmethod
     def is_user_in_dislike(self, _content_object, _user):
         """ 사용자가 싫어요가 되어있는지 확인하는 메서드"""
         return self.is_user_in_activity(
@@ -156,6 +159,7 @@ class LikeActivity(Activity):
             'dislike'
         )
     
+    @classmethod
     def set_user_in_category(self, _content_object, _user, _category):
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         """ 액티비티를 세팅하는 base 메서드 """
@@ -183,6 +187,7 @@ class LikeActivity(Activity):
 
         return response
 
+    @classmethod
     def set_user_in_like(self, _content_object, _user):
         """ set 사용자 좋아요 액티비티 """
         response = self.set_user_in_category(_content_object, _user, 'like')
@@ -195,6 +200,7 @@ class LikeActivity(Activity):
         
         return LikeSuccess()
         
+    @classmethod
     def set_user_in_dislike(self, _content_object, _user):
         """ set 사용자 싫어요 액티비티 """
         response = self.set_user_in_category(_content_object, _user, 'dislike')
@@ -207,7 +213,7 @@ class LikeActivity(Activity):
         
         return DisLikeSuccess()
 
-        
+    @classmethod 
     def set_user_in_none(self, _content_object, _user):
         """ set 사용자 싫어요 액티비티 """
         response = self.set_user_in_category(_content_object, _user, 'none')
@@ -226,7 +232,7 @@ class LikeActivity(Activity):
         
         return AlreadyNoneActivityArticle()
 
-
+    @classmethod
     def get_like_count(self, _content_object):
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         response = LikeActivity.objects.filter(
@@ -237,7 +243,7 @@ class LikeActivity(Activity):
 
         return response
 
-
+    @classmethod
     def get_dislike_count(self, _content_object):
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         response = LikeActivity.objects.filter(
@@ -248,7 +254,7 @@ class LikeActivity(Activity):
 
         return response
 
-
+    @classmethod
     def get_like_activities(self, _user, _content_object):
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         like_activities = LikeActivity.objects.filter(
