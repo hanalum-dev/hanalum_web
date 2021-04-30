@@ -234,6 +234,7 @@ class LikeActivity(Activity):
 
     @classmethod
     def get_like_count(self, _content_object):
+        """좋아요 수를 반환합니다.""" 
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         response = LikeActivity.objects.filter(
             content_type=content_type_obj,
@@ -245,6 +246,8 @@ class LikeActivity(Activity):
 
     @classmethod
     def get_dislike_count(self, _content_object):
+        """싫어요 수를 반환합니다."""
+
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         response = LikeActivity.objects.filter(
             content_type=content_type_obj,
@@ -256,6 +259,8 @@ class LikeActivity(Activity):
 
     @classmethod
     def get_like_activities(self, _user, _content_object):
+        """_user가 좋아요한 _content_object 종류의 객체들을 반환합니다.""" 
+
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         like_activities = LikeActivity.objects.filter(
             user=_user,

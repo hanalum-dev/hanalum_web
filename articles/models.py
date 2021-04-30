@@ -8,6 +8,7 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 
 from hanalum_web.base_model import BaseModel, BaseModelManager
+from history.models import LikeActivity
 
 class ArticleQuerySet(models.QuerySet):
     """ articles 모델 쿼리셋 클래스입니다. """
@@ -80,6 +81,18 @@ class Article(BaseModel):
         verbose_name="상단 고정 게시물",
         default=False,
         null=False
+    )
+    like_count = models.PositiveIntegerField(
+        verbose_name="좋아요 수",
+        default=0,
+        null=True,
+        blank=True
+    )
+    dislike_count = models.PositiveIntegerField(
+        verbose_name="싫어요 수",
+        default=0,
+        null=True,
+        blank=True
     )
 
     def __str__(self):
