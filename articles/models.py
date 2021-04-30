@@ -1,14 +1,13 @@
 """ articles 모델 파일입니다. """
 import html2text
 from bs4 import BeautifulSoup
-from markdown import markdown
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django_summernote.fields import SummernoteTextField
+from markdown import markdown
 
 from hanalum_web.base_model import BaseModel, BaseModelManager
-from history.models import LikeActivity
+
 
 class ArticleQuerySet(models.QuerySet):
     """ articles 모델 쿼리셋 클래스입니다. """
@@ -21,6 +20,12 @@ class ArticleQuerySet(models.QuerySet):
         """ published 상태인 게시글만 리턴합니다. """
         return self.filter(status='p')
 
+    def popular_order(self):
+        """ 좋아요 - 싫어요 갯수가 많은 순서대로 리턴합니다. """
+        return self.extra(where={"like_count > dislike_count"}) \
+            .extra(select={'offset': 'dislike_count - like_count'}) \
+            .order_by('offset')
+
     def top_fixed(self):
         """ 상단 고정 게시글만 리턴합니다. """
         return self.filter(top_fixed=True)
@@ -32,6 +37,7 @@ class ArticleQuerySet(models.QuerySet):
     def five(self):
         """ 5개의 게시글만 리턴합니다. """
         return self[:5]
+
 
 class Article(BaseModel):
     """ 게시글 모델 """
@@ -46,7 +52,7 @@ class Article(BaseModel):
     board = models.ForeignKey(
         'boards.board',
         verbose_name="게시판",
-        on_delete = models.DO_NOTHING,
+        on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
         related_name='articles'
@@ -54,10 +60,10 @@ class Article(BaseModel):
     author = models.ForeignKey(
         'users.user',
         verbose_name="글쓴이",
-        on_delete = models.DO_NOTHING,
+        on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
-    ) # 글쓴이
+    )  # 글쓴이
     title = models.CharField(
         verbose_name="제목",
         max_length=200,
@@ -99,6 +105,7 @@ class Article(BaseModel):
         return "[{}]{}".format(self.board, self.title)
 
     def abstract_title(self):
+        """article의 제목을 최대 30글자까지 반환합니다."""
         if len(self.title) <= 30:
             return str(self.title)
         else:
@@ -123,7 +130,6 @@ class Article(BaseModel):
 
         return plain_text
 
-
     def classname(self):
         """ 클래스명 """
         return self.__class__.__name__
@@ -134,10 +140,7 @@ class Article(BaseModel):
         if self.anonymous_author and not self.board.use_anonymous:
             raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
         super().save(*args, **kwargs)
-    
-    
-    def get_next_article(self):
-        Article.objects.filter(pk_gt)
+
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """

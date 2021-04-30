@@ -48,7 +48,12 @@
                 </h5>
                 <hr>
 
-                {% comment %} TODO: 추가 컨텐츠{% endcomment %}
+                {% for popular_article in popular_articles %}
+                    <span class="w-90p text-overflow-ellipsis ">
+                        {{ popular_article.title }}
+                    </span>
+                    <hr>
+                {% endfor %}
             </div>
         </div>
     </div>
