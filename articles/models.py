@@ -104,6 +104,7 @@ class Article(BaseModel):
     def __str__(self):
         return "[{}]{}".format(self.board, self.title)
 
+    @property
     def abstract_title(self):
         """article의 제목을 최대 30글자까지 반환합니다."""
         if len(self.title) <= 30:

@@ -40,12 +40,6 @@ def show(request, board_id):
             _viewed_obj=article,
         ) or 0
         article.hashtags = hashtag_model.get_hashtag(tagged_object=article)
-        article.like_count = LikeActivity.get_like_count(
-            _content_object=article
-        )
-        article.dislike_count = LikeActivity.get_dislike_count(
-            _content_object=article
-        )
 
         if request.user.is_authenticated:
             article.is_user_in_like = LikeActivity.is_user_in_like(

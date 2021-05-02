@@ -27,13 +27,6 @@ def show(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     comments = Comment().get_comments(article)
 
-    article.like_count = LikeActivity.get_like_count(
-        _content_object=article
-    )
-    article.dislike_count = LikeActivity.get_dislike_count(
-        _content_object=article
-    )
-
     if current_user.is_authenticated:
         article.is_user_in_like = LikeActivity.is_user_in_like(
             _content_object=article,
