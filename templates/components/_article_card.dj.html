@@ -28,7 +28,9 @@
                 {% if article.anonymous_author %}
                     익명
                 {% else %}
-                    {{ article.author}}
+                    <a {% if article.author.id %} href= "{% url 'users:show' article.author.id %}" {% endif %}>
+                        {{ article.author}}
+                    </a>
                 {% endif %}
             </span>
             {% fa5_icon 'eye' 'far' %} {{article.total_viewed_count}}

@@ -730,6 +730,6 @@ footer {
     border-bottom: 1px solid #dee2e6;
 }
 
-.article-list .article-list-item:last-child {
+.article-list .article-list-item:nth-child(5) {
     border-bottom: none!important;
 }
