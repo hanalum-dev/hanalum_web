@@ -372,7 +372,7 @@ nav button {
 .none-itmes-wrapper {
     border-radius: 10px;
     padding: 4px;
-    min-height: 100px;
+    min-height: 200px;
 }
 
 .none-items-msg {
@@ -723,7 +723,7 @@ footer {
 }
 
 .footer-wrap {
-    margin-top: 10rem;
+    margin-top: 17rem;
 }
 
 .article-list .article-list-item {

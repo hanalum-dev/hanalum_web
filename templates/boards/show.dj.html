@@ -29,7 +29,8 @@
                     {% url 'articles:show' article.id as show_url %}
                     {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
                     {% empty %}
-                    {% include 'components/_none_items.dj.html' with msg="게시글이 없습니다. :("%}
+                    {% url 'articles:new' board.id as new_url %}
+                    {% include 'components/_none_items.dj.html' with msg="게시글이 없습니다. :(<br>한번 게시글을 <a href='"|add:new_url|add:"'> 작성해볼까요? </a>"%}
                 {% endfor %}
             </div>
 
