@@ -1,15 +1,15 @@
 {% load fontawesome_5 %}
 
-<div class="card">
+<div class="card {% if article.top_fixed %} bg-light-gray {% endif %}">
     <div class="card-body position-relative">
         <div class="p-1">
             <a href = "{{ show_url }}">
                 <h6 class="card-title w-100 text-overflow-ellipsis">
+                    {% if article.top_fixed %}
+                        <span class="badge bg-success text-white font-size-half-rem me-2">상단 고정</span>
+                    {% endif %}
                     {{ article.title }}
                 </h6>
-                {% if article.top_fixed %}
-                    <span class="badge bg-success text-white font-size-half-rem">상단 고정</span>
-                {% endif %}
             </a>
             <p class="card-text fw-light text-gray text-small text-overflow-ellipsis pb-1 mb-0">
                 {{ article.plain_content }}

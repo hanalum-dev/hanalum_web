@@ -21,6 +21,10 @@
                 <hr>
             </div>
             <div class="row g-2">
+                {% for article in top_fixed_articles %}
+                    {% url 'articles:show' article.id as show_url %}
+                    {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+                {% endfor %}
                 {% for article in articles %}
                     {% url 'articles:show' article.id as show_url %}
                     {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}

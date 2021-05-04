@@ -3,7 +3,7 @@
     --hanalum-navy: #00235D;
     --hanalum-dark-navy: #051122;
     --hanalum-red: #ff5f5f;
-    --hanalum-light-black: #1f1f1f;
+    --hanalum-light-dark: #1f1f1f;
     --hanalum-light-gray: #F7F7FB;
     --hanalum-white: #FFFFFF;
     --hanalum-gray: #6c757d;
@@ -11,27 +11,27 @@
 }
 
 .text-white {
-    color: white;
+    color: white!important;
 }
 
 .text-black {
-    color: black;
+    color: black!important;
 }
 
 .text-blue {
-    color: var(--hanalum-blue);
+    color: var(--hanalum-blue)!important;
 }
 
 .text-red {
-    color: var(--hanalum-red);
+    color: var(--hanalum-red)!important;
 }
 
 .text-light-gray {
-    color: var(--hanalum-light-gray);
+    color: var(--hanalum-light-gray)!important;
 }
 
 .text-gray {
-    color: var(--hanalum-gray);
+    color: var(--hanalum-gray)!important;
 }
 
 .text-small {
@@ -56,31 +56,31 @@
 /* ----- background-color ----- */
 
 .bg-black {
-    background-color: black;
+    background-color: black!important;
 }
 
 .bg-light-dark {
-    background-color: var(--hanalum-light-black);
+    background-color: var(--hanalum-light-dark)!important;
 }
 
 .bg-navy {
-    background-color: var(--hanalum-navy);
+    background-color: var(--hanalum-navy)!important;
 }
 
 .bg-dark-navy {
-    background-color: var(--hanalum-dark-navy);
+    background-color: var(--hanalum-dark-navy)!important;
 }
 
 .bg-gray {
-    background-color: var(--hanalum-gray);
+    background-color: var(--hanalum-gray)!important;
 }
 
 .bg-light-gray {
-    background-color: var(--hanalum-light-gray);
+    background-color: var(--hanalum-light-gray)!important;
 }
 
 .bg-dark-gray {
-    background-color: var(--hanalum-dark-gray);
+    background-color: var(--hanalum-dark-gray)!important;
 }
 
 .bg-transparent-gray {
@@ -107,6 +107,14 @@
 
 .mn-height-px-300 {
     min-height: 300px;
+}
+
+.mn-height-px-350 {
+    min-height: 350px;
+}
+
+.mn-height-px-400 {
+    min-height: 400px;
 }
 
 .mn-height-px-500 {
@@ -716,4 +724,12 @@ footer {
 
 .footer-wrap {
     margin-top: 10rem;
+}
+
+.article-list .article-list-item {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.article-list .article-list-item:last-child {
+    border-bottom: none!important;
 }

@@ -37,18 +37,18 @@
         {% for main_board in main_boards %}
           <div class="main-board-container col-md-6 col-12 gy-3">
             <div class="card">
-              <div class="board-title-container card-header">
-                <h5 class=" card-title p-1 pt-2">
-                  <a href="{% url 'boards:show'  main_board.board.id %}">
+              <div class="board-title-container card-header bg-white">
+                <h5 class="card-title p-1 pt-2">
+                  <a href="{% url 'boards:show'  main_board.board.id %}" class="text-blue">
                     {{ main_board.board.title }}
                   </a>
                 </h5>
               </div>
-              <div class="card-content p-2 mn-height-px-300">
+              <div class="card-content p-2 mn-height-px-350 article-list">
                 {% for article in main_board.board.articles.recent.published.five %}
-                  <div class="p-2 border-bottom">
+                  <div class="p-2 article-list-item">
                     <h6 class="pt-1">
-                      <a href="{% url 'articles:show' article.id %}">
+                      <a href="{% url 'articles:show' article.id %}" class="text-overflow-ellipsis d-block">
                         {{ article.title }}
                       </a>
                     </h6>
