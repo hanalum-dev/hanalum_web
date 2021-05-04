@@ -31,7 +31,7 @@ def show(request, board_id):
     if page == "" or page is None:
         page = 1
 
-    articles = list(top_fixed_articles) + list(paginator.get_page(page))
+    articles = paginator.get_page(page)
     start = max(int(page) - 5, 1)
     end = min(int(page) + 5, paginator.num_pages)
 
@@ -54,6 +54,7 @@ def show(request, board_id):
     response.update({
         'board': board,
         'banner_title' : board.title,
+        'top_fixed_articles': top_fixed_articles,
         'articles': articles,
         'popular_articles': popular_articles,
         'range': list(range(start, end + 1))
