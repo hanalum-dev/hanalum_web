@@ -1,4 +1,5 @@
 :root {
+    --hanalum-light-blue: #6f83e7;
     --hanalum-blue: #5060AD;
     --hanalum-navy: #00235D;
     --hanalum-dark-navy: #051122;
@@ -85,6 +86,10 @@
 
 .bg-transparent-gray {
     background-color: rgba(96, 96, 96, 0.479);
+}
+
+.bg-light-blue {
+    background-color: var(--hanalum-light-blue)!important;
 }
 
 
@@ -732,4 +737,12 @@ footer {
 
 .article-list .article-list-item:nth-child(5) {
     border-bottom: none!important;
+}
+
+.btn-primary {
+    background-color: var(--hanalum-light-blue);
+}
+
+.btn-primary:hover {
+    background-color: var(--hanalum-blue);
 }
