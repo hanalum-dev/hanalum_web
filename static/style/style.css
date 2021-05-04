@@ -1,8 +1,21 @@
 :root {
     --hanalum-blue: #5060AD;
+    --hanalum-navy: #00235D;
+    --hanalum-dark-navy: #051122;
     --hanalum-red: #ff5f5f;
+    --hanalum-light-black: #1f1f1f;
     --hanalum-light-gray: #F7F7FB;
+    --hanalum-white: #FFFFFF;
     --hanalum-gray: #6c757d;
+    --hanalum-dark-gray: #282a2b;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-black {
+    color: black;
 }
 
 .text-blue {
@@ -46,8 +59,28 @@
     background-color: black;
 }
 
+.bg-light-dark {
+    background-color: var(--hanalum-light-black);
+}
+
+.bg-navy {
+    background-color: var(--hanalum-navy);
+}
+
+.bg-dark-navy {
+    background-color: var(--hanalum-dark-navy);
+}
+
+.bg-gray {
+    background-color: var(--hanalum-gray);
+}
+
 .bg-light-gray {
     background-color: var(--hanalum-light-gray);
+}
+
+.bg-dark-gray {
+    background-color: var(--hanalum-dark-gray);
 }
 
 .bg-transparent-gray {
@@ -117,6 +150,10 @@
 
 .w-70p {
     width: 70%;
+}
+
+.hanalum-max-width {
+    max-width: 2000px;
 }
 
 
@@ -200,47 +237,72 @@
 
 /* ----- banner ----- */
 
-.background-banner {
+.banner {
     width: 100%;
-    margin-top: -60px;
-    min-height: 400px;
-    max-height: 500px;
-    background-position: top -250px center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.9;
-    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-image {
+    z-index: 3;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .banner-title {
+    z-index: 10;
+    text-align: left;
+    text-decoration: solid 2px;
+    position: absolute;
+    top: 120px;
+}
+
+.banner-title h2 {
     filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
     color: #ffffff;
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
-    margin: 0 0 24px;
-    text-align: center;
-    text-decoration: solid 2px;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    position: absolute;
-    top: 200px;
-    left: 50%;
 }
 
-.banner-sub-title {
+.banner-title h3 {
     filter: drop-shadow(0 0 1rem rgb(0, 0, 0));
     color: #ffffff;
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
-    text-align: center;
-    text-decoration: solid 2px;
-    font-size: 1.2rem;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 768px) {
+    .banner-title {
+        text-align: left;
+        text-decoration: solid 2px;
+        position: absolute;
+        top: 120px;
+    }
+    .banner-title h2 {
+        filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+        color: #ffffff;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 800;
+    }
+    .banner-title h3 {
+        filter: drop-shadow(0 0 1rem rgb(0, 0, 0));
+        color: #ffffff;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 800;
+    }
+}
+
+.banner .banner-bg-character-container {
+    position: relative;
+}
+
+.banner img.banner-bg-character {
+    width: auto;
+    max-height: 200px;
     position: absolute;
-    top: 260px;
-    left: 50%;
+    bottom: 3rem;
+    right: 2rem;
 }
 
 
@@ -248,9 +310,7 @@
 
 nav {
     z-index: 1000;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--hanalum-white);
 }
 
 nav.navbar {
@@ -265,10 +325,16 @@ nav a {
 
 nav .nav-brand {
     text-decoration: none;
-    color: rgb(255, 255, 255);
-    font-weight: 800;
-    filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+    color: black;
+    padding-left: 1rem;
+    font-weight: 700;
     font-family: 'Raleway', sans-serif;
+}
+
+@media only screen and (max-width: 1100px) {
+    nav .nav-brand {
+        font-size: 1.2rem;
+    }
 }
 
 nav .nav-menu-text:visited {
@@ -276,9 +342,7 @@ nav .nav-menu-text:visited {
 }
 
 nav .nav-menu-text {
-    color: white;
-    font-weight: 600;
-    text-decoration: double;
+    color: black;
 }
 
 nav .board-menu-group {
@@ -287,9 +351,13 @@ nav .board-menu-group {
 }
 
 nav .board-menu-group a {
-    color: white;
+    color: black;
     font-weight: 600;
     text-decoration: double;
+}
+
+nav button {
+    padding-right: 1rem;
 }
 
 .none-itmes-wrapper {

@@ -6,11 +6,14 @@
   <link rel="stylesheet" href="{% static 'style/root.css' %}?v=2">
 {% endblock %}
 
-{% comment %} top_banners, boards {% endcomment %}
+{% block banner %}
+  {% include 'main/_banner.dj.html' %}
+{% endblock %}
+
 {% block content %}
   <main class="root row p-2 g-4">
-    {% if user.is_authenticated %}
-      <section class="col-lg-2 d-lg-block d-md-none d-none">
+    <section class="col-lg-2 d-lg-block d-md-none d-none">
+      {% if user.is_authenticated %}
         <div class="row">
           <div class="col-12 gy-3">
             <div class="card p-3">
@@ -27,11 +30,8 @@
             </div>
           </div>
         </div>
-      </section>
-    {% else %}
-      <section class="col-lg-2 d-lg-block d-md-none d-none">
-      </section>
-    {% endif %}
+      {% endif %}
+    </section>
     <section class="col-lg-8 col-12">
       <div class="row">
         {% for main_board in main_boards %}
