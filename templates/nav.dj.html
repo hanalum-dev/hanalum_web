@@ -60,7 +60,7 @@
                 <div class = "row">
                     {% for board in nav_board_list%}
                         <div class = "col-4 p-2 text-center">
-                            <a href = "{% url 'boards:show' board.id %}">
+                            <a href = "{% url 'boards:show' board.id %}" class="text-white">
                                 {{board.title}}
                             </a>
                         </div>

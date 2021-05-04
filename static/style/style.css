@@ -311,6 +311,7 @@
 nav {
     z-index: 1000;
     background-color: var(--hanalum-white);
+    box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
 }
 
 nav.navbar {
@@ -707,4 +708,12 @@ nav button {
 .gallery-item:hover .card-img-overlay {
     border-radius: 10px;
     display: inherit;
+}
+
+footer {
+    background-color: var(--hanalum-dark-gray);
+}
+
+.footer-wrap {
+    margin-top: 10rem;
 }
