@@ -142,6 +142,18 @@ class Article(BaseModel):
             raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
         super().save(*args, **kwargs)
 
+    def copy(self, status='d'):
+        """ article 복사 메서드 """
+        new_article = Article()
+        new_article.author = self.author
+        new_article.anonymous_author = self.anonymous_author
+        new_article.title = self.title
+        new_article.board = self.board
+        new_article.content = self.content
+        new_article.status = status
+        new_article.save()
+        return new_article
+
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """

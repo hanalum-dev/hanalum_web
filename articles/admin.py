@@ -11,7 +11,11 @@ class ArticleAdmin(admin.ModelAdmin):
     """게시글 어드민 설정 클래스입니다."""
 
     actions = [
-        'reset_like_and_dislike_counter'
+        'reset_like_and_dislike_counter',
+        'copy_to_draft_article',
+        'copy_to_published_article',
+        'set_to_top_fixed_article',
+        'set_to_top_unfixed_article'
     ]
 
     list_display = [
@@ -56,3 +60,37 @@ class ArticleAdmin(admin.ModelAdmin):
             article.dislike_count = LikeActivity.get_dislike_count(article)
             article.save()
     reset_like_and_dislike_counter.short_description = '좋아요/싫어요 카운터 재설정'
+
+    def copy_to_draft_article(modeladmin, request, queryset):
+        """draft 상태로 게시글 복사"""
+        articles = queryset
+
+        for article in articles:
+            article.copy()
+    copy_to_draft_article.short_description = 'draft 상태로 게시글 복사'
+
+    def copy_to_published_article(modeladmin, request, queryset):
+        """published 상태로 게시글 복사"""
+        articles = queryset
+
+        for article in articles:
+            article.copy(status='p')
+    copy_to_published_article.short_description = 'published 상태로 게시글 복사'
+
+    def set_to_top_fixed_article(modeladmin, request, queryset):
+        """상단 고정 게시글 설정"""
+        articles = queryset
+
+        for article in articles:
+            article.top_fixed = True
+            article.save()
+    set_to_top_fixed_article.short_description = '상단 고정 게시글 설정'
+
+    def set_to_top_unfixed_article(modeladmin, request, queryset):
+        """상단 고정 게시글 해제"""
+        articles = queryset
+
+        for article in articles:
+            article.top_fixed = False
+            article.save()
+    set_to_top_unfixed_article.short_description = '상단 고정 게시글 설정'
