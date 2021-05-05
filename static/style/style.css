@@ -11,6 +11,10 @@
     --hanalum-dark-gray: #282a2b;
 }
 
+main {
+    min-height: 70vh;
+}
+
 .text-white {
     color: white!important;
 }
@@ -345,7 +349,7 @@ nav .nav-brand {
     font-family: 'Raleway', sans-serif;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1200px) {
     nav .nav-brand {
         font-size: 1.2rem;
     }
@@ -728,7 +732,7 @@ footer {
 }
 
 .footer-wrap {
-    margin-top: 17rem;
+    margin-top: 10rem;
 }
 
 .article-list .article-list-item {
