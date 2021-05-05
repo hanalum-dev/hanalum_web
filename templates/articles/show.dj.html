@@ -9,8 +9,13 @@
 {% block content %}
     <div class = "article row m-3 gx-lg-5 gy-3">
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card m-3 p-2">
+                <a href="{% url 'boards:show' article.board.id %}">
+                    <h4> {{article.board.title}} </h4>
+                </a>
+            </div>
             <div class="card m-3">
-                <div class="card-header position-relative">
+                <div class="card-header position-relative bg-white">
                     <h3 class="card-title">
                         {{ article.title }}
                     </h3>
@@ -47,7 +52,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="card-footer mn-height-px-100">
+                <div class="card-footer mn-height-px-100 bg-white">
                     <div class="row w-100 justify-content-center">
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-2 text-center">
                             <a href="{% url 'articles:like' article.id %}" class="btn">

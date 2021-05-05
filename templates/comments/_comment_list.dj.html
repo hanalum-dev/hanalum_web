@@ -63,96 +63,96 @@
                         {% endif %}
                     </div>
                 </div>
-            {% else %}
-                {% include 'comments/_destroyed_comment.dj.html' %}
-            {% endif %}
-            <div class="col-12">
-                {% if comment.recomments %}
-                    {% for recomment in comment.recomments %}
-                        {% published recomment as published %}
-                        {% if published %}
-                            <div class="row p-1 m-2 ml-5 bg-light-gray">
-                                <div class="col-12 p-2 pb-1 align-middle position-relative">
-                                    <div class="d-inline">
-                                        {% with avatar_image_url=recomment.user.avatar_image_url %}
-                                            {% include 'comments/_circle_avatar.dj.html' %}
-                                        {% endwith %}
-                                    </div>
-                                    <h5 class="commentor"> {{ recomment.user }}</h5>
-                                    <p class="p-2 m-0 editCommentCollape{{recomment.id}} collapse show" id="editContainer{{recomment.id}}">
-                                        {{ recomment.content }}
-                                    </p>
-                                    {% editable recomment request.user as editable %}
-                                    {% if editable %}
-                                        <div class="editCommentCollape{{recomment.id}} collapse" id="editContainer{{recomment.id}}">
-                                            <form action="{% url 'comments:update' recomment.id %}" method="POST">
-                                                {% csrf_token %}
-                                                <div class="form-group p-2">
-                                                    <div class="input-group comment-textarea-wrapper w-100">
-                                                        <textarea class="form-control" name="content" rows="3">{{ recomment.content }}</textarea>
-                                                        <div class="comment-submit">
-                                                            <button type="submit" class="btn btn-primary"> 작성 </button>
-                                                        </div>
+            </div>
+        {% else %}
+            {% include 'comments/_destroyed_comment.dj.html' %}
+        {% endif %}
+        <div class="col-12">
+            {% if comment.recomments %}
+                {% for recomment in comment.recomments %}
+                    {% published recomment as published %}
+                    {% if published %}
+                        <div class="row p-1 m-2 ml-5 bg-light-gray">
+                            <div class="col-12 p-2 pb-1 align-middle position-relative">
+                                <div class="d-inline">
+                                    {% with avatar_image_url=recomment.user.avatar_image_url %}
+                                        {% include 'comments/_circle_avatar.dj.html' %}
+                                    {% endwith %}
+                                </div>
+                                <h5 class="commentor"> {{ recomment.user }}</h5>
+                                <p class="p-2 m-0 editCommentCollape{{recomment.id}} collapse show" id="editContainer{{recomment.id}}">
+                                    {{ recomment.content }}
+                                </p>
+                                {% editable recomment request.user as editable %}
+                                {% if editable %}
+                                    <div class="editCommentCollape{{recomment.id}} collapse" id="editContainer{{recomment.id}}">
+                                        <form action="{% url 'comments:update' recomment.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group p-2">
+                                                <div class="input-group comment-textarea-wrapper w-100">
+                                                    <textarea class="form-control" name="content" rows="3">{{ recomment.content }}</textarea>
+                                                    <div class="comment-submit">
+                                                        <button type="submit" class="btn btn-primary"> 작성 </button>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                                <small class="text-muted">
+                                    {{ recomment.updated_at }}
+                                    {% if recomment.is_updated %}
+                                        (수정됨)
                                     {% endif %}
-                                    <small class="text-muted">
-                                        {{ recomment.updated_at }}
-                                        {% if recomment.is_updated %}
-                                            (수정됨)
-                                        {% endif %}
-                                    </small>
-                                    <div class="comment-action p-3">
-                                        {% editable recomment request.user as editable %}
-                                        {% if editable %}
-                                            <a class="p-1 text-secondary edit-comment"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target=".editCommentCollape{{recomment.id}}"
-                                                href="#editContainer{{recomment.id}}"
-                                                role="button"
-                                                aria-expanded="false"
-                                                aria-controls="editContainer{{recomment.id}} commentContent{{recomment.id}}">
-                                                    수정
-                                            </a>
-                                        {% endif %}
+                                </small>
+                                <div class="comment-action p-3">
+                                    {% editable recomment request.user as editable %}
+                                    {% if editable %}
+                                        <a class="p-1 text-secondary edit-comment"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target=".editCommentCollape{{recomment.id}}"
+                                            href="#editContainer{{recomment.id}}"
+                                            role="button"
+                                            aria-expanded="false"
+                                            aria-controls="editContainer{{recomment.id}} commentContent{{recomment.id}}">
+                                                수정
+                                        </a>
+                                    {% endif %}
 
-                                        {% destroyable recomment request.user as destroyable %}
-                                        {% if destroyable %}
-                                            <a class="p-1 text-secondary" href="{% url 'comments:destroy' recomment.id %}" onclick="return confirm('댓글을 삭제하시겠습니까?')"> 삭제 </a>
-                                        {% endif %}
-                                    </div>
+                                    {% destroyable recomment request.user as destroyable %}
+                                    {% if destroyable %}
+                                        <a class="p-1 text-secondary" href="{% url 'comments:destroy' recomment.id %}" onclick="return confirm('댓글을 삭제하시겠습니까?')"> 삭제 </a>
+                                    {% endif %}
                                 </div>
                             </div>
-                        {% else %}
-                            {% include 'comments/_destroyed_recomment.dj.html' %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-
-                <div class="row p-1 m-2 ml-5 bg-light-gray collapse" id="inputRecomment{{comment.id}}">
-                    <div class="col-12 p-2 pb-1 align-middle position-relative">
-                        <div class="d-inline">
-                            {% with avatar_image_url=request.user.avatar_image_url %}
-                                {% include 'comments/_circle_avatar.dj.html' %}
-                            {% endwith %}
                         </div>
-                        <h5 class="commentor"> {{ request.user }}</h5>
-                        <form action="{{ new_comment_url }}" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group p-2">
-                                <div class="input-group comment-textarea-wrapper w-100">
-                                    <input type="hidden" name="parent_id" value="{{comment.id}}">
-                                    <textarea class="form-control" name="content" rows="3"></textarea>
-                                    <div class="comment-submit">
-                                        <button type="submit" class="btn btn-primary"> 작성 </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    {% else %}
+                        {% include 'comments/_destroyed_recomment.dj.html' %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="row p-1 m-2 ml-5 bg-light-gray collapse" id="inputRecomment{{comment.id}}">
+            <div class="col-12 p-2 pb-1 align-middle position-relative">
+                <div class="d-inline">
+                    {% with avatar_image_url=request.user.avatar_image_url %}
+                        {% include 'comments/_circle_avatar.dj.html' %}
+                    {% endwith %}
                 </div>
+                <h5 class="commentor"> {{ request.user }}</h5>
+                <form action="{{ new_comment_url }}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group p-2">
+                        <div class="input-group comment-textarea-wrapper w-100">
+                            <input type="hidden" name="parent_id" value="{{comment.id}}">
+                            <textarea class="form-control" name="content" rows="3"></textarea>
+                            <div class="comment-submit">
+                                <button type="submit" class="btn btn-primary"> 작성 </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     {% endfor %}
