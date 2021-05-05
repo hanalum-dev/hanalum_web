@@ -19,7 +19,7 @@ repos:
     rev: 3.8.4
     hooks:
       - id: flake8
-        args: ['--ignore=E1101,E203']
+        args: ['--ignore=E1101,E203,E501,E722']
   - repo: local
     hooks:
       - id: pylint
@@ -28,7 +28,7 @@ repos:
         language: system
         types: [python]
         exclude: "[a-zA-Z]*/(migrations|tests)/(.)*"
-        args: ['--disable=E1101,E0213']
+        args: ['--disable=E1101,E0213,W0702,W0235']
   - repo: https://github.com/asottile/seed-isort-config
     rev: v2.2.0
     hooks:

@@ -1,22 +1,21 @@
+"""histroy signal module"""
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+
 from history.models import LikeActivity
 
-from django.contrib.contenttypes.models import ContentType
-from articles.models import Article
 
-@receiver( pre_save, sender = LikeActivity )
-def update_like_counter_cache( sender, **kwargs ):
-
-    instance = kwargs[ 'instance' ]
+@receiver(pre_save, sender=LikeActivity)
+def update_like_counter_cache(sender, **kwargs):
+    """article.like_counter를 갱신합니다."""
+    instance = kwargs['instance']
 
     content_type = instance.content_type
     content_id = instance.content_id
     category = instance.category
 
-    prev_instance = LikeActivity.objects.get(pk=instance.id)
-    prev_category = prev_instance.category
-
+    prev_instance = LikeActivity.objects.filter(pk=instance.id).first()
+    prev_category = prev_instance.category if prev_instance else 'None'
 
     if category != 'like' and prev_category != 'like':
         return
@@ -37,18 +36,18 @@ def update_like_counter_cache( sender, **kwargs ):
             return
 
 
-@receiver( pre_save, sender = LikeActivity )
-def update_dislike_counter_cache( sender, **kwargs ):
+@receiver(pre_save, sender=LikeActivity)
+def update_dislike_counter_cache(sender, **kwargs):
+    """article.dislike_counter를 갱신합니다."""
 
-    instance = kwargs[ 'instance' ]
+    instance = kwargs['instance']
 
     content_type = instance.content_type
     content_id = instance.content_id
     category = instance.category
 
-    prev_instance = LikeActivity.objects.get(pk=instance.id)
-    prev_category = prev_instance.category
-
+    prev_instance = LikeActivity.objects.filter(pk=instance.id).first()
+    prev_category = prev_instance.category if prev_instance else 'None'
 
     if category != 'dislike' and prev_category != 'dislike':
         return
