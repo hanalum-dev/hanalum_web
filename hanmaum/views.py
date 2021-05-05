@@ -12,7 +12,6 @@ from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
 
-like_activity = LikeActivity()
 view_history = ViewHistory()
 comment_model = Comment()
 
@@ -26,11 +25,11 @@ def index(request):
             _viewed_obj=article,
         )
         if request.user.is_authenticated:
-            article.is_user_in_like = like_activity.is_user_in_like(
+            article.is_user_in_like = LikeActivity.is_user_in_like(
                 _content_object=article,
                 _user=request.user
             )
-            article.is_user_in_dislike = LikeActivity().is_user_in_dislike(
+            article.is_user_in_dislike = LikeActivity.is_user_in_dislike(
                 _content_object=article,
                 _user=request.user
             )
@@ -104,7 +103,7 @@ def like(request):
     
     user = request.user
 
-    activity_result = like_activity.set_user_in_like(
+    activity_result = LikeActivity.set_user_in_like(
         _content_object=article,
         _user=user
     )
@@ -161,7 +160,7 @@ def cancle(request):
 
     user = request.user
 
-    activity_result = like_activity.set_user_in_none(
+    activity_result = LikeActivity.set_user_in_none(
         _content_object=article,
         _user=user
     )

@@ -2,12 +2,12 @@
 {% load fontawesome_5 %}
 
 <nav class = "navbar sticky-top m-0 p-0">
-    <div class = "row w-100 m-3">
+    <div class = "row w-100 m-3 justify-content-center">
         <div class = "col-lg-3 col-11">
             <a href = "/">
                 <h4 class = "nav-brand">
                     <img src = "{% static 'img/no-title-logo.png'%}" height = "30"/>
-                    한민의 소리, 한아름
+                    한민의 소리, <span class="text-blue">한아름</span>
                 </h5>
             </a>
         </div>
@@ -48,19 +48,19 @@
                 {% endif %}
             </div>
         </div>
-        <div class="col-1 d-md-block d-lg-none ">
+        <div class="col-1 d-md-block d-lg-none">
             <button class="btn nav-menu-text m-0 p-0" id="sidebarCollapse">
                 {% fa5_icon 'bars' 'fas' %}
             </button>
         </div>
     </div>
-    <div class = "row board-menu-group w-80p">
+    <div class = "row board-menu-group w-80p d-lg-block d-md-none d-none">
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
             <div class="accordion-body">
                 <div class = "row">
                     {% for board in nav_board_list%}
                         <div class = "col-4 p-2 text-center">
-                            <a href = "{% url 'boards:show' board.id %}">
+                            <a href = "{% url 'boards:show' board.id %}" class="text-white">
                                 {{board.title}}
                             </a>
                         </div>

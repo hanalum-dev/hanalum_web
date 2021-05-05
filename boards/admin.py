@@ -19,6 +19,7 @@ class BoardAdmin(admin.ModelAdmin):
         'use_bad',
         'use_anonymous',
         'status',
+        'priority',
         'board_format_category',
         'max_attachment_count'
     ]
@@ -36,8 +37,10 @@ class BoardAdmin(admin.ModelAdmin):
         'max_attachment_count',
     ]
 
+
 @admin.register(BoardAdminUser)
 class BoardAdminUserAdmin(admin.ModelAdmin):
+    """게시판 관리자 유저 어드민 설정 클래스입니다."""
     list_display = [
         'user',
         'board',

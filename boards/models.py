@@ -4,12 +4,18 @@ from django_summernote.fields import SummernoteTextField
 
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
+
 class BoardQuerySet(models.QuerySet):
     """ Board 모델 쿼리셋 클래스입니다. """
 
     def published(self):
         """ published 상태인 게시판만 리턴합니다. """
         return self.filter(status='p')
+
+    def priority_order(self):
+        # FIXME: 가나다 순이 제대로 안 작동함.
+        """ 우선순위 높은 순서에 따라 정렬하고, 우선순위가 같다면 게시판 제목의 가나다 순으로 정렬합니다. """
+        return self.order_by('-priority', 'title')
 
 
 class Board(BaseModel):
@@ -39,7 +45,7 @@ class Board(BaseModel):
     creator = models.ForeignKey(
         'users.user',
         verbose_name="게시판 제작자",
-        on_delete = models.DO_NOTHING,
+        on_delete=models.DO_NOTHING,
         blank=True,
         null=True
     )
@@ -109,6 +115,10 @@ class Board(BaseModel):
         default=0,
         blank=True,
         null=True,
+    )
+    priority = models.IntegerField(
+        verbose_name="우선순위",
+        default=0
     )
 
     def __str__(self):

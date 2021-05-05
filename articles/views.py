@@ -2,60 +2,47 @@
 from copy import deepcopy as dp
 
 from django.contrib import messages
-from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
 
 from boards.models import Board
 from comments.models import Comment
-from .models import Article
-from .forms import ArticleCreationForm, ArticleEditionForm
-from helpers.default import default_response
-from history.models import ViewHistory, LikeActivity
+from hanalum_web.base_views import catch_all_exceptions
 from hashtags.models import HashTag
+from helpers.default import default_response
+from history.models import LikeActivity, ViewHistory
+
+from .forms import ArticleCreationForm, ArticleEditionForm
+from .models import Article
+from .validators import ArticlePermissionValidator
 
 view_history = ViewHistory()
 hashtag_model = HashTag()
 comment_model = Comment()
-like_activity = LikeActivity()
-
-def get_hashtag_list(hashtags_str):
-    ret = []
-    for hashtag in hashtags_str.split("\n"):
-        if len(hashtag) > 0:
-            ret.append(hashtag)
-    return ret
 
 
+@catch_all_exceptions
 def show(request, article_id):
-    """ 게시글 상세 페이지 """
-    # TODO: validation 추가
+    """articles#show"""
+
     response = dp(default_response)
     current_user = request.user
+
+    ArticlePermissionValidator.show(current_user, article_id)
+
     article = get_object_or_404(Article, pk=article_id)
     comments = Comment().get_comments(article)
 
-    article.like_count = like_activity.get_like_count(
-        _content_object=article
-    )
-    article.dislike_count = like_activity.get_dislike_count(
-        _content_object=article
-    )
-
     if current_user.is_authenticated:
-        article.is_user_in_like = like_activity.is_user_in_like(
+        article.is_user_in_like = LikeActivity.is_user_in_like(
             _content_object=article,
             _user=current_user
         )
-        article.is_user_in_dislike = like_activity.is_user_in_dislike(
+        article.is_user_in_dislike = LikeActivity.is_user_in_dislike(
             _content_object=article,
             _user=current_user
         )
     is_author = article.author == current_user
-
-    if article.status != 'p':
-        messages.error(request, '삭제된 글입니다.')
-        return redirect("boards:show", article.board.id)
 
     hashtags = hashtag_model.get_hashtag(tagged_object=article)
 
@@ -76,13 +63,20 @@ def show(request, article_id):
 
     return render(request, 'articles/show.dj.html', response)
 
+
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new(request, board_id):
+    """articles#new"""
     response = dp(default_response)
     response.update({
         'board_id': board_id,
+        'full_screen': True,
         'form': ArticleCreationForm()
     })
+    current_user = request.user
+
+    ArticlePermissionValidator.new(current_user, board_id)
 
     current_board = get_object_or_404(Board, pk=board_id)  # 현재 글을 작성 중인 게시판
     response['board'] = current_board
@@ -93,7 +87,7 @@ def new(request, board_id):
         form = ArticleCreationForm(request.POST)
 
         if form.is_valid():
-            author = request.user
+            author = current_user
             if author is None:
                 # TODO: validation + error message 따로 빼기
                 messages.error(request, '로그인 후, 글을 작성해주세요.')
@@ -101,7 +95,7 @@ def new(request, board_id):
 
             article = form.save(commit=False)
             article.author = author
-            article.board  = current_board
+            article.board = current_board
             article.save()
 
             hashtags_str = request.POST.get('hashtags_str')
@@ -117,15 +111,22 @@ def new(request, board_id):
         messages.error(request, "글 작성 중 오류가 발생하였습니다.")
         return redirect("boards:show", board_id)
     else:
-        response['form'] = ArticleCreationForm(initial={'content': (current_board.default_article_format or "")})
+        response['form'] = ArticleCreationForm(
+            initial={'content': (current_board.default_article_format or "")}
+        )
         return render(request, 'articles/new.dj.html', response)
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def edit(request, article_id):
+    """articles#edit"""
+
     response = dp(default_response)
 
     current_user = request.user
+    ArticlePermissionValidator.edit(current_user, article_id)
+
     article = get_object_or_404(Article, pk=article_id)
 
     if article.author != current_user:
@@ -164,9 +165,15 @@ def edit(request, article_id):
 
     return render(request, 'articles/edit.dj.html', response)
 
+
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def delete(request, article_id):
+    """articles#delete"""
+
     current_user = request.user
+    ArticlePermissionValidator.delete(current_user, article_id)
+
     article = get_object_or_404(Article, pk=article_id)
 
     if article.author != current_user:
@@ -180,8 +187,10 @@ def delete(request, article_id):
     return redirect("boards:show", board_id)
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new_comment(request, article_id):
+    """articles#new_comment"""
 
     article = get_object_or_404(Article, pk=article_id)
     user = request.user
@@ -194,32 +203,34 @@ def new_comment(request, article_id):
         parent = None
 
     comment_model.new_comment(
-        _commented_object = article,
-        _user = user,
-        _content = content,
+        _commented_object=article,
+        _user=user,
+        _content=content,
         _parent=parent
     )
 
     # TODO: 댓글이 작성되었습니다. 메세지 띄우기
     return redirect("articles:show", article_id)
 
+
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def like(request, article_id):
-    """ 좋아요 view"""
+    """article을 좋아요 처리합니다."""
 
-    article = get_object_or_404(Article, pk=article_id)
-    # TODO: validation 추가하기
+    current_user = request.user
+    ArticlePermissionValidator.like(current_user, article_id)
+    article = Article.objects.filter(pk=article_id).first()
 
-    user = request.user
-    if like_activity.is_user_in_like(_content_object=article, _user=user):
-        activity_result = like_activity.set_user_in_none(
+    if LikeActivity.is_user_in_like(_content_object=article, _user=current_user):
+        activity_result = LikeActivity.set_user_in_none(
             _content_object=article,
-            _user=user
+            _user=current_user
         )
     else:
-        activity_result = like_activity.set_user_in_like(
+        activity_result = LikeActivity.set_user_in_like(
             _content_object=article,
-            _user=user
+            _user=current_user
         )
 
     if activity_result.status:
@@ -229,24 +240,26 @@ def like(request, article_id):
 
     return redirect("articles:show", article_id)
 
+
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def dislike(request, article_id):
-    """ 싫어요 view """
+    """article을 싫어요 처리합니다."""
 
+    current_user = request.user
+
+    ArticlePermissionValidator.dislike(current_user, article_id)
     article = get_object_or_404(Article, pk=article_id)
-    # TODO: validation 추가하기
 
-    user = request.user
-
-    if like_activity.is_user_in_dislike(_content_object=article, _user=user):
-        activity_result = like_activity.set_user_in_none(
+    if LikeActivity.is_user_in_dislike(_content_object=article, _user=current_user):
+        activity_result = LikeActivity.set_user_in_none(
             _content_object=article,
-            _user=user
+            _user=current_user
         )
     else:
-        activity_result = like_activity.set_user_in_dislike(
+        activity_result = LikeActivity.set_user_in_dislike(
             _content_object=article,
-            _user=user
+            _user=current_user
         )
 
     if activity_result.status:
@@ -255,3 +268,20 @@ def dislike(request, article_id):
         messages.error(request, activity_result.msg)
 
     return redirect("articles:show", article_id)
+
+
+def get_hashtag_list(hashtags_str):
+    """입력된 hashtag 문자열을 list로 변환하여 반환합니다."""
+    ret = []
+    for hashtag in hashtags_str.split("\n"):
+        if len(hashtag) > 0:
+            ret.append(hashtag)
+    return ret
+
+
+def get_recent_popular_articles(board_id=None):
+    """인기 게시글을 반환합니다."""
+    if board_id:
+        return Article.objects.filter(board_id=board_id).popular_order().five()
+    else:
+        return Article.objects.popular_order().five()

@@ -18,7 +18,6 @@ from articles.models import Article
 from hanmaum.models import HanmaumArticle
 
 logger = logging.getLogger(__name__)
-like_activity = LikeActivity()
 view_history = ViewHistory()
 
 @transaction.atomic
@@ -120,7 +119,7 @@ def me(request):
     #     return redirect("users:signin")
 
     # # FIXME: activity 개선하면서 작동 안될거임.(게시물을 가져오는게 아니라 activity가 리턴됨.)
-    # like_articles = like_activity.get_like_activities(
+    # like_articles = LikeActivity.get_like_activities(
     #     _user=user,
     #     _content_object=ARTICLE
     # )
@@ -133,7 +132,7 @@ def me(request):
     #        continue
 
     # # TODO: 코드 개선하기
-    # like_hanmaum_activities = like_activity.get_like_activities(
+    # like_hanmaum_activities = LikeActivity.get_like_activities(
     #     _user=user,
     #     _content_object=HANMAUMARTICLE
     # )
