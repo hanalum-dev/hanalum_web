@@ -140,4 +140,8 @@ nav button.nav-menu-bar-button { padding-right: 1rem; }
 
 .footer-wrap footer { background-color: #282a2b; }
 
+.pagination_wrapper { padding: 1rem; text-align: center; background-color: transparent !important; }
+
+.pagination_wrapper .pagination { padding: 2rem; }
+
 /*# sourceMappingURL=style.css.map */
