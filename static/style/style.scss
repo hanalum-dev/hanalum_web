@@ -1,6 +1,7 @@
 @import 'color';
 @import 'size';
 @import 'button';
+@import 'variables';
 nav {
     z-index: 1000;
     background-color: white;
@@ -29,6 +30,10 @@ nav {
     .nav-menu-text:visited {
         text-decoration: none;
     }
+    .nav-center-menu-item {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
     .board-menu-group {
         background-color: rgba(0, 0, 0, 0.5);
         margin: 0 auto;
@@ -40,6 +45,9 @@ nav {
     }
     button.nav-menu-bar-button {
         padding-right: 1rem;
+    }
+    .board-menu-group {
+        max-width: $window-max-width * 3 / 5;
     }
 }
 

@@ -130,11 +130,15 @@ nav .nav-menu-text { color: black; }
 
 nav .nav-menu-text:visited { text-decoration: none; }
 
+nav .nav-center-menu-item { padding-left: 1.5rem; padding-right: 1.5rem; }
+
 nav .board-menu-group { background-color: rgba(0, 0, 0, 0.5); margin: 0 auto; }
 
 nav .board-menu-group a { color: black; font-weight: 600; text-decoration: double; }
 
 nav button.nav-menu-bar-button { padding-right: 1rem; }
+
+nav .board-menu-group { max-width: 1200px; }
 
 .footer-wrap { margin-top: 10rem; }
 

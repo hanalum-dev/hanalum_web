@@ -76,11 +76,13 @@
         <div id="collapseSideNavBoard" class="accordion-collapse collapse" aria-labelledby="nav-menu-text">
             <div class="accordion-body">
                 {% for board in nav_board_list%}
-                    <li class="nav-item p-2 ms-2">
-                        <a href = "{% url 'boards:show' board.id %}">
-                            {{ board.title }}
-                        </a>
-                    </li>
+                    {% if not user.is_anonymous or board.visible_anonymous %}
+                        <li class="nav-item p-2 ms-2">
+                            <a href = "{% url 'boards:show' board.id %}">
+                                {{ board.title }}
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
