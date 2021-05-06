@@ -1,6 +1,8 @@
 {% load bootstrap5 %}
 {% load fontawesome_5 %}
 {% load static %}
+{% load sass_tags %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,8 +20,10 @@
         <link rel="shortcut icon" href="{% static 'img/no-title-logo.png' %}?v=2">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{% static 'library/bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css' %}?v=2" rel="stylesheet">
+        <link href="{% sass_src 'style/style.scss' %}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{% static 'style/normalize.css' %}?v=2">
-        <link rel="stylesheet" href="{% static 'style/style.css' %}?v=2">
+        <link rel="stylesheet" href="{% static 'style/style2.css' %}?v=2">
+
         {% fontawesome_5_static %}
         {% block stylesheet %}
         {% endblock %}
@@ -29,14 +33,16 @@
         {% if not non_nav %}
             {% include 'nav.dj.html' %}
         {% endif %}
-        {% block banner %}
-        {% endblock %}
-        <div class = "row h-100 justify-content-center hanalum-max-width" style=" margin: auto;">
-            <div class = "col-xl-10 col-lg-10 col-md-10 col-12">
-                {% block content %}
-                {% endblock %}
+        <main>
+            {% block banner %}
+            {% endblock %}
+            <div class = "row h-100 justify-content-center hanalum-max-width" style="margin: auto;">
+                <div class = "col-xl-10 col-lg-10 col-md-10 col-12">
+                    {% block content %}
+                    {% endblock %}
+                </div>
             </div>
-        </div>
+        </main>
         {% include 'footer.dj.html' %}
         {% include 'components/_toasts.dj.html' %}
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
