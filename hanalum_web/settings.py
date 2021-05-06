@@ -155,6 +155,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_summernote',
     'fontawesome_5',
+    'sass_processor',
     'users',
     'api',
     'articles',
@@ -197,6 +198,10 @@ TEMPLATES = [
         },
     },
 ]
+
+SASS_PROCESSOR_ENABLED = True
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
+SASS_OUTPUT_STYLE = 'compact'
 
 WSGI_APPLICATION = "hanalum_web.wsgi.application"
 
