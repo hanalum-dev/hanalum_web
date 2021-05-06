@@ -1,0 +1,50 @@
+@import 'color';
+@import 'size';
+nav {
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 1px 0 0 #0000001a;
+    width: 100%;
+    height: 60px;
+    text-decoration: none;
+    a {
+        text-decoration: none;
+    }
+    h4.nav-brand {
+        text-decoration: none;
+        color: black;
+        padding-left: 1rem;
+        font-weight: 700;
+        font-family: 'Raleway', sans-serif;
+    }
+    @media only screen and (max-width: 1200px) {
+        .nav-brand {
+            font-size: 1.2rem;
+        }
+    }
+    .nav-menu-text {
+        color: black;
+    }
+    .nav-menu-text:visited {
+        text-decoration: none;
+    }
+    .board-menu-group {
+        background-color: rgba(0, 0, 0, 0.5);
+        margin: 0 auto;
+        a {
+            color: black;
+            font-weight: 600;
+            text-decoration: double;
+        }
+    }
+    button.nav-menu-bar-button {
+        padding-right: 1rem;
+    }
+}
+
+.footer-wrap {
+    margin-top: 10rem;
+    footer {
+        background-color: map-get($map: $colors, $key: dark-gray);
+    }
+}
