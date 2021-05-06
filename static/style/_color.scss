@@ -2,9 +2,9 @@ $colors: ( white: #ffffff, light-gray: #F7F7FB, light-dark: #1f1f1f, black: #000
 @each $color,
 $hex in $colors {
     .text-#{$color} {
-        color: $hex;
+        color: $hex!important;
     }
     .bg-#{$color} {
-        background-color: $hex;
+        background-color: $hex!important;
     }
 }

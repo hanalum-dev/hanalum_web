@@ -1,16 +1,3 @@
-:root {
-    --hanalum-light-blue: #6f83e7;
-    --hanalum-blue: #5060AD;
-    --hanalum-navy: #00235D;
-    --hanalum-dark-navy: #051122;
-    --hanalum-red: #ff5f5f;
-    --hanalum-light-dark: #1f1f1f;
-    --hanalum-light-gray: #F7F7FB;
-    --hanalum-white: #FFFFFF;
-    --hanalum-gray: #6c757d;
-    --hanalum-dark-gray: #282a2b;
-}
-
 main {
     min-height: 70vh;
 }
@@ -587,12 +574,4 @@ main {
 
 .article-list .article-list-item:nth-child(5) {
     border-bottom: none!important;
-}
-
-.btn-primary {
-    background-color: var(--hanalum-light-blue);
-}
-
-.btn-primary:hover {
-    background-color: var(--hanalum-blue);
 }

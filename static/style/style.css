@@ -1,54 +1,54 @@
-.text-white { color: #ffffff; }
+.text-white { color: #ffffff !important; }
 
-.bg-white { background-color: #ffffff; }
+.bg-white { background-color: #ffffff !important; }
 
-.text-light-gray { color: #F7F7FB; }
+.text-light-gray { color: #F7F7FB !important; }
 
-.bg-light-gray { background-color: #F7F7FB; }
+.bg-light-gray { background-color: #F7F7FB !important; }
 
-.text-light-dark { color: #1f1f1f; }
+.text-light-dark { color: #1f1f1f !important; }
 
-.bg-light-dark { background-color: #1f1f1f; }
+.bg-light-dark { background-color: #1f1f1f !important; }
 
-.text-black { color: #000000; }
+.text-black { color: #000000 !important; }
 
-.bg-black { background-color: #000000; }
+.bg-black { background-color: #000000 !important; }
 
-.text-dark { color: #000000; }
+.text-dark { color: #000000 !important; }
 
-.bg-dark { background-color: #000000; }
+.bg-dark { background-color: #000000 !important; }
 
-.text-navy { color: #00235D; }
+.text-navy { color: #00235D !important; }
 
-.bg-navy { background-color: #00235D; }
+.bg-navy { background-color: #00235D !important; }
 
-.text-dark-navy { color: #051122; }
+.text-dark-navy { color: #051122 !important; }
 
-.bg-dark-navy { background-color: #051122; }
+.bg-dark-navy { background-color: #051122 !important; }
 
-.text-blue { color: #5060AD; }
+.text-blue { color: #5060AD !important; }
 
-.bg-blue { background-color: #5060AD; }
+.bg-blue { background-color: #5060AD !important; }
 
-.text-light-blue { color: #6f83e7; }
+.text-light-blue { color: #6f83e7 !important; }
 
-.bg-light-blue { background-color: #6f83e7; }
+.bg-light-blue { background-color: #6f83e7 !important; }
 
-.text-red { color: #ff5f5f; }
+.text-red { color: #ff5f5f !important; }
 
-.bg-red { background-color: #ff5f5f; }
+.bg-red { background-color: #ff5f5f !important; }
 
-.text-gray { color: #6c757d; }
+.text-gray { color: #6c757d !important; }
 
-.bg-gray { background-color: #6c757d; }
+.bg-gray { background-color: #6c757d !important; }
 
-.text-dark-gray { color: #282a2b; }
+.text-dark-gray { color: #282a2b !important; }
 
-.bg-dark-gray { background-color: #282a2b; }
+.bg-dark-gray { background-color: #282a2b !important; }
 
-.text-transparent-gray { color: #6060607a; }
+.text-transparent-gray { color: #6060607a !important; }
 
-.bg-transparent-gray { background-color: #6060607a; }
+.bg-transparent-gray { background-color: #6060607a !important; }
 
 .mn-height-px-100 { min-height: 100px; }
 
@@ -61,6 +61,62 @@
 .mn-height-px-400 { min-height: 400px; }
 
 .mn-height-px-500 { min-height: 500px; }
+
+.text-white { color: #ffffff !important; }
+
+.bg-white { background-color: #ffffff !important; }
+
+.text-light-gray { color: #F7F7FB !important; }
+
+.bg-light-gray { background-color: #F7F7FB !important; }
+
+.text-light-dark { color: #1f1f1f !important; }
+
+.bg-light-dark { background-color: #1f1f1f !important; }
+
+.text-black { color: #000000 !important; }
+
+.bg-black { background-color: #000000 !important; }
+
+.text-dark { color: #000000 !important; }
+
+.bg-dark { background-color: #000000 !important; }
+
+.text-navy { color: #00235D !important; }
+
+.bg-navy { background-color: #00235D !important; }
+
+.text-dark-navy { color: #051122 !important; }
+
+.bg-dark-navy { background-color: #051122 !important; }
+
+.text-blue { color: #5060AD !important; }
+
+.bg-blue { background-color: #5060AD !important; }
+
+.text-light-blue { color: #6f83e7 !important; }
+
+.bg-light-blue { background-color: #6f83e7 !important; }
+
+.text-red { color: #ff5f5f !important; }
+
+.bg-red { background-color: #ff5f5f !important; }
+
+.text-gray { color: #6c757d !important; }
+
+.bg-gray { background-color: #6c757d !important; }
+
+.text-dark-gray { color: #282a2b !important; }
+
+.bg-dark-gray { background-color: #282a2b !important; }
+
+.text-transparent-gray { color: #6060607a !important; }
+
+.bg-transparent-gray { background-color: #6060607a !important; }
+
+.btn-primary { background-color: #6f83e7; }
+
+.btn-primary:hover { background-color: #5060AD; }
 
 nav { z-index: 1000; background-color: white; box-shadow: 0 1px 0 0 #0000001a; width: 100%; height: 60px; text-decoration: none; }
 
