@@ -59,11 +59,13 @@
             <div class="accordion-body">
                 <div class = "row">
                     {% for board in nav_board_list%}
-                        <div class = "col-4 p-2 text-center">
-                            <a href = "{% url 'boards:show' board.id %}" class="text-white">
-                                {{board.title}}
-                            </a>
-                        </div>
+                        {% if not user.is_anonymous or board.visible_anonymous %}
+                            <div class = "col-4 p-2 text-center">
+                                <a href = "{% url 'boards:show' board.id %}" class="text-white">
+                                    {{board.title}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

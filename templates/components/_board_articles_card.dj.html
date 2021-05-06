@@ -1,0 +1,38 @@
+{% load static %}
+{% load fontawesome_5 %}
+{% if not user.is_anonymous or board.visible_anonymous %}
+<div class="main-board-container col-md-6 col-12 gy-3">
+    <div class="card">
+        <div class="board-title-container card-header bg-white">
+        <h5 class="card-title p-1 pt-2">
+            <a href="{% url 'boards:show' board.id %}" class="text-blue">
+                {{ board.title }}
+            </a>
+        </h5>
+        </div>
+        <div class="card-content p-2 mn-height-px-350 article-list">
+            {% for article in board.articles.recent.published.five %}
+                <div class="p-2 article-list-item">
+                    <h6 class="pt-1">
+                        <a href="{% url 'articles:show' article.id %}" class="text-overflow-ellipsis d-block">
+                        {{ article.title }}
+                        </a>
+                    </h6>
+                    <div class="w-100 text-muted" style="font-size: 0.8rem;">
+                        {% fa5_icon 'user-alt' 'fas' %}
+                        {% if article.anonymous_author %}
+                        익명
+                        {% else %}
+                        <a href="{% url 'users:show' article.author.id %}">
+                            {{ article.author }}
+                        </a>
+                        {% endif %}
+                        {% fa5_icon 'clock' 'far ms-2' %}
+                        {{ article.updated_at }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
