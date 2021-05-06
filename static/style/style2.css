@@ -232,15 +232,6 @@ main {
     right: 2rem;
 }
 
-
-/* -------- nav -------- */
-
-@media only screen and (max-width: 1200px) {
-    nav .nav-brand {
-        font-size: 1.2rem;
-    }
-}
-
 .none-itmes-wrapper {
     border-radius: 10px;
     padding: 4px;
