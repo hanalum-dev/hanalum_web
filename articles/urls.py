@@ -1,9 +1,7 @@
 """articles urls 정의 파일입니다."""
 from django.urls import path
 
-from .views import (
-    show, new, new_comment, edit, delete, like, dislike
-)
+from .views import delete, dislike, edit, like, new, new_comment, search, show
 
 app_name = 'articles'
 
@@ -16,4 +14,5 @@ urlpatterns = [
     path('<int:article_id>/comment/new/', new_comment, name="new_comment"),
     path('<int:article_id>/like', like, name="like"),
     path('<int:article_id>/dislike', dislike, name="dislike"),
+    path('search', search, name="search"),
 ]

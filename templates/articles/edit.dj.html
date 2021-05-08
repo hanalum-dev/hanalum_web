@@ -5,32 +5,34 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="article container">
   <div class="card row m-3 p-3">
     <h2>
       글 수정 : {{ article.title }}
     </h2>
     <form method = "POST" action = "{% url 'articles:edit' article.id %}" class="align-middle">
       {% csrf_token %}
-      <div class = "p-3">
-        <div class = "card-content">
-          {% for field in form %}
-            <div class="m-1">
-              {% if field.id_for_label != 'id_anonymous_author' or article.board.use_anonymous %}
-                <label for="{{field.id_for_label}}" class = "m-1">{{field.label}}</label>
-                {{field}}
+      <div class = "card-content">
+        {% for field in form %}
+          <div class="m-1 pb-1 {{field.id_for_label}}">
+            {% if field.id_for_label != 'id_anonymous_author' or board.use_anonymous %}
+              {% if field.id_for_label != 'id_content' %}
+                <label for="{{field.id_for_label}}" class = "m-1">
+                  {{field.label}}
+                </label>
               {% endif %}
-            </div>
-          {% endfor %}
-          <input type="hidden" name="hashtags_str" id="hashtags_str">
-          <div class="chips">
-            <input class="chipsInput" id="hashTagChipsInput">
+              {{field}}
+            {% endif %}
           </div>
+        {% endfor %}
+        <input type="hidden" name="hashtags_str" id="hashtags_str">
+        <div class="chips">
+          <input class="chipsInput" id = "hashTagChipsInput">
         </div>
-        <hr class="mb-4">
-        <div class="d-grid d-md-flex justify-content-md-center">
-          <button class="btn btn-primary text-right submit">글 수정</button>
-        </div>
+      </div>
+      <hr class="mb-4">
+      <div class="d-grid d-md-flex justify-content-md-center">
+        <button class="btn btn-primary text-right submit">글 작성</button>
       </div>
     </form>
   </div>
