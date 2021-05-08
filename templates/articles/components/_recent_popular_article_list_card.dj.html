@@ -3,7 +3,7 @@
 <div class="card m-1 mn-height-px-300">
     <div class="card-header p-3 bg-light-gray">
         <h5>
-            실시간 인기글
+            {% if board %} {{ board.title }} : {% endif %} 실시간 인기글
         </h5>
     </div>
     <div class="card-body w-100 text-overflow-ellipsis">

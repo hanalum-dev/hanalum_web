@@ -31,6 +31,8 @@ def show(request, article_id):
     ArticlePermissionValidator.show(current_user, article_id)
 
     article = get_object_or_404(Article, pk=article_id)
+    board = article.board
+
     comments = Comment().get_comments(article)
 
     if current_user.is_authenticated:
@@ -46,17 +48,20 @@ def show(request, article_id):
 
     hashtags = hashtag_model.get_hashtag(tagged_object=article)
 
-    next_article = get_next_article(article_id=article_id, board_id=article.board_id)
-    prev_article = get_prev_article(article_id=article_id, board_id=article.board.id)
+    next_article = get_next_article(article_id=article_id, board_id=board.id)
+    prev_article = get_prev_article(article_id=article_id, board_id=board.id)
+    popular_articles = get_recent_popular_articles(board_id=board.id)
 
     response.update({
         'banner_title' : article.title,
         'article' : article,
+        'board': board,
         'comments' : comments,
         'is_author' : is_author,
         'hashtags' : hashtags,
         'next_article': next_article,
-        'prev_article': prev_article
+        'prev_article': prev_article,
+        'popular_articles': popular_articles
     })
 
     # 사용자 접속 로그 추가
