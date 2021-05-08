@@ -66,3 +66,12 @@ nav {
         padding: 2rem;
     }
 }
+
+.article {
+    .article-content {
+        iframe {
+            max-width: 100%;
+            max-height: 500px;
+        }
+    }
+}

@@ -148,4 +148,6 @@ nav .board-menu-group { max-width: 1200px; }
 
 .pagination_wrapper .pagination { padding: 2rem; }
 
+.article .article-content iframe { max-width: 100%; max-height: 500px; }
+
 /*# sourceMappingURL=style.css.map */

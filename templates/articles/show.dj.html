@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "article row m-3 gx-lg-5 gy-3">
+    <div class = "article row gx-lg-5 gy-3">
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card m-3 p-2">
                 <a href="{% url 'boards:show' article.board.id %}">
@@ -41,7 +41,7 @@
                     </small>
                 </div>
                 <div class="card-body mn-height-px-200 position-relative">
-                    <div class="card-text p-3">
+                    <div class="card-text p-3 article-content">
                         {{article.content | safe }}
                     </div>
                     <div class="card-text position-absolute bottom-0 p-3">
