@@ -46,20 +46,7 @@
                     <input placeholder="{{ board.title }}에서 글을 검색해보세요!" class="w-100 p-3 h-50-px border-solid-light-gray bg-light-gray">
                 </div>
             </form>
-
-            <div class="card p-3 m-1 mn-height-px-300" style="background-color: #F7F7FB;">
-                <h5>
-                    실시간 인기글
-                </h5>
-                <hr>
-
-                {% for popular_article in popular_articles %}
-                    <span class="w-90p text-overflow-ellipsis ">
-                        {{ popular_article.title }}
-                    </span>
-                    <hr>
-                {% endfor %}
-            </div>
+            {% include 'articles/components/_recent_popular_article_list_card.dj.html' %}
         </div>
     </div>
 {% endblock %}
