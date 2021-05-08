@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "row m-3 gx-lg-5 gy-3">
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
-            <div class="card m-3">
-                <div class="card-header p-3">
+    <div class = "notice row gx-sm-1 gy-3 pt-3">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header p-3 position-relative bg-white">
                     <h3 class="card-title">
                         {{ notice.title }}
                     </h3>
@@ -22,21 +22,22 @@
                         {{ notice.updated_at }}
                     </span>
                 </div>
-                <div class="card-body mn-height-px-100">
-                    <div class="card-text">
-                        {{notice.content | safe }}
+                <div class="card-body mn-height-px-200 position-relative">
+                    <div class="card-text p-3 article-content">
+                        {{article.content | safe }}
+                    </div>
+                    <div class="card-text position-absolute bottom-0 p-3">
+                        {% for hashtag in hashtags%}
+                            <span class="fw-bold">
+                                {{hashtag.content}}
+                            </span>
+                        {% endfor %}
                     </div>
                 </div>
                 {% url 'notices:new_comment' notice.id as new_comment_url%}
                 {% include 'comments/_comment_list.dj.html' with article=notice comments=comments new_comment_url=new_comment_url %}
             </div>
-        </div>
-
-
-        <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card mn-height-px-300">
-                {% comment %} TODO: 추가 컨텐츠{% endcomment %}
-            </div>
+            {% include 'notices/components/_prev_next_article_nav.dj.html' %}
         </div>
     </div>
 {% endblock %}

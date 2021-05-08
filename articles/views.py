@@ -333,22 +333,22 @@ def get_hashtag_list(hashtags_str):
 def get_recent_popular_articles(board_id=None):
     """인기 게시글을 반환합니다."""
     if board_id:
-        return Article.objects.filter(board_id=board_id).popular_order().five()
+        return Article.objects.published().filter(board_id=board_id).popular_order().five()
     else:
-        return Article.objects.popular_order().five()
+        return Article.objects.published().popular_order().five()
 
 
 def get_next_article(article_id, board_id=None):
     """다음 게시글을 반환합니다."""
     if board_id:
-        return Article.objects.filter(board_id=board_id, pk__gt=article_id).first()
+        return Article.objects.published().filter(board_id=board_id, pk__gt=article_id).first()
     else:
-        return Article.objects.filter(pk__gt=article_id).first()
+        return Article.objects.published().filter(pk__gt=article_id).first()
 
 
 def get_prev_article(article_id, board_id=None):
     """이전 게시글을 반환합니다."""
     if board_id:
-        return Article.objects.filter(board_id=board_id, pk__lt=article_id).first()
+        return Article.objects.published().filter(board_id=board_id, pk__lt=article_id).first()
     else:
-        return Article.objects.filter(pk__lt=article_id).first()
+        return Article.objects.published().filter(pk__lt=article_id).first()
