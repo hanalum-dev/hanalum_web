@@ -24,6 +24,11 @@ class ArticleCreationForm(forms.ModelForm):
                         'height': '600px',
                     }
                 }
+            ),
+            "title": forms.TextInput(
+                attrs={
+                    'class': 'article-title-form'
+                }
             )
         }
         labels = {
@@ -51,6 +56,11 @@ class ArticleEditionForm(forms.ModelForm):
                         'width': '100%',
                         'height': '600px',
                     }
+                }
+            ),
+            "title": forms.TextInput(
+                attrs={
+                    'class': 'article-title-form'
                 }
             )
         }

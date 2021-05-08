@@ -70,6 +70,10 @@ main {
     max-width: 2000px;
 }
 
+.w-fit-content {
+    width: fit-content;
+}
+
 
 /* ----- heght ----- */
 
@@ -440,12 +444,6 @@ main {
     margin-right: 5px;
 }
 
-.input-field {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
 .chip .close {
     cursor: pointer;
     float: right;
@@ -574,4 +572,8 @@ main {
 
 .article-list .article-list-item:nth-child(5) {
     border-bottom: none!important;
+}
+
+.border-bottom-gray {
+    border-bottom: 1px solid #dee2e6;
 }

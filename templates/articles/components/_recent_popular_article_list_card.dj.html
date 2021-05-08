@@ -1,0 +1,24 @@
+{% load fontawesome_5 %}
+
+<div class="card m-1 mn-height-px-300">
+    <div class="card-header p-3 bg-light-gray">
+        <h5>
+            {% if board %} {{ board.title }} : {% endif %} 실시간 인기글
+        </h5>
+    </div>
+    <div class="card-body w-100 text-overflow-ellipsis">
+        {% for popular_article in popular_articles %}
+            <span class="w-90p">
+                <a href="{% url 'articles:show' popular_article.id %}">
+                    {{ popular_article.title }}
+                </a>
+            </span>
+
+            <p class="pt-1 text-muted text-xxsmall">
+                {% fa5_icon 'clock' 'far' %}
+                {{popular_article.updated_at}}
+            </p>
+            <hr>
+        {% endfor %}
+    </div>
+</div>
