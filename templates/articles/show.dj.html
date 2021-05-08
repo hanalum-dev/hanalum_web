@@ -83,6 +83,40 @@
                 {% url 'articles:new_comment' article.id as new_comment_url%}
                 {% include 'comments/_comment_list.dj.html' with article=article comments=comments new_comment_url=new_comment_url %}
             </div>
+            <div class="card m-3 p-2">
+                <div class="card-body border-bottom-gray row">
+                    <div class="w-fit-content">
+                        <span class="fw-bold">
+                            다음 글:
+                        </span>
+                    </div>
+                    <div class="col text-overflow-ellipsis">
+                        {% if next_article %}
+                            <a href="{% url 'articles:show' next_article.id %}">{{ next_article.title }} </a>
+                        {% else%}
+                            <a class="text-muted">
+                                다음 글이 없습니다.
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body row">
+                    <div class="w-fit-content">
+                        <span class="fw-bold">
+                            이전 글:
+                        </span>
+                    </div>
+                    <div class="col text-overflow-ellipsis">
+                        {% if prev_article %}
+                            <a href="{% url 'articles:show' prev_article.id %}">{{ prev_article.title }} </a>
+                        {% else%}
+                            <a class="text-muted">
+                                이전 글이 없습니다.
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class = "col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">

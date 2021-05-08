@@ -46,12 +46,17 @@ def show(request, article_id):
 
     hashtags = hashtag_model.get_hashtag(tagged_object=article)
 
+    next_article = get_next_article(article_id=article_id, board_id=article.board_id)
+    prev_article = get_prev_article(article_id=article_id, board_id=article.board.id)
+
     response.update({
         'banner_title' : article.title,
         'article' : article,
         'comments' : comments,
         'is_author' : is_author,
         'hashtags' : hashtags,
+        'next_article': next_article,
+        'prev_article': prev_article
     })
 
     # 사용자 접속 로그 추가
@@ -285,3 +290,16 @@ def get_recent_popular_articles(board_id=None):
         return Article.objects.filter(board_id=board_id).popular_order().five()
     else:
         return Article.objects.popular_order().five()
+
+def get_next_article(article_id, board_id=None):
+    if board_id:
+        return Article.objects.filter(board_id=board_id, pk__gt=article_id).first()
+    else:
+        return Article.objects.filter(pk__gt=article_id).first()
+
+def get_prev_article(article_id, board_id=None):
+    if board_id:
+        return Article.objects.filter(board_id=board_id, pk__lt=article_id).first()
+    else:
+        return Article.objects.filter(pk__lt=article_id).first()
+
