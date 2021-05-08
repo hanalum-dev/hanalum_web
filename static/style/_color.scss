@@ -1,4 +1,4 @@
-$colors: ( white: #ffffff, light-gray: #F7F7FB, light-dark: #1f1f1f, black: #000000, dark: #000000, navy: #00235D, dark-navy: #051122, blue: #5060AD, light-blue: #6f83e7, red: #ff5f5f, gray: #6c757d, dark-gray: #282a2b, transparent-gray: #6060607a);
+$colors: ( white: #ffffff, light-gray: #F7F7FB, light-dark: #1f1f1f, black: #000000, dark: #000000, navy: #00235D, dark-navy: #051122, blue: #5060AD, light-blue: #6f83e7, red: #ff5f5f, gray: #6c757d, dark-gray: #282a2b, transparent-gray: #6060607a, transparent: transparent);
 @each $color,
 $hex in $colors {
     .text-#{$color} {

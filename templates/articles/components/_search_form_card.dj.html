@@ -1,0 +1,9 @@
+{% load fontawesome_5 %}
+<form method="GET" action="{% url 'articles:search' %}">
+    <div class="m-1 mb-3 position-relative">
+        <button type="submit" class="position-absolute text-gray right-10-px top-center-50 border-none">
+            {% fa5_icon 'search' 'fas' %}
+        </button>
+        <input placeholder="{% if board %}{{ board.title }}에서 글을 검색해보세요!{% else %}글을 검색해보세요!{% endif %}" class="w-100 p-3 h-50-px border-solid-light-gray bg-light-gray" name="search_keyword" value="{{ search_keyword }}">
+    </div>
+</form>

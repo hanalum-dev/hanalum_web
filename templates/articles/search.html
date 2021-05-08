@@ -11,13 +11,8 @@
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12 col-12">
             <div class="board-header w-100 position-relative">
                 <h3 class="d-inline-block p-2 w-100">
-                    {{ board.title }} : 최신 글
+                    {{ search_keyword }} : 검색 결과
                 </h3>
-                <div class="position-absolute right-0 top-0 m-1">
-                    <a href="{% url 'articles:new' board.id %}" class="text-right btn btn-success">
-                            {% fa5_icon 'pencil-alt' 'fas' %} 글 작성
-                    </a>
-                </div>
                 <hr>
             </div>
             <div class="row g-2 pb-5">

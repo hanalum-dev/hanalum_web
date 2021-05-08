@@ -3,6 +3,8 @@ from copy import deepcopy as dp
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from boards.models import Board
@@ -280,6 +282,45 @@ def dislike(request, article_id):
     return redirect("articles:show", article_id)
 
 
+@catch_all_exceptions
+def search(request):
+    """ GET: search
+        params: search_keyword, page
+    """
+
+    response = dp(default_response)
+
+    search_keyword = request.GET.get('search_keyword')
+    board_id = request.GET.get('board_id')
+
+    articles = Article.objects.published().filter(
+        Q(title__contains=search_keyword) | Q(content__contains=search_keyword)
+    ).recent()
+    popular_articles = get_recent_popular_articles(board_id=board_id)
+
+    if board_id:
+        articles = articles.filter(board_id=board_id)
+
+    paginator = Paginator(articles, 5)
+    page = request.GET.get('page')
+    if page == "" or page is None:
+        page = 1
+
+    articles = paginator.get_page(page)
+    start = max(int(page) - 5, 1)
+    end = min(int(page) + 5, paginator.num_pages)
+
+    response.update({
+        'search_keyword': search_keyword,
+        'articles': articles,
+        'popular_articles': popular_articles,
+        'range': list(range(start, end + 1)),
+        'custom_query': "&search_keyword={}".format(search_keyword)
+    })
+
+    return render(request, 'articles/search.html', response)
+
+
 def get_hashtag_list(hashtags_str):
     """입력된 hashtag 문자열을 list로 변환하여 반환합니다."""
     ret = []
@@ -296,15 +337,18 @@ def get_recent_popular_articles(board_id=None):
     else:
         return Article.objects.popular_order().five()
 
+
 def get_next_article(article_id, board_id=None):
+    """다음 게시글을 반환합니다."""
     if board_id:
         return Article.objects.filter(board_id=board_id, pk__gt=article_id).first()
     else:
         return Article.objects.filter(pk__gt=article_id).first()
 
+
 def get_prev_article(article_id, board_id=None):
+    """이전 게시글을 반환합니다."""
     if board_id:
         return Article.objects.filter(board_id=board_id, pk__lt=article_id).first()
     else:
         return Article.objects.filter(pk__lt=article_id).first()
-

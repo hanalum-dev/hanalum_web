@@ -2,7 +2,7 @@
     <ul class="pagination">
         {% if current_page.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{current_page.previous_page_number}}" tabindex="-1"
+                <a class="page-link" href="?page={{current_page.previous_page_number}}{{custom_query}}" tabindex="-1"
                     aria-disabled="false">이전</a>
             </li>
         {% else %}
@@ -13,15 +13,15 @@
         {% for i in range %}
             {% if i == current_page.number  %}
                 <li class="page-item active" aria-current="page">
-                    <a class="page-link bg-light-blue" href="?page={{i}}"> {{i}} <span class="sr-only">(current)</span></a>
+                    <a class="page-link bg-light-blue" href="?page={{i}}{{custom_query}}"> {{i}} <span class="sr-only">(current)</span></a>
                 </li>
             {% else %}
-                <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{i}}{{custom_query}}">{{i}}</a></li>
             {% endif %}
         {% endfor %}
         {% if current_page.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{current_page.next_page_number}}">다음</a>
+                <a class="page-link" href="?page={{current_page.next_page_number}}{{custom_query}}">다음</a>
             </li>
         {% else %}
             <li class="page-item disabled">
