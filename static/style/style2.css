@@ -444,12 +444,6 @@ main {
     margin-right: 5px;
 }
 
-.input-field {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
 .chip .close {
     cursor: pointer;
     float: right;
