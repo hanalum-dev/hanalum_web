@@ -1,4 +1,4 @@
-@import 'color';
+@import '../base/color';
 .btn-primary {
     background-color: map-get($map: $colors, $key: light-blue);
 }

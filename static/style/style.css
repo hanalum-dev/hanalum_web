@@ -66,6 +66,24 @@
 
 .mn-height-px-500 { min-height: 500px; }
 
+.w-50p { width: 50%; }
+
+.w-60p { width: 60%; }
+
+.w-70p { width: 70%; }
+
+.w-80p { width: 80%; }
+
+.w-90p { width: 90%; }
+
+.text-small { font-size: 0.9rem; }
+
+.text-xsmall { font-size: 0.8rem; }
+
+.text-xxsmall { font-size: 0.7rem; }
+
+.text-overflow-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 .text-white { color: #ffffff !important; }
 
 .bg-white { background-color: #ffffff !important; }
@@ -149,6 +167,8 @@ nav .board-menu-group a { color: black; font-weight: 600; text-decoration: doubl
 nav button.nav-menu-bar-button { padding-right: 1rem; }
 
 nav .board-menu-group { max-width: 1200px; }
+
+.hanalum-max-width { max-width: 2000px; }
 
 .footer-wrap { margin-top: 10rem; }
 
