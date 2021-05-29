@@ -10,7 +10,7 @@
 <div class = "container p-3 user-page">
     <div class="row g-2">
         <div class="col-md-4 col-12">
-            <div class="card p-3">
+            <div class="card p-3 h-100">
                 <div class="avatar-image-wrapper">
                     <img src = "{{ user.avatar_image_url }}">
                 </div>
@@ -24,40 +24,52 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-8 col-12">
-            <div class="card p-3">
-                <div class="p-3">
-                    <h4>
-                        좋아요한 게시물
-                    </h4>
+            <div class="card p-3 w-100">
+                <canvas id="profileChart" width="300" height="300" class="mx-height-px-300"></canvas>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card mx-height-px-400 overflow-scroll bg-white">
+                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+                    좋아요한 게시물
                     <hr>
-                    {% if like_articles is None or like_articles.count is 0 %}
-                        {% comment %} TOTO: 메세지 예쁘게 바꾸기 {% endcomment %}
+                </h4>
+                <div class="ps-3 pe-3 pt-1 pb-1">
+                    {% for article in like_articles %}
+                        <div class = "pb-1">
+                            {% url 'articles:show' article.id as show_url %}
+                            {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+                        </div>
+                        {% empty %}
                         {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
-                    {% else %}
-                        {% for article in like_articles %}
-                            {{ article.title }}
-                        {% endfor %}
-                    {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="p-3">
-                    <h4>
-                        좋아요를 누른 한마음 게시물
-                    </h4>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card mx-height-px-400 overflow-scroll bg-white">
+                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+                    좋아요를 누른 한마음 게시물
                     <hr>
-                    {% if like_hanmaum_activities is None or like_hanmaum_activities.count is 0 %}
+                </h4>
+                <div class="ps-3 pe-3 pt-1 pb-1">
+                    {% for article in like_hanmaum_articles %}
+                        <div class = "pb-1">
+                            {% url 'hanmaum:show' article.id as show_url %}
+                            {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+                        </div>
+                        {% empty %}
                         {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
-                    {% else %}
-                        {% for activity in like_hanmaum_activities %}
-                            {% with article=activity.article %}
-                                <div class = "p-2">
-                                    {% include 'users/_article_card.dj.html'%}
-                                </div>
-                            {% endwith %}
-                        {% endfor %}
-                    {% endif %}
+                    {% endfor %}
                 </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card p-3 mx-height-px-400">
                 <div class="p-3">
                     <h4>
                         최근에 단 댓글
@@ -81,7 +93,48 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'chart.js/dist/chart.js' %}"></script>
 <script>
+    var ctx = document.getElementById('profileChart');
+
+    var data = {
+        labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+        datasets: [
+            {
+            label: 'Dataset 1',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            }
+        ]
+    };
+
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        size: {
+            width: 400,
+            height: 400,
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: false,
+                }
+            },
+            
+        }
+    });
     $(document).ready(function() {
         initLikeActivity();
     })

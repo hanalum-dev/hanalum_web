@@ -257,12 +257,20 @@ class LikeActivity(Activity):
         return response
 
     @classmethod
-    def get_like_activities(cls, _user, _content_object):
+    def get_like_content_objects(cls, _user, _content_object):
         """_user가 좋아요한 _content_object 종류의 객체들을 반환합니다."""
 
         content_type_obj = ContentType.objects.get_for_model(_content_object)
         like_activities = LikeActivity.objects.filter(
             user=_user,
             content_type=content_type_obj,
+            category='like'
         ).order_by('-updated_at')
-        return like_activities
+
+        like_objects = []
+        for like_activity in like_activities:
+            like_objects.append(
+                content_type_obj.get_object_for_this_type(pk=like_activity.content_id)
+            )
+
+        return like_objects

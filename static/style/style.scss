@@ -70,3 +70,16 @@ button.border-none {
     background: none;
     outline: none;
 }
+
+.overflow-scroll {
+    overflow: scroll;
+}
+
+@supports (position: sticky) or (position: -webkit-sticky) {
+    .sticky-title {
+        position: -webkit-sticky;
+        position: sticky;
+        z-index: 99;
+        top: 0px;
+    }
+}
