@@ -20,7 +20,8 @@ services:
       bash -c "python wait_for_postgres.py &&
               ./manage.py makemigrations --noinput &&
               ./manage.py migrate &&
-              ./manage.py runserver 0.0.0.0:3000"
+              ./manage.py collectstatic  --noinput &&
+              ./manage.py runserver 0.0.0.0:3000 --insecure"
     ports:
       - "3000:3000"
     volumes:
