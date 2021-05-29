@@ -96,20 +96,22 @@
 <script src="{% static 'chart.js/dist/chart.js' %}"></script>
 <script>
     var ctx = document.getElementById('profileChart');
+    var like_articles_count = {{ like_articles | length }} || 0;
+    var like_hanmaum_articles_count = {{ like_hanmaum_articles | length }} || 0;
 
     var data = {
-        labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+        labels: ['작성한 게시글 수', '작성한 댓글 수', '좋아하는 게시글 수', '좋아하는 한마음 게시글 수'],
         datasets: [
             {
             label: 'Dataset 1',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [12, 19, like_articles_count, like_hanmaum_articles_count],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                {% comment %} 'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)' {% endcomment %}
             ],
             }
         ]
