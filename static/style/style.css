@@ -206,9 +206,9 @@ nav .board-menu-group { max-width: 1200px; }
 
 .hanalum-max-width { max-width: 2000px; }
 
-.footer-wrap { margin-top: 10rem; }
+main { min-height: calc(100vh - 15rem); }
 
-.footer-wrap footer { background-color: #282a2b; }
+footer { margin-top: 10rem; background-color: #282a2b; }
 
 .pagination_wrapper { padding: 1rem; text-align: center; background-color: transparent !important; }
 

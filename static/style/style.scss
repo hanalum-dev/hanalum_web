@@ -9,11 +9,13 @@
     max-width: $window-max-width;
 }
 
-.footer-wrap {
+main {
+    min-height: calc(100vh - 15rem);
+}
+
+footer {
     margin-top: 10rem;
-    footer {
-        background-color: map-get($map: $colors, $key: dark-gray);
-    }
+    background-color: #282a2b;
 }
 
 .pagination_wrapper {
