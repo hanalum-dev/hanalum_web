@@ -91,6 +91,9 @@ def signin(request):
                 # TODO: message가 아니라 validation text로 나오게 하기
                 messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
                 return render(request, 'users/confirmations/new.dj.html', response)
+            elif not user.is_active:
+                messages.error(request, '이메일로 발송된 인증 이메일을 확인해주세요.')
+                return render(request, 'users/confirmations/new.dj.html', response)
             else:
                 messages.success(request, '로그인되었습니다.')
                 auth.login(request, user)
