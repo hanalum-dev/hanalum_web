@@ -1,4 +1,5 @@
 """user(사용자 계정) views 모듈입니다."""
+from comments.models import Comment
 from copy import deepcopy as dp
 import logging
 
@@ -85,7 +86,7 @@ def signin(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = auth.authenticate(request, username=email, password=password)
-
+            
             if user is None:
                 # TODO: message가 아니라 validation text로 나오게 하기
                 messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
@@ -129,10 +130,15 @@ def me(request):
         _content_object=HanmaumArticle
     )
 
+    recent_comments = Comment.get_recent_user_comments(
+        _user=current_user
+    )
+
     response.update({
         'user':current_user,
         'like_articles': like_articles,
-        'like_hanmaum_articles': like_hanmaum_articles
+        'like_hanmaum_articles': like_hanmaum_articles,
+        'recent_comments': recent_comments
     })
 
     return render(request, 'users/me.dj.html', response)

@@ -62,7 +62,7 @@ class Notice(BaseModel):
     )
 
     def __str__(self):
-        return "{}".format(self.title)
+        return "[{}] {}".format(Notice.classname() ,self.title)
 
     def abstract_title(self, length=30):
         """ """
@@ -85,6 +85,7 @@ class Notice(BaseModel):
 
         return plain_text[:length]
 
-    def classname(self):
+    @classmethod
+    def classname(cls):
         """ 클래스명 """
-        return self.__class__.__name__
+        return "공지사항"

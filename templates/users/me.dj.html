@@ -67,23 +67,21 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="col-12">
-            <div class="card p-3 mx-height-px-400">
-                <div class="p-3">
-                    <h4>
-                        최근에 단 댓글
-                    </h4>
+            <div class="card mx-height-px-400 overflow-scroll bg-white">
+                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+                    최근에 단 댓글
                     <hr>
-                    {% comment %} TODO: HNM-0070: comment 기능 {% endcomment %}
-                    {% if comment is None or comments.count is 0 %}
+                </h4>
+                <div class="ps-3 pe-3 pt-1 pb-1">
+                    {% for comment in recent_comments %}
+                        <div class = "pb-1">
+                            {% include 'components/_comment_item.dj.html' %}
+                        </div>
+                        {% empty %}
                         {% include 'components/_none_items.dj.html' with msg="최근에 단 댓글이 없습니다.<br>게시글에 댓글을 달아보는 것은 어떤가요?"%}
-                    {% else %}
-                        {% for commet in comments %}
-                            <div class = "p-2">
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -98,13 +96,14 @@
     var ctx = document.getElementById('profileChart');
     var like_articles_count = {{ like_articles | length }} || 0;
     var like_hanmaum_articles_count = {{ like_hanmaum_articles | length }} || 0;
+    var comments_count = {{ recent_comments | length }} || 0;
 
     var data = {
         labels: ['작성한 게시글 수', '작성한 댓글 수', '좋아하는 게시글 수', '좋아하는 한마음 게시글 수'],
         datasets: [
             {
             label: 'Dataset 1',
-            data: [12, 19, like_articles_count, like_hanmaum_articles_count],
+            data: [12, comments_count, like_articles_count, like_hanmaum_articles_count],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -117,13 +116,9 @@
         ]
     };
 
-    var myChart = new Chart(ctx, {
+    var profileChart = new Chart(ctx, {
         type: 'doughnut',
         data: data,
-        size: {
-            width: 400,
-            height: 400,
-        },
         options: {
             responsive: true,
             plugins: {
@@ -134,7 +129,6 @@
                     display: false,
                 }
             },
-            
         }
     });
     $(document).ready(function() {
