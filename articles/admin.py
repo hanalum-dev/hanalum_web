@@ -98,7 +98,7 @@ class ArticleAdmin(admin.ModelAdmin):
     set_to_top_unfixed_article.short_description = '상단 고정 게시글 설정'
 
     def reset_viewed_counter(modeladmin, request, queryset):
-        """좋아요/싫어요 캐시 카운터를 쿼리를 날려 다시 설정한다."""
+        """조회수 캐시 카운터를 쿼리를 날려 다시 설정한다."""
         articles = queryset
 
         for article in articles:

@@ -91,6 +91,15 @@ class Notice(BaseModel):
 
         return plain_text[:length]
 
+    def copy(self, status='d'):
+        """ notice 복사 메서드 """
+        new_notice = Notice()
+        new_notice.title = self.title
+        new_notice.content = self.content
+        new_notice.status = status
+        new_notice.save()
+        return new_notice
+
     @classmethod
     def classname(cls):
         """ 클래스명 """
