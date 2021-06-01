@@ -14,8 +14,6 @@ from history.models import LikeActivity, ViewHistory
 from .models import Board
 from .validators import BoardPermissionValidator
 
-hashtag_model = HashTag()
-view_history = ViewHistory()
 
 @catch_all_exceptions
 def show(request, board_id):
@@ -41,10 +39,7 @@ def show(request, board_id):
     end = min(int(page) + 5, paginator.num_pages)
 
     for article in articles:
-        article.total_viewed_count = view_history.total_viewed_count(
-            _viewed_obj=article,
-        ) or 0
-        article.hashtags = hashtag_model.get_hashtag(tagged_object=article)
+        article.hashtags = HashTag.get_hashtag(tagged_object=article)
 
         if current_user.is_authenticated:
             article.is_user_in_like = LikeActivity.is_user_in_like(

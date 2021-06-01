@@ -11,9 +11,6 @@ from history.models import ViewHistory
 
 from .models import Notice
 
-view_history = ViewHistory()
-comment_model = Comment()
-
 
 def index(request):
     """ GET: index """
@@ -39,14 +36,8 @@ def index(request):
 
     for notice in top_fixed_notices:
         notice.author = '한아름'
-        notice.total_viewed_count = view_history.total_viewed_count(
-            _viewed_obj=notice,
-        ) or 0
     for notice in non_top_fixed_notices:
         notice.author = '한아름'
-        notice.total_viewed_count = view_history.total_viewed_count(
-            _viewed_obj=notice,
-        ) or 0
 
     return render(request, 'notices/index.dj.html', response)
 
@@ -60,7 +51,7 @@ def show(request, notice_id):
     next_notice = get_next_notice(notice_id)
     prev_notice = get_prev_notice(notice_id)
 
-    comments = Comment().get_comments(notice)
+    comments = Comment.get_comments(notice)
 
     response.update({
         'banner_title' : "[공지사항] " + notice.title,
@@ -72,7 +63,7 @@ def show(request, notice_id):
 
     # 사용자 접속 로그 추가
     if current_user.is_authenticated:
-        view_history.add_history(
+        ViewHistory.add_history(
             _viewed_obj=notice,
             _viewer=current_user
         )
@@ -96,7 +87,7 @@ def new_comment(request, notice_id):
     else:
         parent = None
 
-    comment_model.new_comment(
+    Comment.new_comment(
         _commented_object=notice,
         _user=user,
         _content=content,

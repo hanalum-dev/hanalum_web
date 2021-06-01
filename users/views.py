@@ -1,8 +1,10 @@
 """user(사용자 계정) views 모듈입니다."""
+from comments.models import Comment
 from copy import deepcopy as dp
 import logging
 
 from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.db import IntegrityError, transaction
 from django.shortcuts import redirect, render, get_object_or_404
@@ -12,13 +14,13 @@ from helpers.default import default_response
 from .forms import UserConfirmationForm, UserCreationForm
 from .models import User
 from .tokens import account_activation_token
+from hanalum_web.base_views import catch_all_exceptions
 from .validators import UserCreationValidator
 from history.models import LikeActivity, ViewHistory
 from articles.models import Article
 from hanmaum.models import HanmaumArticle
 
 logger = logging.getLogger(__name__)
-view_history = ViewHistory()
 
 @transaction.atomic
 def signup(request):
@@ -83,10 +85,13 @@ def signin(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = auth.authenticate(request, username=email, password=password)
-
+            
             if user is None:
                 # TODO: message가 아니라 validation text로 나오게 하기
                 messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
+                return render(request, 'users/confirmations/new.dj.html', response)
+            elif not user.is_active:
+                messages.error(request, '이메일로 발송된 인증 이메일을 확인해주세요.')
                 return render(request, 'users/confirmations/new.dj.html', response)
             else:
                 messages.success(request, '로그인되었습니다.')
@@ -110,47 +115,33 @@ def signout(request):
     messages.success(request, '로그아웃되었습니다.')
     return redirect('/')
 
+
+@catch_all_exceptions
+@login_required(login_url='/users/signin')
 def me(request):
     response = dp(default_response)
-    user = get_object_or_404(User, pk=request.user.id)
+    current_user = request.user
 
-    # if not request.user.is_authenticated or not user:
-    #     messages.error(request, "로그인 후, 이용할 수 있습니다.")
-    #     return redirect("users:signin")
+    like_articles = LikeActivity.get_like_content_objects(
+        _user=current_user,
+        _content_object=Article,
+    )
 
-    # # FIXME: activity 개선하면서 작동 안될거임.(게시물을 가져오는게 아니라 activity가 리턴됨.)
-    # like_articles = LikeActivity.get_like_activities(
-    #     _user=user,
-    #     _content_object=ARTICLE
-    # )
-    # for like_article in like_articles:
-    #     try:
-    #         article = Article.objects.get(id=like_article.id)
-    #         like_article.title = article.title
-    #         like_article.updated_at = article.updated_at
-    #     except:
-    #        continue
+    like_hanmaum_articles = LikeActivity.get_like_content_objects(
+        _user=current_user,
+        _content_object=HanmaumArticle
+    )
 
-    # # TODO: 코드 개선하기
-    # like_hanmaum_activities = LikeActivity.get_like_activities(
-    #     _user=user,
-    #     _content_object=HANMAUMARTICLE
-    # )
+    recent_comments = Comment.get_recent_user_comments(
+        _user=current_user
+    )
 
-    # for activity in like_hanmaum_activities:
-    #     try:
-    #         activity.article = HanmaumArticle.objects.get(id = activity.content_id)
-    #         activity.article.total_viewed_count = view_history.total_viewed_count(
-    #         _viewed_obj=activity.article,
-    #         )
-    #     except:
-    #         pass
-
-    # response.update({
-    #     'user':user,
-    #     'like_articles': like_articles,
-    #     'like_hanmaum_activities': like_hanmaum_activities
-    # })
+    response.update({
+        'user':current_user,
+        'like_articles': like_articles,
+        'like_hanmaum_articles': like_hanmaum_articles,
+        'recent_comments': recent_comments
+    })
 
     return render(request, 'users/me.dj.html', response)
 

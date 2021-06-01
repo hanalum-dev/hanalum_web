@@ -1,0 +1,19 @@
+.comment-action { position: absolute; top: 1px; right: 1px; }
+
+.comment .updated_at { padding: 0.2rem 0 0 0.5rem; font-size: small; color: #6c757d !important; }
+
+.comment .commentor { display: inline-block; vertical-align: middle; float: none; margin: 0; padding: 0.5rem !important; vertical-align: middle !important; }
+
+.comment .avatar-image-small-wrapper { vertical-align: middle; }
+
+.comment .comment-textarea-wrapper .comment-submit { width: 10%; }
+
+.comment .comment-textarea-wrapper .comment-submit button { height: 100%; width: 100%; }
+
+.comment .comment-textarea-wrapper textarea { display: inline-block; width: 89.5%; margin-right: 0.5%; }
+
+@media only screen and (min-width: 1900px) { .comment .comment-textarea-wrapper textarea { display: inline-block; width: 94.5%; margin-right: 0.5%; } .comment .comment-textarea-wrapper .comment-submit { width: 5%; } }
+
+@media only screen and (max-width: 1100px) { .comment .comment-textarea-wrapper textarea { display: inline-block; width: 79.5%; margin-right: 0.5%; } .comment .comment-textarea-wrapper .comment-submit { width: 20%; } }
+
+/*# sourceMappingURL=_comments.css.map */

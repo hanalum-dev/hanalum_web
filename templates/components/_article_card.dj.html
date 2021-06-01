@@ -33,7 +33,7 @@
                     </a>
                 {% endif %}
             </span>
-            {% fa5_icon 'eye' 'far' %} {{article.total_viewed_count}}
+            {% fa5_icon 'eye' 'far' %} {{article.viewed_count}}
             {% if show_like_activity %}
                 <span class="card-text ps-2 text-blue">
                     {% if user.is_user_in_like %}

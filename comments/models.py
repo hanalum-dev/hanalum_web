@@ -38,7 +38,6 @@ class Comment(BaseModel):
         'commented_type',
         'commented_id',
     )
-
     parent = models.ForeignKey(
         "self",
         verbose_name="답글을 단 댓글",
@@ -47,7 +46,6 @@ class Comment(BaseModel):
         blank=True,
         related_name="replies",
     )
-
     user = models.ForeignKey(
         "users.User",
         verbose_name="댓글을 단 사람",
@@ -55,9 +53,8 @@ class Comment(BaseModel):
         null=True,
         blank=True
     )
-    content = models.CharField(
+    content = models.TextField(
         verbose_name="내용",
-        max_length=200,
         null=True,
         blank=True,
     )
@@ -87,7 +84,8 @@ class Comment(BaseModel):
         self.status = 't'
         self.save()
 
-    def get_comments(self, _commented_object):
+    @classmethod
+    def get_comments(cls, _commented_object):
         """특정 객체에 달린 댓글을 리턴합니다."""
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)
         comments = Comment.objects.filter(
@@ -102,6 +100,7 @@ class Comment(BaseModel):
             ).order_by('created_at')
         return comments
 
+    @classmethod
     def new_comment(self, _commented_object, _user, _content, _parent=None):
         """새로운 댓글을 추가합니다."""
         # TODO: transaction 적용하고, logger 적용하기
@@ -114,3 +113,17 @@ class Comment(BaseModel):
         comment.content = _content
         comment.parent = _parent
         comment.save()
+
+    @classmethod
+    def get_recent_user_comments(cls, _user):
+        """특정 유저가 최근에 작성한 댓글을 리턴합니다."""
+        comments = Comment.objects.published().filter(
+            user=_user,
+        ).order_by('-updated_at')
+
+        for comment in comments:
+            comment.show_url = "/{}/{}".format(comment.commented_type.app_label, comment.commented_id)
+        
+        return comments
+
+    
