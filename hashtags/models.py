@@ -28,6 +28,7 @@ class HashTag(BaseModel):
         default=""
     )
 
+    @classmethod
     def add_hashtag(self, tagged_object, content):
         tagged_type_object = ContentType.objects.get_for_model(tagged_object)
 
@@ -38,6 +39,7 @@ class HashTag(BaseModel):
         )
         hashtag.save()
 
+    @classmethod
     def get_hashtag(self, tagged_object):
         content_type_obj = ContentType.objects.get_for_model(tagged_object)
         response = HashTag.objects.filter(
@@ -46,6 +48,7 @@ class HashTag(BaseModel):
         ).order_by('updated_at')
         return response
 
+    @classmethod
     def destroy_all_hashtag(self, tagged_object):
         content_type_obj = ContentType.objects.get_for_model(tagged_object)
 

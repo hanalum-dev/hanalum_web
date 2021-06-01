@@ -11,8 +11,6 @@ from history.models import ViewHistory
 
 from .models import Notice
 
-comment_model = Comment()
-
 
 def index(request):
     """ GET: index """
@@ -53,7 +51,7 @@ def show(request, notice_id):
     next_notice = get_next_notice(notice_id)
     prev_notice = get_prev_notice(notice_id)
 
-    comments = Comment().get_comments(notice)
+    comments = Comment.get_comments(notice)
 
     response.update({
         'banner_title' : "[공지사항] " + notice.title,
@@ -89,7 +87,7 @@ def new_comment(request, notice_id):
     else:
         parent = None
 
-    comment_model.new_comment(
+    Comment.new_comment(
         _commented_object=notice,
         _user=user,
         _content=content,

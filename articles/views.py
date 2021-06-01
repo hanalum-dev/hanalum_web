@@ -18,9 +18,6 @@ from .forms import ArticleCreationForm, ArticleEditionForm
 from .models import Article
 from .validators import ArticlePermissionValidator
 
-hashtag_model = HashTag()
-comment_model = Comment()
-
 
 @catch_all_exceptions
 def show(request, article_id):
@@ -34,7 +31,7 @@ def show(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     board = article.board
 
-    comments = Comment().get_comments(article)
+    comments = Comment.get_comments(article)
 
     if current_user.is_authenticated:
         article.is_user_in_like = LikeActivity.is_user_in_like(
@@ -47,7 +44,7 @@ def show(request, article_id):
         )
     is_author = article.author == current_user
 
-    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+    hashtags = HashTag.get_hashtag(tagged_object=article)
 
     next_article = get_next_article(article_id=article_id, board_id=board.id)
     prev_article = get_prev_article(article_id=article_id, board_id=board.id)
@@ -65,9 +62,8 @@ def show(request, article_id):
         'popular_articles': popular_articles
     })
 
-    # 사용자 접속 로그 추가
     if current_user.is_authenticated:
-        view_history.add_history(
+        ViewHistory.add_history(
             _viewed_obj=article,
             _viewer=current_user
         )
@@ -112,7 +108,7 @@ def new(request, board_id):
             hashtags_str = request.POST.get('hashtags_str')
             hashtags = get_hashtag_list(hashtags_str)
             for hashtag in hashtags:
-                hashtag_model.add_hashtag(
+                HashTag.add_hashtag(
                     article,
                     hashtag
                 )
@@ -146,7 +142,7 @@ def edit(request, article_id):
 
     form = ArticleEditionForm(request.POST or None, instance=article)
 
-    hashtags = hashtag_model.get_hashtag(tagged_object=article)
+    hashtags = HashTag.get_hashtag(tagged_object=article)
     hashtags_str = ""
     for hashtag in hashtags:
         hashtags_str += hashtag.content
@@ -163,11 +159,11 @@ def edit(request, article_id):
 
         hashtags_str = request.POST.get('hashtags_str')
         hashtags = get_hashtag_list(hashtags_str)
-        hashtag_model.destroy_all_hashtag(
+        HashTag.destroy_all_hashtag(
             article
         )
         for hashtag in hashtags:
-            hashtag_model.add_hashtag(
+            HashTag.add_hashtag(
                 article,
                 hashtag
             )
@@ -213,7 +209,7 @@ def new_comment(request, article_id):
     else:
         parent = None
 
-    comment_model.new_comment(
+    Comment.new_comment(
         _commented_object=article,
         _user=user,
         _content=content,

@@ -12,8 +12,6 @@ from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
 
-comment_model = Comment()
-
 def index(request):
     """ index """
     response = dp(default_response)
@@ -42,7 +40,7 @@ def show(request, article_id):
 
     article = get_object_or_404(HanmaumArticle, pk=article_id)
 
-    comments = Comment().get_comments(article)
+    comments = Comment.get_comments(article)
 
     response.update({
         'banner_title' : article.title,
@@ -183,7 +181,7 @@ def new_comment(request, article_id):
     else:
         parent = None
 
-    comment_model.new_comment(
+    Comment.new_comment(
         _commented_object = hanmaum_article,
         _user = user,
         _content = content,

@@ -84,7 +84,8 @@ class Comment(BaseModel):
         self.status = 't'
         self.save()
 
-    def get_comments(self, _commented_object):
+    @classmethod
+    def get_comments(cls, _commented_object):
         """특정 객체에 달린 댓글을 리턴합니다."""
         commented_type_obj = ContentType.objects.get_for_model(_commented_object)
         comments = Comment.objects.filter(
@@ -99,6 +100,7 @@ class Comment(BaseModel):
             ).order_by('created_at')
         return comments
 
+    @classmethod
     def new_comment(self, _commented_object, _user, _content, _parent=None):
         """새로운 댓글을 추가합니다."""
         # TODO: transaction 적용하고, logger 적용하기
