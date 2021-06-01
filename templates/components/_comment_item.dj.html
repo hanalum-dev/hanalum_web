@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-body text-overflow-ellipsis">
+        <a href="{{comment.show_url}}" class="card-title m-0 p-1"">
+            {{ comment.content }}
+            <span class="text-small text-gray">
+            {{ comment.commented_object}}
+            </span>
+        </a><br>
+        <small class="text-gray p-1">
+            {{ comment.updated_at }}
+            {% if comment.is_updated %}
+                (수정됨)
+            {% endif %}
+        </small>
+    </div>
+</div>

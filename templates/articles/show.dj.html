@@ -2,8 +2,11 @@
 {% load static %}
 {% load bootstrap5 %}
 {% load fontawesome_5 %}
+{% load sass_tags %}
+
 {% block stylesheet %}
-{% fontawesome_5_static %}
+    {% fontawesome_5_static %}
+    <link href="{% sass_src 'style/components/_comments.scss' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}

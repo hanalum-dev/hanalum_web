@@ -60,9 +60,15 @@ class Notice(BaseModel):
         verbose_name="우선순위",
         default=0
     )
+    viewed_count = models.PositiveIntegerField(
+        verbose_name="조회수",
+        default=0,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
-        return "{}".format(self.title)
+        return "[{}] {}".format(Notice.classname() ,self.title)
 
     def abstract_title(self, length=30):
         """ """
@@ -85,6 +91,16 @@ class Notice(BaseModel):
 
         return plain_text[:length]
 
-    def classname(self):
+    def copy(self, status='d'):
+        """ notice 복사 메서드 """
+        new_notice = Notice()
+        new_notice.title = self.title
+        new_notice.content = self.content
+        new_notice.status = status
+        new_notice.save()
+        return new_notice
+
+    @classmethod
+    def classname(cls):
         """ 클래스명 """
-        return self.__class__.__name__
+        return "공지사항"

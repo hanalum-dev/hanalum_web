@@ -1,7 +1,0 @@
-$heights: (100: 100px, 200: 200px, 300: 300px, 350: 350px, 400: 400px, 500: 500px);
-@each $height,
-$px in $heights {
-    .mn-height-px-#{$height} {
-        min-height: $px;
-    }
-}

@@ -1,26 +1,3 @@
-main {
-    min-height: 70vh;
-}
-
-.text-small {
-    font-size: 0.9rem;
-}
-
-.text-xsmall {
-    font-size: 0.8rem;
-}
-
-.text-xxsmall {
-    font-size: 0.7rem;
-}
-
-.text-overflow-ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
 /* ----- border -----*/
 
 .border-solid-light-gray {
@@ -52,22 +29,6 @@ main {
     width: auto;
     max-width: 100%;
     height: 100;
-}
-
-.w-90p {
-    width: 90%;
-}
-
-.w-80p {
-    width: 80%;
-}
-
-.w-70p {
-    width: 70%;
-}
-
-.hanalum-max-width {
-    max-width: 2000px;
 }
 
 .w-fit-content {
@@ -304,73 +265,6 @@ main {
 .avatar-image-small-wrapper img {
     width: 100%;
     height: auto;
-}
-
-
-/* comments */
-
-.comment-action {
-    position: absolute;
-    top: 1px;
-    right: 1px;
-}
-
-.comment .updated_at {
-    padding: 0.2rem 0 0 0.5rem;
-    font-size: small;
-    color: #6c757d!important;
-}
-
-.comment .commentor {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-    margin: 0;
-    padding: 0.5rem!important;
-    vertical-align: middle!important;
-}
-
-.comment .avatar-image-small-wrapper {
-    vertical-align: middle;
-}
-
-.comment .comment-textarea-wrapper {}
-
-.comment .comment-textarea-wrapper .comment-submit {
-    width: 10%;
-}
-
-.comment .comment-textarea-wrapper .comment-submit button {
-    height: 100%;
-    width: 100%;
-}
-
-.comment .comment-textarea-wrapper textarea {
-    display: inline-block;
-    width: 89.5%;
-    margin-right: 0.5%;
-}
-
-@media only screen and (min-width: 1900px) {
-    .comment .comment-textarea-wrapper textarea {
-        display: inline-block;
-        width: 94.5%;
-        margin-right: 0.5%;
-    }
-    .comment .comment-textarea-wrapper .comment-submit {
-        width: 5%;
-    }
-}
-
-@media only screen and (max-width: 1100px) {
-    .comment .comment-textarea-wrapper textarea {
-        display: inline-block;
-        width: 79.5%;
-        margin-right: 0.5%;
-    }
-    .comment .comment-textarea-wrapper .comment-submit {
-        width: 20%;
-    }
 }
 
 
