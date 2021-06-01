@@ -18,7 +18,6 @@ from .forms import ArticleCreationForm, ArticleEditionForm
 from .models import Article
 from .validators import ArticlePermissionValidator
 
-view_history = ViewHistory()
 hashtag_model = HashTag()
 comment_model = Comment()
 

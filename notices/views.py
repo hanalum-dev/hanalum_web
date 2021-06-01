@@ -11,7 +11,6 @@ from history.models import ViewHistory
 
 from .models import Notice
 
-view_history = ViewHistory()
 comment_model = Comment()
 
 
@@ -39,14 +38,8 @@ def index(request):
 
     for notice in top_fixed_notices:
         notice.author = '한아름'
-        notice.total_viewed_count = view_history.total_viewed_count(
-            _viewed_obj=notice,
-        ) or 0
     for notice in non_top_fixed_notices:
         notice.author = '한아름'
-        notice.total_viewed_count = view_history.total_viewed_count(
-            _viewed_obj=notice,
-        ) or 0
 
     return render(request, 'notices/index.dj.html', response)
 
@@ -72,7 +65,7 @@ def show(request, notice_id):
 
     # 사용자 접속 로그 추가
     if current_user.is_authenticated:
-        view_history.add_history(
+        ViewHistory.add_history(
             _viewed_obj=notice,
             _viewer=current_user
         )

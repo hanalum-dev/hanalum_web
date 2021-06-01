@@ -12,7 +12,6 @@ from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
 
-view_history = ViewHistory()
 comment_model = Comment()
 
 def index(request):
@@ -21,9 +20,6 @@ def index(request):
     response['articles'] = HanmaumArticle.objects.published()
 
     for article in response['articles']:
-        article.total_viewed_count = view_history.total_viewed_count(
-            _viewed_obj=article,
-        )
         if request.user.is_authenticated:
             article.is_user_in_like = LikeActivity.is_user_in_like(
                 _content_object=article,
@@ -56,7 +52,7 @@ def show(request, article_id):
 
     # 사용자 접속 로그 추가
     if request.user.is_authenticated:
-        view_history.add_history(
+        ViewHistory.add_history(
             _viewed_obj=article,
             _viewer=request.user
         )

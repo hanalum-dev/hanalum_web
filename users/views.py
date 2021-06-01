@@ -21,7 +21,6 @@ from articles.models import Article
 from hanmaum.models import HanmaumArticle
 
 logger = logging.getLogger(__name__)
-view_history = ViewHistory()
 
 @transaction.atomic
 def signup(request):
