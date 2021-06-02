@@ -95,7 +95,7 @@ class ArticleAdmin(admin.ModelAdmin):
         for article in articles:
             article.top_fixed = False
             article.save()
-    set_to_top_unfixed_article.short_description = '상단 고정 게시글 설정'
+    set_to_top_unfixed_article.short_description = '상단 고정 게시글 해제'
 
     def reset_viewed_counter(modeladmin, request, queryset):
         """조회수 캐시 카운터를 쿼리를 날려 다시 설정한다."""

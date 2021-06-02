@@ -161,6 +161,13 @@ class Article(BaseModel):
         new_article.save()
         return new_article
 
+    @classmethod
+    def get_articles_created_by(cls, user):
+        return Article.objects.filter(author=user, anonymous_author = False)
+
+    @classmethod
+    def get_articles_include_anonymous_author_created_by(cls, user):
+        return Article.objects.filter(author=user)
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """
