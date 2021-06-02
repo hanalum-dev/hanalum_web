@@ -149,7 +149,6 @@ def show(request, user_id):
     """사용자 페이지 뷰"""
     response = dp(default_response)
     user = get_object_or_404(User, pk=user_id)
-    response['user'] = user
 
     like_articles = LikeActivity.get_like_content_objects(
         _user=user,
@@ -160,9 +159,10 @@ def show(request, user_id):
         _content_object=HanmaumArticle
     )
     create_articles = Article.get_articles_created_by(user)
+
     response.update({
         'user': user,
-        'user': like_articles,
+        'like_articles': like_articles,
         'like_hanmaum_articles': like_hanmaum_articles,
         'create_articles' : create_articles
     })

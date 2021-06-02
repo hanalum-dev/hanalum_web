@@ -4,6 +4,7 @@ astroid==2.4.2
 beautifulsoup4==4.9.3
 bunch==1.0.1
 cfgv==3.2.0
+cssutils==2.3.0
 distlib==0.3.1
 Django==3.1.9
 django-adminlte-ui==1.5.1
@@ -11,11 +12,13 @@ django-appconf==1.0.4
 django-bootstrap-v5==1.0.0
 django-compressor==2.4.1
 django-fontawesome-5==1.0.18
+django-inlinecss==0.3.0
 django-material-admin==1.7.16
 django-sass-processor==1.0.1
 django-summernote==0.8.11.6
 django-treebeard==4.3
 filelock==3.0.12
+future==0.18.2
 html2text==2020.1.16
 httplib2==0.19.0
 identify==1.5.13
@@ -33,6 +36,7 @@ psycopg2-binary==2.8.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pylint==2.6.0
+pynliner==0.8.0
 pyparsing==2.4.7
 pytz==2020.5
 PyYAML==5.4.1

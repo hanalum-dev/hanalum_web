@@ -1,11 +1,53 @@
+{% load static %}
+{% load inlinecss %}
+{% inlinecss "style/mailer.css" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{user.nickname}}님, 한아름 인증 링크를 확인해주세요</title>
+    <meta charset="UTF-8"/>
+    <title>{{user.nickname}}님, 한아름 가입을 환영합니다! </title>
 </head>
 <body>
-    <div><span style="font-size: 20px;font-weight: bold;">{{user.nickname}}</span>님, 아래 링크를 클릭하여 계정을 활성화하세요</div>
-    <a href="http://{{domain}}{% url 'users:activate_account' uid token %}" style="font-size: 20px;text-decoration: none;">링크</a>
+    <div class="justify-content-center" style="margin: 1.5rem;">
+        <div class="card" style="display: block!important;">
+            <div class="row justify-content-center bg-dark-gray banner m-0">
+                <div class="col-12 mn-height-px-300 text-white position-relative">
+                    <div class="banner-title" style="margin: 1rem;">
+                        <h3>
+                            여러분들의 소리를 들려주세요.
+                        </h3>
+                        <h2>
+                            한민의 소리, <span class="text-blue">한아름</span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-6 banner-bg-character-container">
+                    <img src="http://{{domain}}{% static 'img/hanmin_character.png' %}" class="banner-bg-character" style="bottom: -6rem!important;">
+                </div>
+            </div>
+
+            <div class="card-content p-3">
+                <p class="card-text">
+                    안녕하세요, <span style="font-weight: bold;">{{user.nickname}}</span>님 <br/>
+                    <br/>
+                    한아름 사이트는 한민고 재학생, 졸업생을 넘어 모든 한민인의 이야기를 공유하고,
+                    들려주는 커뮤니티 플랫폼입니다. 글 작성, 댓글 작성, 추가 기능 사용을 모두 이용하시려면 이메일 인증이 필요합니다.<br/>
+                    <br/>
+                    아래 링크를 클릭하여 이메일을 인증하고, 계정을 활성화해주세요.<br/>
+                    <br/>
+                    <br/>
+                    <a href="http://{{domain}}{% url 'users:activate_account' uid token %}" style="font-size: 20px;text-decoration: none;">
+                        <button class="btn btn-primary">
+                            이메일 인증 및 계정 활성화
+                        </button>
+                    </a>
+                    <br/>
+                    <br/>
+                    <br/>
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+{% endinlinecss %}

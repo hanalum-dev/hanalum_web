@@ -7,7 +7,6 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 
 from users.models import User
-from articles.models import Article
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
 class HanmaumArticleQuerySet(models.QuerySet):
@@ -18,10 +17,55 @@ class HanmaumArticleQuerySet(models.QuerySet):
         return self.filter(status='p').order_by("-updated_at")
 
 
-class HanmaumArticle(Article, BaseModel):
+class HanmaumArticle(BaseModel):
     """한마음 게시글 모델입니다."""
     objects = BaseModelManager.from_queryset(HanmaumArticleQuerySet)()
 
+    STATUS_CHOICES = (
+        ('d', 'draft'),
+        ('p', 'published'),
+        ('t', 'trash')
+    )
+
+    author = models.ForeignKey(
+        'users.user',
+        verbose_name="글쓴이",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )  # 글쓴이
+    title = models.CharField(
+        verbose_name="제목",
+        max_length=200,
+    )
+    content = SummernoteTextField(
+        verbose_name="내용"
+    )
+    status = models.CharField(
+        verbose_name='게시글 공개 상태',
+        max_length=2,
+        default='p',
+        null=False,
+        choices=STATUS_CHOICES
+    )
+    like_count = models.PositiveIntegerField(
+        verbose_name="좋아요 수",
+        default=0,
+        null=True,
+        blank=True
+    )
+    dislike_count = models.PositiveIntegerField(
+        verbose_name="싫어요 수",
+        default=0,
+        null=True,
+        blank=True
+    )
+    viewed_count = models.PositiveIntegerField(
+        verbose_name="조회수",
+        default=0,
+        null=True,
+        blank=True
+    )
     interviewer = models.CharField(
         verbose_name="인터뷰어",
         max_length=10,
@@ -64,3 +108,13 @@ class HanmaumArticle(Article, BaseModel):
             return plain_text[:length] + "..."
 
         return plain_text[:length]
+
+    def copy(self, status='d'):
+        """ article 복사 메서드 """
+        new_article = HanmaumArticle()
+        new_article.author = self.author
+        new_article.title = self.title
+        new_article.content = self.content
+        new_article.status = status
+        new_article.save()
+        return new_article
