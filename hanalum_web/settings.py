@@ -156,6 +156,7 @@ INSTALLED_APPS = [
     'django_summernote',
     'fontawesome_5',
     'sass_processor',
+    'django_inlinecss',
     'users',
     'api',
     'articles',

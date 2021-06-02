@@ -15,6 +15,7 @@ urlpatterns = [
     path("notices/", include('notices.urls', 'notices')),
     path("articles/", include('articles.urls', 'articles'), name='articles'),
     path("boards/", include('boards.urls', 'boards')),
+    path("mailers/", include('mailers.urls', 'mailers')),
     path("comments/", include('comments.urls', 'comments')),
     path("hanmaum/", include('hanmaum.urls', 'hanmaum')),
     path("admin/", admin.site.urls),
