@@ -126,14 +126,11 @@ def me(request):
         _user=current_user,
         _content_object=Article,
     )
-
     like_hanmaum_articles = LikeActivity.get_like_content_objects(
         _user=current_user,
         _content_object=HanmaumArticle
     )
-
-    create_articles_count = Article.get_articles_created_by(current_user).count()
-
+    create_articles = Article.get_articles_include_anonymous_author_created_by(current_user)
     recent_comments = Comment.get_recent_user_comments(
         _user=current_user
     )
@@ -143,7 +140,7 @@ def me(request):
         'like_articles': like_articles,
         'like_hanmaum_articles': like_hanmaum_articles,
         'recent_comments': recent_comments,
-        'create_articles_count' : create_articles_count
+        'create_articles' : create_articles
     })
 
     return render(request, 'users/me.dj.html', response)
@@ -153,6 +150,23 @@ def show(request, user_id):
     response = dp(default_response)
     user = get_object_or_404(User, pk=user_id)
     response['user'] = user
+
+    like_articles = LikeActivity.get_like_content_objects(
+        _user=user,
+        _content_object=Article,
+    )
+    like_hanmaum_articles = LikeActivity.get_like_content_objects(
+        _user=user,
+        _content_object=HanmaumArticle
+    )
+    create_articles = Article.get_articles_created_by(user)
+    response.update({
+        'user': user,
+        'user': like_articles,
+        'like_hanmaum_articles': like_hanmaum_articles,
+        'create_articles' : create_articles
+    })
+
     return render(request, 'users/show.dj.html', response)
 
 

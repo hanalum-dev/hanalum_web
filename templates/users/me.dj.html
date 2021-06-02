@@ -29,7 +29,24 @@
                 <canvas id="profileChart" width="300" height="300" class="mx-height-px-300"></canvas>
             </div>
         </div>
-
+        <div class="col-12">
+            <div class="card mx-height-px-400 overflow-scroll bg-white">
+                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+                    작성한 게시물
+                    <hr>
+                </h4>
+                <div class="ps-3 pe-3 pt-1 pb-1">
+                    {% for article in create_articles %}
+                        <div class = "pb-1">
+                            {% url 'articles:show' article.id as show_url %}
+                            {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+                        </div>
+                        {% empty %}
+                        {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         <div class="col-12">
             <div class="card mx-height-px-400 overflow-scroll bg-white">
                 <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
@@ -96,7 +113,7 @@
     const CHART_CARTEGORIES_COUNT = 4;
 
     var ctx = document.getElementById('profileChart');
-    var create_articles_count = {{ create_articles_count }} || 0;
+    var create_articles_count = {{ create_articles | length }} || 0;
     var like_articles_count = {{ like_articles | length }} || 0;
     var like_hanmaum_articles_count = {{ like_hanmaum_articles | length }} || 0;
     var comments_count = {{ recent_comments | length }} || 0;
@@ -125,15 +142,11 @@
             chart_data = chart.data.datasets[0].data;
             if (chart_data.length !== CHART_CARTEGORIES_COUNT || chart_data.reduce((a,b) => a + b) == 0) {
                 var width = chart.width;
-                var height = chart.height;
-
-                console.log(ctx, width, height);
-                
+                var height = chart.height;                
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = "black";
                 ctx.fillText('통계 정보가 없습니다.', width / 2, height / 2);
-                console.log(ctx);
                 ctx.restore(); 
             }
         }
