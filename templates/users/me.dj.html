@@ -42,7 +42,7 @@
                             {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
                         </div>
                         {% empty %}
-                        {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
+                        {% include 'components/_none_items.dj.html' with msg="작성한 게시물이 없습니다.<br>게시글을 작성해보시는 것은 어떤가요?"%}
                     {% endfor %}
                 </div>
             </div>
