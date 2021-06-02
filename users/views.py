@@ -132,6 +132,8 @@ def me(request):
         _content_object=HanmaumArticle
     )
 
+    create_articles_count = Article.get_articles_created_by(current_user).count()
+
     recent_comments = Comment.get_recent_user_comments(
         _user=current_user
     )
@@ -140,7 +142,8 @@ def me(request):
         'user':current_user,
         'like_articles': like_articles,
         'like_hanmaum_articles': like_hanmaum_articles,
-        'recent_comments': recent_comments
+        'recent_comments': recent_comments,
+        'create_articles_count' : create_articles_count
     })
 
     return render(request, 'users/me.dj.html', response)
