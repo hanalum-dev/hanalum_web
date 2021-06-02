@@ -125,5 +125,3 @@ class Comment(BaseModel):
             comment.show_url = "/{}/{}".format(comment.commented_type.app_label, comment.commented_id)
         
         return comments
-
-    
