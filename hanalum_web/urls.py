@@ -1,4 +1,5 @@
 """hanalum_web urls 정의 파일입니다."""
+from policies.views import personal_information
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -19,6 +20,7 @@ urlpatterns = [
     path("comments/", include('comments.urls', 'comments')),
     path("hanmaum/", include('hanmaum.urls', 'hanmaum')),
     path("admin/", admin.site.urls),
+    path("policy/personal_information", personal_information),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
 ] 
