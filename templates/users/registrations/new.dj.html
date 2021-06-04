@@ -40,10 +40,18 @@
               {% endif %}
             </div>
           {% endfor %}
+          <div class="m-1 p-2 text-center">
+            <label for="agree_personal_infomation_policy"> 
+              <a class="color-blue" data-bs-toggle="modal" href="#personalInformationPolicy">
+                개인정보처리방침
+              </a>에 동의합니다. 
+            </label>
+            <input type="checkbox" name="agree_personal_infomation_policy" required>
+          </div>
         </div>
-        <div class="small px-3">
-          <p class="mb-2 text-center"><a class="text-decoration-underline text-center color-blue" href="{% url 'users:signin' %}">이미 계정이 있으신가요?</a></p>
-          <p class="mb-0 text-center"><a class="text-decoration-underline text-center color-blue" href="/">메인화면으로 돌아가기</a></p>
+        <div class="small px-3 text-center">
+          <p class="mb-2"><a class="color-blue" href="{% url 'users:signin' %}">이미 계정이 있으신가요?</a></p>
+          <p class="mb-0"><a class="color-blue" href="/">메인화면으로 돌아가기</a></p>
         </div>
         <hr class="mb-4">
         <button class="btn btn-primary btn-md" type="submit">회원 가입</button>
@@ -52,4 +60,20 @@
   </div>
 </div>
 
+<div class="modal fade" id="personalInformationPolicy" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">개인정보처리방침</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% include 'policies/personal_information.html' %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

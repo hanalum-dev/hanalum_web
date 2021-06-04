@@ -7,7 +7,6 @@ from django.db import models
 from django.templatetags.static import static
 
 
-# 모델 migrate 할 때 setting의 'django.contrib.admin', urls의 path('admin/', admin.site.urls) 주석처리하기
 class UserManager(BaseUserManager):
     """ 클래스를 관리하는 클래스"""
 
