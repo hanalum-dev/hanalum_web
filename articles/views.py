@@ -28,7 +28,7 @@ def show(request, article_id):
 
     ArticlePermissionValidator.show(current_user, article_id)
 
-    article = get_object_or_404(Article, pk=article_id)
+    article = Article.objects.get(pk=article_id)
     board = article.board
 
     comments = Comment.get_comments(article)

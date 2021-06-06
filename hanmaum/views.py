@@ -7,11 +7,13 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
+from hanalum_web.base_views import catch_all_exceptions
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
 
+@catch_all_exceptions
 def index(request):
     """ index """
     response = dp(default_response)
@@ -34,11 +36,12 @@ def index(request):
     return render(request, 'hanmaum/index.dj.html', response)
 
 
+@catch_all_exceptions
 def show(request, article_id):
     """ show """
     response = dp(default_response)
 
-    article = get_object_or_404(HanmaumArticle, pk=article_id)
+    article = HanmaumArticle.objects.get(pk=article_id)
 
     comments = Comment.get_comments(article)
 
@@ -57,6 +60,7 @@ def show(request, article_id):
 
     return render(request, 'hanmaum/show.dj.html', response)
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def edit(request):
     """ edit """
@@ -65,6 +69,8 @@ def edit(request):
     }
     return render(request, 'hanmaum/edit.dj.html', response)
 
+
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new(request):
     """ new """
@@ -83,6 +89,7 @@ def introduce(request):
     return render(request, 'hanmaum/introduce.dj.html', response)
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def like(request):
     """ 좋아요 view""" 
@@ -112,6 +119,7 @@ def like(request):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def dislike(request):
     """ 싫어요 view """
@@ -140,6 +148,7 @@ def dislike(request):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def cancle(request):
 
@@ -168,6 +177,7 @@ def cancle(request):
 
     return HttpResponse(json.dumps(response), content_type="application/json")
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new_comment(request, article_id):
 
