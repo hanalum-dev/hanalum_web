@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django import forms
 from django.conf import settings
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, password_validation
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, password_validation, ReadOnlyPasswordHashField
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -203,46 +203,29 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-class UserModifyForm(forms.Form):
-    """유저 정보 변경 폼 클래스"""
+# class UserModifyForm(forms.ModelForm):
+#     """유저 정보 변경 폼 클래스"""
 
-    class Meta:
-        """user change form meta class"""
+#     password = forms.CharField(
+#         label="비밀번호",
+#         strip=False,
+#         widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True, "class": "form-control"}),
+#     )
 
-        model = User
-        fields = ["avatar", "nickname", "password1", "password2"]
-        widgets = {
-            "avatar": forms.FileInput(attrs={"class": "custom-file-input"}),
-            "nickname": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "입력하세요"}
-            ),
-        }
-        labels = {
-            "avatar": "프로필",
-            "nickname": "닉네임",
-        }
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
 
-    password = None
-    password1 = forms.CharField(
-        label="비밀번호",
-        widget=forms.PasswordInput(
-            attrs={"class": "form-control", "placeholder": "영문 + 숫자로 8자 이상"}
-        ),
-    )
-    password2 = forms.CharField(
-        label="비밀번호 확인",
-        widget=forms.PasswordInput(
-            attrs={"class": "form-control", "placeholder": "영문 + 숫자로 8자 이상"}
-        ),
-    )
+#     class Meta:
+#         """user change form meta class"""
 
-    def save(self, commit=True):
-        """비밀번호를 해시 상태로 저장"""
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
+#         model = User
+#         fields = ["password", "avatar"]
+#         widgets = {
+#             "avatar": forms.FileInput(attrs={"class": "custom-file-input"}),
+#         }
+#         labels = {
+#             "avatar": "프로필",
+#         }
 
 
 class UserConfirmationForm(forms.Form):

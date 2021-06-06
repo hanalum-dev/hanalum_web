@@ -33,8 +33,25 @@
     </div>
     <div class="col-md-8 col-12">
       <div class="card p-3 w-100">
-        <form>
-          
+        <form method="POST" action="{% url 'users:edit' %}">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="m-1">
+              <label for="{{field.id_for_label}}" class = "sm-1">{{field.label}}</label>
+              {{ field }}
+              {% for error in field.errors %}
+                <span class="text-red">
+                  {{ error }}<br>
+                </span>
+              {% endfor %}
+              <div class="pt-2">
+                {{field.help_text}}
+              </div>
+            </div>
+          {% endfor %}
+          <div class="m-1 pt-3">
+            <button class="btn btn-primary btn-md" type="submit">정보 변경</button>
+          </div>
         </form>
       </div>
     </div>

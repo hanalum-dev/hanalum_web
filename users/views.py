@@ -170,49 +170,36 @@ def show(request, user_id):
 
     return render(request, 'users/show.dj.html', response)
 
-@catch_all_exceptions
-@login_required(login_url='/users/signin')
-def edit(request):
-    """ 사용자 정보 수정 페이지 뷰"""
-    response = dp(default_response)
-    current_user = request.user
+# @catch_all_exceptions
+# @login_required(login_url='/users/signin')
+# def edit(request):
+#     """ 사용자 정보 수정 페이지 뷰"""
+#     response = dp(default_response)
+#     current_user = request.user
 
-    response.update({
-        'user': current_user,
-        # 'form' : UserConfirmationForm()
-    })
+#     response.update({
+#         'user': current_user,
+#         'form' : UserModifyForm()
+#     })
 
-    # if request.method == 'POST':
-    #     form = response['form'] = UserConfirmationForm(request.POST)
+#     if request.method == 'POST':
+#         form = response['form'] = UserModifyForm(request.POST, request.FILES)
 
-    #     if form.is_valid():
-    #         email = form.cleaned_data['email']
-    #         password = form.cleaned_data['password']
-    #         user = auth.authenticate(request, username=email, password=password)
-            
-    #         if user is None:
-    #             # TODO: message가 아니라 validation text로 나오게 하기
-    #             messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
-    #             return render(request, 'users/confirmations/new.dj.html', response)
-    #         elif not user.is_active:
-    #             messages.error(request, '이메일로 발송된 인증 이메일을 확인해주세요.')
-    #             return render(request, 'users/confirmations/new.dj.html', response)
-    #         else:
-    #             messages.success(request, '로그인되었습니다.')
-    #             auth.login(request, user)
-    #             return redirect('/')
-    #     else:
-    #         messages.error(request, '오류가 발생하였습니다.')
-    #         return render(request, 'users/confirmations/new.dj.html', response)
+#         if form.is_valid():
+#             password = form.cleaned_data['password']
+#             avatar = form.cleaned_data['avatar']
+#             user = auth.authenticate(request, username=current_user.email, password=password)                
+#             form.save()
+#             messages.error(request, '유저 정보가 변경되었습니다!')
+#             return redirect('users:me')
+#         else:
+#             messages.error(request, '유저 정보가 변경하는데 실패했습니다 :(')
+#             return render(request,  'users/edit.dj.html', response)
 
-    # else:
-    #     if request.user.is_authenticated:
-    #         messages.error(request, '이미 로그인되어있습니다.')
-    #         return redirect('/')
-    #     response['form'] = UserConfirmationForm()
-        # return render(request, 'users/confirmations/new.dj.html', response)
+#     else:
+#         response['form'] = UserModifyForm()
 
-    return render(request, 'users/edit.dj.html', response)
+#     return render(request, 'users/edit.dj.html', response)
 
 # @catch_all_exceptions
 @login_required(login_url='/users/signin')
