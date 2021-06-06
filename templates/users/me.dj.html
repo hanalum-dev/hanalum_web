@@ -3,174 +3,174 @@
 {% load bootstrap5 %}
 {% load fontawesome_5 %}
 {% block stylesheet %}
-{% fontawesome_5_static %}
-{% endblock %}
+  {% fontawesome_5_static %}
+{% endblock %} 
 
 {% block content %}
-<div class = "container p-3 user-page">
-    <div class="row g-2">
-        <div class="col-md-4 col-12">
-            <div class="card p-3 h-100">
-                <div class="avatar-image-wrapper">
-                    <img src = "{{ user.avatar_image_url }}">
-                </div>
-
-                <div class="text-center p-2">
-                    <h2>
-                        {{user.nickname}}
-                    </h2>
-
-                    {{user.realname}}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 col-12">
-            <div class="card p-3 w-100">
-                <canvas id="profileChart" width="300" height="300" class="mx-height-px-300"></canvas>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card mx-height-px-400 overflow-scroll bg-white">
-                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
-                    작성한 게시물
-                    <hr>
-                </h4>
-                <div class="ps-3 pe-3 pt-1 pb-1">
-                    {% for article in create_articles %}
-                        <div class = "pb-1">
-                            {% url 'articles:show' article.id as show_url %}
-                            {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
-                        </div>
-                        {% empty %}
-                        {% include 'components/_none_items.dj.html' with msg="작성한 게시물이 없습니다.<br>게시글을 작성해보시는 것은 어떤가요?"%}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card mx-height-px-400 overflow-scroll bg-white">
-                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
-                    좋아요한 게시물
-                    <hr>
-                </h4>
-                <div class="ps-3 pe-3 pt-1 pb-1">
-                    {% for article in like_articles %}
-                        <div class = "pb-1">
-                            {% url 'articles:show' article.id as show_url %}
-                            {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
-                        </div>
-                        {% empty %}
-                        {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
-                    {% endfor %}
-                </div>
-            </div>
+<div class="container p-3 user-page">
+  <div class="row g-2">
+    <div class="col-md-4 col-12">
+      <div class="card p-3 h-100">
+        <div class="avatar-image-wrapper">
+          <img src="{{ user.avatar_image_url }}">
         </div>
 
-        <div class="col-12">
-            <div class="card mx-height-px-400 overflow-scroll bg-white">
-                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
-                    좋아요를 누른 한마음 게시물
-                    <hr>
-                </h4>
-                <div class="ps-3 pe-3 pt-1 pb-1">
-                    {% for article in like_hanmaum_articles %}
-                        <div class = "pb-1">
-                            {% url 'hanmaum:show' article.id as show_url %}
-                            {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
-                        </div>
-                        {% empty %}
-                        {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
-                    {% endfor %}
-                </div>
-            </div>
+        <div class="text-center p-2">
+          <h2>
+            {{user.nickname}}
+          </h2>
         </div>
-        
-        <div class="col-12">
-            <div class="card mx-height-px-400 overflow-scroll bg-white">
-                <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
-                    최근에 단 댓글
-                    <hr>
-                </h4>
-                <div class="ps-3 pe-3 pt-1 pb-1">
-                    {% for comment in recent_comments %}
-                        <div class = "pb-1">
-                            {% include 'components/_comment_item.dj.html' %}
-                        </div>
-                        {% empty %}
-                        {% include 'components/_none_items.dj.html' with msg="최근에 단 댓글이 없습니다.<br>게시글에 댓글을 달아보는 것은 어떤가요?"%}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+
+        <ul class="list-group list-group-flush list-style-none text-center border-none">
+          <li>
+            <a href="{% url 'users:edit' %}" class="list-group-item"> 정보 수정 </a>
+          </li>
+          <li class="mt-1">
+            <a href="{% url 'users:password_edit' %}"class="list-group-item"> 비밀번호 수정 </a>
+          </li>
+        </ul>
+      </div>
     </div>
+    <div class="col-md-8 col-12">
+      <div class="card p-3 w-100">
+        <canvas id="profileChart" width="300" height="300" class="mx-height-px-300"></canvas>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card mx-height-px-400 overflow-scroll bg-white">
+        <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+          작성한 게시물
+          <hr>
+        </h4>
+        <div class="ps-3 pe-3 pt-1 pb-1">
+          {% for article in create_articles %}
+            <div class="pb-1">
+              {% url 'articles:show' article.id as show_url %}
+              {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+            </div>
+            {% empty %}
+            {% include 'components/_none_items.dj.html' with msg="작성한 게시물이 없습니다.<br>게시글을 작성해보시는 것은 어떤가요?"%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card mx-height-px-400 overflow-scroll bg-white">
+        <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+          좋아요한 게시물
+          <hr>
+        </h4>
+        <div class="ps-3 pe-3 pt-1 pb-1">
+          {% for article in like_articles %}
+            <div class="pb-1">
+              {% url 'articles:show' article.id as show_url %}
+              {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+            </div>
+            {% empty %}
+            {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card mx-height-px-400 overflow-scroll bg-white">
+        <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+          좋아요를 누른 한마음 게시물
+          <hr>
+        </h4>
+        <div class="ps-3 pe-3 pt-1 pb-1">
+          {% for article in like_hanmaum_articles %}
+          <div class="pb-1">
+            {% url 'hanmaum:show' article.id as show_url %} {% include 'components/_article_card.dj.html' with show_url=show_url article=article show_like_activity=True %}
+          </div>
+          {% empty %} {% include 'components/_none_items.dj.html' with msg="좋아요한 게시물이 없습니다.<br>게시글에 좋아요를 눌러보는 것은 어떤가요?"%} {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card mx-height-px-400 overflow-scroll bg-white">
+        <h4 class="sticky-title bg-white ps-3 pe-3 pt-3 m-0">
+          최근에 단 댓글
+          <hr>
+        </h4>
+        <div class="ps-3 pe-3 pt-1 pb-1">
+          {% for comment in recent_comments %}
+            <div class="pb-1">
+              {% include 'components/_comment_item.dj.html' %}
+            </div>
+            {% empty %}
+            {% include 'components/_none_items.dj.html' with msg="최근에 단 댓글이 없습니다.<br>게시글에 댓글을 달아보는 것은 어떤가요?"%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
-
 {% block scripts %}
 <script src="{% static 'chart.js/dist/chart.js' %}"></script>
 <script>
-    const CHART_CARTEGORIES_COUNT = 4;
+  const CHART_CARTEGORIES_COUNT = 4;
 
-    var ctx = document.getElementById('profileChart');
-    var create_articles_count = {{ create_articles | length }} || 0;
-    var like_articles_count = {{ like_articles | length }} || 0;
-    var like_hanmaum_articles_count = {{ like_hanmaum_articles | length }} || 0;
-    var comments_count = {{ recent_comments | length }} || 0;
+  var ctx = document.getElementById('profileChart');
+  var create_articles_count = {{ create_articles | length}} || 0;
+  var like_articles_count = {{ like_articles | length }} || 0;
+  var like_hanmaum_articles_count = {{ like_hanmaum_articles | length }} || 0;
+  var comments_count = {{ recent_comments | length }} || 0;
 
-    var data = {
-        labels: ['작성한 게시글 수', '작성한 댓글 수', '좋아하는 게시글 수', '좋아하는 한마음 게시글 수'],
-        datasets: [
-            {
-            label: 'Dataset 1',
-            data: [create_articles_count, comments_count, like_articles_count, like_hanmaum_articles_count],
-            {% comment %} data: [0, 0, 0, 0], {% endcomment %}
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-            ],
-            }
-        ]
-    };
-    const plugin = {
-        id: 'custom_canvas_background_color',
-        beforeDraw: (chart) => {
-            const ctx = chart.canvas.getContext('2d');
-            ctx.save();
-            chart_data = chart.data.datasets[0].data;
-            if (chart_data.length !== CHART_CARTEGORIES_COUNT || chart_data.reduce((a,b) => a + b) == 0) {
-                var width = chart.width;
-                var height = chart.height;                
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillStyle = "black";
-                ctx.fillText('통계 정보가 없습니다.', width / 2, height / 2);
-                ctx.restore(); 
-            }
-        }
-    };
+  var data = {
+    labels: ['작성한 게시글 수', '작성한 댓글 수', '좋아하는 게시글 수', '좋아하는 한마음 게시글 수'],
+    datasets: [{
+      label: 'Dataset 1',
+      data: [create_articles_count, comments_count, like_articles_count, like_hanmaum_articles_count],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+      ],
+    }]
+  };
+  const plugin = {
+    id: 'custom_canvas_background_color',
+    beforeDraw: (chart) => {
+      const ctx = chart.canvas.getContext('2d');
+      ctx.save();
+      chart_data = chart.data.datasets[0].data;
+      if (chart_data.length !== CHART_CARTEGORIES_COUNT || chart_data.reduce((a, b) => a + b) == 0) {
+        var width = chart.width;
+        var height = chart.height;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = "black";
+        ctx.fillText('통계 정보가 없습니다.', width / 2, height / 2);
+        ctx.restore();
+      }
+    }
+  };
 
-    var profileChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                },
-                title: {
-                    display: false,
-                },
-            }
+  var profileChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
         },
-        plugins: [plugin],
-    });
+        title: {
+          display: false,
+        },
+      }
+    },
+    plugins: [plugin],
+  });
 
-    $(document).ready(function() {
-        initLikeActivity();
-    })
+  $(document).ready(function() {
+    initLikeActivity();
+  })
 </script>
 {% endblock %}

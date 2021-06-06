@@ -22,4 +22,6 @@ def catch_all_exceptions(function):
         except Article.DoesNotExist:
             # TODO: DoesNotPage
             return HttpResponse('<h1>없는 게시글입니다.</h1>', status=404)
+        except Exception as e:
+            return HttpResponse(e, status=500)
     return wrapper

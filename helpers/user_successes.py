@@ -19,3 +19,12 @@ class UserCreationValidationSuccess(Success):
         """생성자"""
         super().__init__()
         self.msg = "정상적으로 입력되었습니다."
+
+
+class UserPasswordEditionValidationSuccess(Success):
+    """ 사용자 비밀번호 변경 데이터 검증 성공 """ 
+
+    def __init__(self):
+        """생성자"""
+        super().__init__()
+        self.msg = "비밀번호가 정상적으로 변경되었습니다."

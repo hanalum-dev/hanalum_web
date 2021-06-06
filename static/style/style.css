@@ -559,4 +559,8 @@ button.border-none { border: none; background: none; outline: none; }
 
 .ps-5 { padding-left: 3rem !important; }
 
+.list-style-none { list-style: none; padding-left: 0; }
+
+.border-none { border: none !important; }
+
 /*# sourceMappingURL=style.css.map */

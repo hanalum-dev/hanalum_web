@@ -8,10 +8,11 @@ from .models import HanmaumArticle
 class HanmaumAdmin(admin.ModelAdmin):
     """ 한마음 어드민 설정 클래스입니다. """
     list_display = [
-        "title",
-        "interviewer",
-        "interviewee",
-        "created_at",
-        "updated_at",
+        'id',
+        'title',
+        'interviewer',
+        'interviewee',
+        'created_at',
+        'updated_at',
     ]
     list_filter = ["interviewer"]

@@ -12,7 +12,7 @@ from helpers.user_errors import (AlreadyRegisteredEmailError,
                                  MismatchedPasswordError, NoInputEmailError,
                                  NoInputNicknameError, NoInputPasswordError,
                                  NoInputRealnameError)
-from helpers.user_successes import UserCreationValidationSuccess
+from helpers.user_successes import UserCreationValidationSuccess, UserPasswordEditionValidationSuccess
 
 from .models import User
 
@@ -113,4 +113,39 @@ class UserEditionValidator:
     def validate_nickname(self, current_user, _nickname):
         """ 닉네임 validation """
         # TODO : 내용 작성
+        return Success()
+
+class UserPasswordEditionValidator:
+    """ 사용자 비밀번호 변경 데이터 검증 클래스"""
+
+    def validate(self, _password1, _password2):
+        """사용자 생성 validation"""
+
+        v_password = self.validate_password(_password1, _password2)
+
+        e = Error()
+        e.msg = {}
+
+        if not v_password.status:
+            e.msg['password'] = v_password
+
+        if e.msg != {}:
+            return e
+
+        return UserPasswordEditionValidationSuccess()
+
+    def validate_password(self, _password1, _password2):
+        """ 비밀번호 validation """
+
+        if _password1 is None or _password2 is None:
+            return NoInputPasswordError()
+
+        is_match = password_regex.match(_password1)
+
+        if is_match is None:
+            return InvalidFormatPasswordError()
+
+        if _password1 != _password2:
+            return MismatchedPasswordError()
+
         return Success()
