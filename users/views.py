@@ -226,7 +226,6 @@ def password_edit(request):
             response['status'] = validate_user_form_result.status
             response['msg'] = validate_user_form_result.msg
             response['form'] = form
-            messages.error(request, response['msg'])
             messages.error(request, '비밀번호가 변경되지 않았습니다.')
             return render(request, 'users/passwords/edit.dj.html', response)
 
@@ -239,10 +238,8 @@ def password_edit(request):
                     messages.error(request, '비밀번호가 변경되지 않았습니다. :(')
         except IntegrityError as e:
             logger.error(e)
-            messages.success(e)
         except Exception as e:  # pylint: disable=broad-except
             logger.error(e)
-            messages.success(e)
         messages.error(request, '비밀번호가 변경되지 않았습니다. :(')
     else:
         response['form'] = CustomPasswordChangeForm(current_user)
