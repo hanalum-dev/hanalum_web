@@ -344,6 +344,6 @@ def get_next_article(article_id, board_id=None):
 def get_prev_article(article_id, board_id=None):
     """이전 게시글을 반환합니다."""
     if board_id:
-        return Article.objects.published().filter(board_id=board_id, pk__lt=article_id).first()
+        return Article.objects.published().filter(board_id=board_id, pk__lt=article_id).last()
     else:
-        return Article.objects.published().filter(pk__lt=article_id).first()
+        return Article.objects.published().filter(pk__lt=article_id).last()

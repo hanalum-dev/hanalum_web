@@ -37,7 +37,7 @@ def index(request):
     return render(request, 'hanmaum/index.dj.html', response)
 
 
-# @catch_all_exceptions
+@catch_all_exceptions
 def show(request, article_id):
     """ show """
     response = dp(default_response)
@@ -186,9 +186,9 @@ def new_comment(request, article_id):
 
 def get_next_article(article_id):
     """다음 게시글을 반환합니다."""
-    return HanmaumArticle.objects.published().filter(pk__gt=article_id).first()
+    return HanmaumArticle.objects.published().order_by('pk').filter(pk__gt=article_id).first()
 
 
 def get_prev_article(article_id):
     """이전 게시글을 반환합니다."""
-    return HanmaumArticle.objects.published().filter(pk__lt=article_id).first()
+    return HanmaumArticle.objects.published().order_by('pk').filter(pk__lt=article_id).last()
