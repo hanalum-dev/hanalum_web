@@ -121,6 +121,8 @@
 
 .text-overflow-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+.text-overflow-ellipsis-2 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 .text-white { color: #ffffff !important; }
 
 .bg-white { background-color: #ffffff !important; }
