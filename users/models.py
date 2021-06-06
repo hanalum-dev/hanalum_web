@@ -92,7 +92,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name="created_at",
         auto_now_add=True,
     )
-    updated_at = models.DateTimeField(verbose_name="updated_at", auto_now=True)
+    updated_at = models.DateTimeField(
+        verbose_name="updated_at",
+        auto_now=True
+    )
     is_active = models.BooleanField(
         verbose_name="Is active",
         default=True,

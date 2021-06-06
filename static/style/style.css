@@ -121,6 +121,8 @@
 
 .text-overflow-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+.text-overflow-ellipsis-2 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 .text-white { color: #ffffff !important; }
 
 .bg-white { background-color: #ffffff !important; }
@@ -558,5 +560,9 @@ button.border-none { border: none; background: none; outline: none; }
 .ps-4 { padding-left: 1.5rem !important; }
 
 .ps-5 { padding-left: 3rem !important; }
+
+.list-style-none { list-style: none; padding-left: 0; }
+
+.border-none { border: none !important; }
 
 /*# sourceMappingURL=style.css.map */

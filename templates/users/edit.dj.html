@@ -21,19 +21,19 @@
           </h2>
         </div>
 
-        {% comment %} <ul class="list-group list-group-flush list-style-none text-center border-none">
+        <ul class="list-group list-group-flush list-style-none text-center border-none">
           <li>
             <a href="{% url 'users:edit' %}" class="list-group-item"> 정보 수정 </a>
           </li>
           <li class="mt-1">
             <a href="{% url 'users:password_edit' %}"class="list-group-item"> 비밀번호 수정 </a>
           </li>
-        </ul> {% endcomment %}
+        </ul>
       </div>
     </div>
     <div class="col-md-8 col-12">
       <div class="card p-3 w-100">
-        <form method = "POST" action = "{% url 'users:password_edit' %}">
+        <form method="POST" action="{% url 'users:edit' %}">
           {% csrf_token %}
           {% for field in form %}
             <div class="m-1">
@@ -44,16 +44,13 @@
                   {{ error }}<br>
                 </span>
               {% endfor %}
-              {% if field.id_for_label == "id_new_password2" and not msg.password.status and msg.password.status is not None %}
-                  <div class="text-error ml-3 mb-2">{{msg.password.msg}}</div>
-              {% endif %}
               <div class="pt-2">
                 {{field.help_text}}
               </div>
             </div>
           {% endfor %}
           <div class="m-1 pt-3">
-            <button class="btn btn-primary btn-md" type="submit">비밀번호 변경</button>
+            <button class="btn btn-primary btn-md" type="submit">정보 변경</button>
           </div>
         </form>
       </div>

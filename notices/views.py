@@ -8,10 +8,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from comments.models import Comment
 from helpers.default import default_response
 from history.models import ViewHistory
+from hanalum_web.base_views import catch_all_exceptions
 
 from .models import Notice
 
-
+@catch_all_exceptions
 def index(request):
     """ GET: index """
     response = dp(default_response)
@@ -41,13 +42,13 @@ def index(request):
 
     return render(request, 'notices/index.dj.html', response)
 
-
+@catch_all_exceptions
 def show(request, notice_id):
     """ GET: show """
     current_user = request.user
     response = dp(default_response)
 
-    notice = get_object_or_404(Notice, pk=notice_id)
+    notice = Notice.objects.get(pk=notice_id)
     next_notice = get_next_notice(notice_id)
     prev_notice = get_prev_notice(notice_id)
 
@@ -71,19 +72,20 @@ def show(request, notice_id):
     return render(request, 'notices/show.dj.html', response)
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new_comment(request, notice_id):
     """ GET: new_comment
         댓글을 추가합니다.
     """
 
-    notice = get_object_or_404(Notice, pk=notice_id)
+    notice = Notice.objects.get(pk=notice_id)
     user = request.user
     content = request.POST.get('content')
 
     parent_id = request.POST.get('parent_id')
     if parent_id:
-        parent = get_object_or_404(Comment, pk=parent_id)
+        parent = Comment.objects.get(pk=parent_id)
     else:
         parent = None
 

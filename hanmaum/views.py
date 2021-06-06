@@ -1,4 +1,5 @@
 """ 한마음 views 모듈입니다."""
+from hanmaum.validators import HanmaumArticlePermissionValidator
 import json
 from copy import deepcopy as dp
 
@@ -7,11 +8,13 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
+from hanalum_web.base_views import catch_all_exceptions
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
 
+@catch_all_exceptions
 def index(request):
     """ index """
     response = dp(default_response)
@@ -34,29 +37,44 @@ def index(request):
     return render(request, 'hanmaum/index.dj.html', response)
 
 
+# @catch_all_exceptions
 def show(request, article_id):
     """ show """
     response = dp(default_response)
+    current_user = request.user
 
-    article = get_object_or_404(HanmaumArticle, pk=article_id)
+    article = HanmaumArticle.objects.get(pk=article_id)
 
     comments = Comment.get_comments(article)
+
+    if current_user.is_authenticated:
+        article.is_user_in_like = LikeActivity.is_user_in_like(
+            _content_object=article,
+            _user=current_user
+        )
+        article.is_user_in_dislike = LikeActivity.is_user_in_dislike(
+            _content_object=article,
+            _user=current_user
+        )
+        ViewHistory.add_history(
+            _viewed_obj=article,
+            _viewer=current_user
+        )  # 사용자 접속 로그 추가
+
+    next_article = get_next_article(article_id=article_id)
+    prev_article = get_prev_article(article_id=article_id)
 
     response.update({
         'banner_title' : article.title,
         'article' : article,
         'comments' : comments,
+        'next_article': next_article,
+        'prev_article': prev_article,
     })
-
-    # 사용자 접속 로그 추가
-    if request.user.is_authenticated:
-        ViewHistory.add_history(
-            _viewed_obj=article,
-            _viewer=request.user
-        )
 
     return render(request, 'hanmaum/show.dj.html', response)
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def edit(request):
     """ edit """
@@ -65,6 +83,8 @@ def edit(request):
     }
     return render(request, 'hanmaum/edit.dj.html', response)
 
+
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new(request):
     """ new """
@@ -83,91 +103,63 @@ def introduce(request):
     return render(request, 'hanmaum/introduce.dj.html', response)
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
-def like(request):
-    """ 좋아요 view""" 
-    response = {
-        'status' : False   
-    }
+def like(request, article_id):
+    """article을 좋아요 처리합니다."""
 
-    article_id = request.POST.get('article_id')
+    current_user = request.user
+    HanmaumArticlePermissionValidator.like(current_user, article_id)
+    article = HanmaumArticle.objects.filter(pk=article_id).first()
 
-    article = get_object_or_404(HanmaumArticle, pk=article_id)
-    # TODO: validation 추가하기
-    
-    user = request.user
-
-    activity_result = LikeActivity.set_user_in_like(
-        _content_object=article,
-        _user=user
-    )
-
-    response['status'] = activity_result.status
+    if LikeActivity.is_user_in_like(_content_object=article, _user=current_user):
+        activity_result = LikeActivity.set_user_in_none(
+            _content_object=article,
+            _user=current_user
+        )
+    else:
+        activity_result = LikeActivity.set_user_in_like(
+            _content_object=article,
+            _user=current_user
+        )
 
     if activity_result.status:
         messages.success(request, activity_result.msg)
     else:
         messages.error(request, activity_result.msg)
 
-    return HttpResponse(json.dumps(response), content_type="application/json")
+    return redirect("hanmaum:show", article_id)
 
 
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
-def dislike(request):
-    """ 싫어요 view """
-    response = {
-        'status' : False   
-    }
+def dislike(request, article_id):
+    """article을 싫어요 처리합니다."""
 
-    article_id = request.POST.get('article_id')
+    current_user = request.user
+
+    HanmaumArticlePermissionValidator.dislike(current_user, article_id)
     article = get_object_or_404(HanmaumArticle, pk=article_id)
-    # TODO: validation 추가하기
 
-    user = request.user
-
-    activity_result = LikeActivity().set_user_in_dislike(
-        _content_object=article,
-        _user=user
-    )
-
-    response['status'] = activity_result.status
+    if LikeActivity.is_user_in_dislike(_content_object=article, _user=current_user):
+        activity_result = LikeActivity.set_user_in_none(
+            _content_object=article,
+            _user=current_user
+        )
+    else:
+        activity_result = LikeActivity.set_user_in_dislike(
+            _content_object=article,
+            _user=current_user
+        )
 
     if activity_result.status:
         messages.success(request, activity_result.msg)
     else:
         messages.error(request, activity_result.msg)
 
-    return HttpResponse(json.dumps(response), content_type="application/json")
+    return redirect("hanmaum:show", article_id)
 
-
-@login_required(login_url='/users/signin')
-def cancle(request):
-
-    """ 좋아요/싫어요 취소 view """
-    response = {
-        'status' : False   
-    }
-    
-    article_id = request.POST.get('article_id')
-    article = get_object_or_404(HanmaumArticle, pk=article_id)
-    # TODO: validation 추가하기
-
-    user = request.user
-
-    activity_result = LikeActivity.set_user_in_none(
-        _content_object=article,
-        _user=user
-    )
-
-    response['status'] = activity_result.status
-
-    if activity_result.status:
-        messages.success(request, activity_result.msg)
-    else:
-        messages.error(request, activity_result.msg)
-
-    return HttpResponse(json.dumps(response), content_type="application/json")
-
+@catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new_comment(request, article_id):
 
@@ -190,3 +182,13 @@ def new_comment(request, article_id):
 
     # TODO: 댓글이 작성되었습니다. 메세지 띄우기
     return redirect("hanmaum:show", article_id)
+
+
+def get_next_article(article_id):
+    """다음 게시글을 반환합니다."""
+    return HanmaumArticle.objects.published().filter(pk__gt=article_id).first()
+
+
+def get_prev_article(article_id):
+    """이전 게시글을 반환합니다."""
+    return HanmaumArticle.objects.published().filter(pk__lt=article_id).first()

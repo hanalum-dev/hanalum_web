@@ -1,4 +1,5 @@
 """user(사용자 계정) views 모듈입니다."""
+from django.http import response
 from comments.models import Comment
 from copy import deepcopy as dp
 import logging
@@ -11,12 +12,12 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 
 from helpers.default import default_response
-from .forms import UserConfirmationForm, UserCreationForm
+from .forms import UserConfirmationForm, UserCreationForm, CustomPasswordChangeForm
 from .models import User
 from .tokens import account_activation_token
 from hanalum_web.base_views import catch_all_exceptions
-from .validators import UserCreationValidator
-from history.models import LikeActivity, ViewHistory
+from .validators import UserCreationValidator, UserPasswordEditionValidator
+from history.models import LikeActivity
 from articles.models import Article
 from hanmaum.models import HanmaumArticle
 
@@ -169,15 +170,80 @@ def show(request, user_id):
 
     return render(request, 'users/show.dj.html', response)
 
+# @catch_all_exceptions
+# @login_required(login_url='/users/signin')
+# def edit(request):
+#     """ 사용자 정보 수정 페이지 뷰"""
+#     response = dp(default_response)
+#     current_user = request.user
 
-def edit(request):
+#     response.update({
+#         'user': current_user,
+#         'form' : UserModifyForm()
+#     })
+
+#     if request.method == 'POST':
+#         form = response['form'] = UserModifyForm(request.POST, request.FILES)
+
+#         if form.is_valid():
+#             password = form.cleaned_data['password']
+#             avatar = form.cleaned_data['avatar']
+#             user = auth.authenticate(request, username=current_user.email, password=password)                
+#             form.save()
+#             messages.error(request, '유저 정보가 변경되었습니다!')
+#             return redirect('users:me')
+#         else:
+#             messages.error(request, '유저 정보가 변경하는데 실패했습니다 :(')
+#             return render(request,  'users/edit.dj.html', response)
+
+#     else:
+#         response['form'] = UserModifyForm()
+
+#     return render(request, 'users/edit.dj.html', response)
+
+# @catch_all_exceptions
+@login_required(login_url='/users/signin')
+def password_edit(request):
     """ 사용자 정보 수정 페이지 뷰"""
-    return
+    response = dp(default_response)
+    current_user = request.user
 
+    response.update({
+        'user':current_user,
+        'form': CustomPasswordChangeForm(current_user)
+    })
+    
+    if request.method == 'POST':
+        form = response['form'] = CustomPasswordChangeForm(current_user, request.POST)
+        _password1 = request.POST.get('new_password1')
+        _password2 = request.POST.get('new_password2')
 
-def update(request):
-    """ 사용자 정보 수정 반영 뷰"""
-    return
+        validate_user_form_result = UserPasswordEditionValidator().validate(
+            _password1=_password1, _password2=_password2,
+        )
+
+        if not validate_user_form_result.status:
+            response['status'] = validate_user_form_result.status
+            response['msg'] = validate_user_form_result.msg
+            response['form'] = form
+            messages.error(request, '비밀번호가 변경되지 않았습니다.')
+            return render(request, 'users/passwords/edit.dj.html', response)
+
+        try:
+            with transaction.atomic():
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, '비밀번호가 정상적으로 변경되었습니다.')
+                else:
+                    messages.error(request, '비밀번호가 변경되지 않았습니다. :(')
+        except IntegrityError as e:
+            logger.error(e)
+        except Exception as e:  # pylint: disable=broad-except
+            logger.error(e)
+        messages.error(request, '비밀번호가 변경되지 않았습니다. :(')
+    else:
+        response['form'] = CustomPasswordChangeForm(current_user)
+    return render(request, 'users/passwords/edit.dj.html', response)
 
 
 def delete(request):
