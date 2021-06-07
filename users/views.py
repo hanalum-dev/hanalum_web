@@ -234,6 +234,7 @@ def password_edit(request):
                 if form.is_valid():
                     form.save()
                     messages.success(request, '비밀번호가 정상적으로 변경되었습니다.')
+                    return redirect("users:me")
                 else:
                     messages.error(request, '비밀번호가 변경되지 않았습니다. :(')
         except IntegrityError as e:
