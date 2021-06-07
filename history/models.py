@@ -272,8 +272,11 @@ class LikeActivity(Activity):
 
         like_objects = []
         for like_activity in like_activities:
-            like_objects.append(
-                content_type_obj.get_object_for_this_type(pk=like_activity.content_id)
-            )
+            try:
+                like_objects.append(
+                    content_type_obj.get_object_for_this_type(pk=like_activity.content_id)
+                )
+            except:
+                pass
 
         return like_objects
