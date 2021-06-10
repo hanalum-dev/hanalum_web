@@ -52,7 +52,7 @@ class Article(BaseModel):
     board = models.ForeignKey(
         'boards.board',
         verbose_name="게시판",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='articles'
@@ -60,7 +60,7 @@ class Article(BaseModel):
     author = models.ForeignKey(
         'users.user',
         verbose_name="글쓴이",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
     )  # 글쓴이
@@ -174,7 +174,8 @@ class ArticleAttachment(models.Model):
     article = models.ForeignKey(
         'articles.article',
         related_name='articles',
-        on_delete=models.DO_NOTHING
+        on_delete=models.SET_NULL,
+        null=True
     )
     attachment = models.FileField(
         verbose_name="첨부파일",

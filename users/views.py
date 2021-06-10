@@ -16,7 +16,7 @@ from .forms import UserConfirmationForm, UserCreationForm, CustomPasswordChangeF
 from .models import User
 from .tokens import account_activation_token
 from hanalum_web.base_views import catch_all_exceptions
-from .validators import UserCreationValidator, UserPasswordEditionValidator
+from .validators import UserCreationValidator, UserPasswordEditionValidator, UserPermissionValidator
 from history.models import LikeActivity
 from articles.models import Article
 from hanmaum.models import HanmaumArticle
@@ -146,10 +146,13 @@ def me(request):
 
     return render(request, 'users/me.dj.html', response)
 
+@catch_all_exceptions
 def show(request, user_id):
     """사용자 페이지 뷰"""
     response = dp(default_response)
-    user = get_object_or_404(User, pk=user_id)
+    user = User.objects.get(pk=user_id)
+
+    UserPermissionValidator.show(user_id)
 
     like_articles = LikeActivity.get_like_content_objects(
         _user=user,

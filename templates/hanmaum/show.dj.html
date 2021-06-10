@@ -6,6 +6,7 @@
 
 {% block stylesheet %}
     <link href="{% sass_src 'style/components/_comments.scss' %}" rel="stylesheet" type="text/css" />
+    <link href="{% sass_src 'style/pages/hanmaum.scss' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
@@ -33,12 +34,12 @@
                 </div>
                 <div class="card-body mn-height-px-200 position-relative">
                     <div class="card-text p-3 article-content">
-                        {% if article.interviewer %}
-                            인터뷰어: {{article.interviewer}}
+                        {% comment %} {% if article.interviewer %}
+                            인터뷰어: {{article.interviewer}}<br>
                         {% endif %}
                         {% if article.interviewee %}
                             인터뷰이: {{article.interviewee}}
-                        {% endif %}
+                        {% endif %} {% endcomment %}
                         {{article.content | safe }}
                     </div>
                     <div class="card-text position-absolute bottom-0 p-3">

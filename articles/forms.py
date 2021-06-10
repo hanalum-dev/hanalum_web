@@ -1,4 +1,4 @@
-""" 한마음 게시글 폼 모둘입니다. """
+""" 게시글 폼 모둘입니다. """
 from django_summernote.widgets import SummernoteWidget
 
 from django import forms

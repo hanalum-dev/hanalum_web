@@ -13,6 +13,7 @@ from helpers.user_errors import (AlreadyRegisteredEmailError,
                                  NoInputNicknameError, NoInputPasswordError,
                                  NoInputRealnameError)
 from helpers.user_successes import UserCreationValidationSuccess, UserPasswordEditionValidationSuccess
+from helpers.exeptions import NoPermissionException
 
 from .models import User
 
@@ -149,3 +150,14 @@ class UserPasswordEditionValidator:
             return MismatchedPasswordError()
 
         return Success()
+
+class UserPermissionValidator():
+    """user views마다의 권한 제어 클래스"""
+
+    @classmethod
+    def show(cls, user_id):
+        """show validator"""
+
+        user = User.objects.get(pk=user_id)
+
+        return True
