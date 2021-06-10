@@ -10,18 +10,6 @@ from django.views.static import serve
 from main.views import root
 from helpers.default import default_response
 
-def not_authorized(request):
-    response = dp(default_response)
-    return render(request, '402.html', response)
-
-def not_found(request):
-    response = dp(default_response)
-    return render(request, '404.html', response)
-
-def server_error(request):
-    response = dp(default_response)
-    return render(request, '500.html', response)
-
 urlpatterns = [
     path('', root, name='root'),
     path('summernote/', include('django_summernote.urls')),
@@ -35,9 +23,6 @@ urlpatterns = [
     path("hanmaum/", include('hanmaum.urls', 'hanmaum')),
     path("admin/", admin.site.urls),
     path("policy/personal_information", personal_information),
-    path("402", not_authorized, name='402'),
-    path("404", not_found, name='404'),
-    path("500", server_error, name='500'),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
 ] 
