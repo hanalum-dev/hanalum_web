@@ -55,10 +55,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         unique=True,
     )
-    nickname = models.CharField(
+    nickname = models.TextField(
         verbose_name="닉네임",
-        max_length=10,
-        unique=True,
     )
     realname = models.CharField(
         verbose_name="이름",
@@ -112,6 +110,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name="Is superuser",
         default=False,
     )
+    roles = models.TextField(
+        default="",
+        null=False,
+        blank=True,
+        verbose_name="roles"
+    )
 
     objects = UserManager()
 
@@ -128,6 +132,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.avatar:
             return self.avatar.url  # pylint: disable=E1101
         return static('img/no-title-logo.png')
+
+    @property
+    def is_hanmaum_member(self):
+        return 'hanmaum' in self.roles
 
     class Meta:
         """user meta class"""
