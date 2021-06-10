@@ -30,7 +30,7 @@ class ViewHistory(BaseModel):
     viewer = models.ForeignKey(
         "users.User",
         verbose_name="유저",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
@@ -106,7 +106,7 @@ class Activity(BaseModel):
     user = models.ForeignKey(
         "users.User",
         verbose_name="유저",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )

@@ -1,15 +1,17 @@
 """ base_views """
 from boards.models import Board
+from copy import deepcopy as dp
 from functools import wraps
 
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 
 from articles.models import Article
 from boards.models import Board
 from hanmaum.models import HanmaumArticle
 from users.models import User
 from notices.models import Notice
+from helpers.default import default_response
 from helpers.exeptions import NoPermissionException
 
 
@@ -20,20 +22,21 @@ def catch_all_exceptions(function):
     """
     @wraps(function)
     def wrapper(*args, **kwargs):
+        response = dp(default_response)
         try:
             return function(*args, **kwargs)
         except NoPermissionException:
-            return redirect('402')
+            return render(args[0], '402.html')
         except Article.DoesNotExist :
-            return redirect('404')
+            return render(args[0], '404.html')
         except Board.DoesNotExist:
-            return redirect('404')
+            return render(args[0], '404.html')
         except HanmaumArticle.DoesNotExist:
-            return redirect('404')
+            return render(args[0], '404.html')
         except User.DoesNotExist:
-            return redirect('404')
+            return render(args[0], '404.html')
         except Notice.DoesNotExist:
-            return redirect('404')
+            return render(args[0], '404.html')
         except Exception as e:
-            return redirect('500')
+            return render(args[0], '500.html')
     return wrapper

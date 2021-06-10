@@ -1,5 +1,4 @@
 """ 한마음 views 모듈입니다."""
-from hanmaum.validators import HanmaumArticlePermissionValidator
 import json
 from copy import deepcopy as dp
 
@@ -13,6 +12,8 @@ from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
+from hanmaum.validators import HanmaumArticlePermissionValidator
+from .forms import HanmaumCreationForm
 
 @catch_all_exceptions
 def index(request):
@@ -42,6 +43,8 @@ def show(request, article_id):
     """ show """
     response = dp(default_response)
     current_user = request.user
+
+    HanmaumArticlePermissionValidator.show(current_user, article_id)
 
     article = HanmaumArticle.objects.get(pk=article_id)
 
@@ -87,10 +90,37 @@ def edit(request):
 @catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new(request):
-    """ new """
+    """hanmaum#new"""
     response = dp(default_response)
+    response.update({
+        'form': HanmaumCreationForm()
+    })
+    current_user = request.user
 
-    return render(request, 'hanmaum/new.dj.html', response)
+    HanmaumArticlePermissionValidator.new(current_user)
+
+    if request.method == 'POST':
+        form = HanmaumCreationForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            article = form.save(commit=False)
+
+            article.save()
+
+            # hashtags_str = request.POST.get('hashtags_str')
+            # hashtags = get_hashtag_list(hashtags_str)
+            # for hashtag in hashtags:
+            #     HashTag.add_hashtag(
+            #         article,
+            #         hashtag
+            #     )
+
+            messages.success(request, '글이 작성되었습니다.')
+            return redirect("hanmaum:show", article.id)
+        messages.error(request, "글 작성 중 오류가 발생하였습니다.")
+        return redirect("hanmaum:index")
+    else:
+        return render(request, 'hanmaum/new.dj.html', response)
 
 def introduce(request):
     response = dp(default_response)

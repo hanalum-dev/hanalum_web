@@ -27,6 +27,7 @@ class UserAdmin(BaseUserAdmin):
         "read_authority",
         "write_authority",
         "user_category",
+        "roles",
     ]
     list_filter = ["is_admin", "read_authority", "write_authority", "user_category"]
     fieldsets = (
@@ -53,6 +54,7 @@ class UserAdmin(BaseUserAdmin):
                     "is_superuser",
                     "read_authority",
                     "write_authority",
+                    "roles"
                 )
             },
         ),
@@ -72,7 +74,8 @@ class UserAdmin(BaseUserAdmin):
                     "is_admin",
                     "is_staff",
                     "read_authority",
-                    "write_authority"
+                    "write_authority",
+                    "roles",
                 )
             }
         ),

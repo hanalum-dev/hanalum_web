@@ -41,7 +41,7 @@ class Comment(BaseModel):
     parent = models.ForeignKey(
         "self",
         verbose_name="답글을 단 댓글",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="replies",
@@ -49,7 +49,7 @@ class Comment(BaseModel):
     user = models.ForeignKey(
         "users.User",
         verbose_name="댓글을 단 사람",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
