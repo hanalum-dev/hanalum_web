@@ -45,7 +45,7 @@ class Board(BaseModel):
     creator = models.ForeignKey(
         'users.user',
         verbose_name="게시판 제작자",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True
     )
@@ -131,14 +131,14 @@ class BoardAdminUser(models.Model):
     user = models.ForeignKey(
         'users.user',
         verbose_name="게시판 관리자",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True
     )
     board = models.ForeignKey(
         'boards.board',
         verbose_name="게시판",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True,
     )
