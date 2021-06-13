@@ -18,3 +18,23 @@
         margin: 2rem auto 1rem auto;
     }
 }
+
+.joha {
+    ul {
+        list-style: none;
+    }
+    .introduce-section {
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+        border-top: 1px solid #00000020;
+    }
+    .joha-introduce-subtitle {
+        padding-top: 1.5rem;
+        font-size: medium;
+        color: #719f86;
+    }
+    .joha-introduce-title {
+        padding-top: 0;
+        padding-bottom: 1rem;
+    }
+}
