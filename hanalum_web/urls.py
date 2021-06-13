@@ -21,6 +21,7 @@ urlpatterns = [
     path("mailers/", include('mailers.urls', 'mailers')),
     path("comments/", include('comments.urls', 'comments')),
     path("hanmaum/", include('hanmaum.urls', 'hanmaum')),
+    path("joha/", include('joha.urls', 'joha')),
     path("admin/", admin.site.urls),
     path("policy/personal_information", personal_information),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
