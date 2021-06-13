@@ -154,4 +154,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         verbose_name = "user"
         verbose_name_plural = "users"
-        ordering = ("-updated_at",)
+        ordering = ("-id",)
