@@ -27,6 +27,16 @@
         padding-top: 1rem;
         padding-bottom: 3rem;
         border-top: 1px solid #00000020;
+        #joha-project-process-content {
+            padding-top: 1rem;
+            margin: auto;
+            width: 80%;
+        }
+        @media screen and (max-width: 767px) {
+            #joha-project-process-content {
+                width: 100%
+            }
+        }
     }
     .joha-introduce-subtitle {
         padding-top: 1.5rem;

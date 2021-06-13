@@ -6,6 +6,11 @@ from .models import Comment
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     """ Comment 어드민 설정 클래스입니다. """
+
+    autocomplete_fields = [
+        'user'
+    ]
+
     list_display = [
         'id',
         'user',

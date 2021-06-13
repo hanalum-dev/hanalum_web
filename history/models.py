@@ -14,6 +14,10 @@ from helpers.activity_sucesses import (DisLikeCancleSuccess, DisLikeSuccess,
 
 class ViewHistory(BaseModel):
     """ 사용자 모델 뷰 로그 모델입니다. """
+    class Meta:
+        verbose_name = '조회 기록'
+        verbose_name_plural = '조회 기록'
+
     viewed_type = models.ForeignKey(
         ContentType,
         verbose_name="모델명",
@@ -114,6 +118,10 @@ class Activity(BaseModel):
 
 class LikeActivity(Activity):
     """ 좋아요/싫어요 등의 액션 모델입니다."""
+    class Meta:
+        verbose_name = '좋아요/싫어요'
+        verbose_name_plural = '좋아요/싫어요'
+
     # TODO: 이후 슬퍼요, 멋져요 등의 카테고리도 추가하기
     ACTIVITY_CATEGORY = (
         ('like', '좋아요'),

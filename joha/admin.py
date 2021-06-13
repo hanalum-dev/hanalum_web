@@ -22,6 +22,10 @@ class PaperAdmin(admin.ModelAdmin):
 
 @admin.register(PaperAuthor)
 class PaperAuthorAdmin(admin.ModelAdmin):
+    autocomplete_fields = [
+        'author'
+    ]
+
     list_display = [
         'id',
         'author',
@@ -39,6 +43,9 @@ class PaperVersionAdmin(admin.ModelAdmin):
 
 @admin.register(PaperVersionReviewer)
 class PaperVersionReviewerAdmin(admin.ModelAdmin):
+    autocomplete_fields = [
+        'reviewer'
+    ]
     list_display = [
         'id',
         'reviewer',
@@ -48,6 +55,9 @@ class PaperVersionReviewerAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    autocomplete_fields = [
+        'reviewer'
+    ]
     list_display = [
         'id',
         'before_version',

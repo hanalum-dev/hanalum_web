@@ -41,6 +41,10 @@ class ArticleQuerySet(models.QuerySet):
 
 class Article(BaseModel):
     """ 게시글 모델 """
+    class Meta:
+        verbose_name = '게시글'
+        verbose_name_plural = '게시글'
+
     objects = BaseModelManager.from_queryset(ArticleQuerySet)()
 
     STATUS_CHOICES = (
