@@ -1,0 +1,77 @@
+{% extends 'base.dj.html' %}
+{% load static %}
+{% load sass_tags %}
+{% load bootstrap5 %}
+{% block stylesheet %}
+    <link href="{% sass_src 'style/pages/joha.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block banner %}
+    {% include 'joha/components/_banner.dj.html' %}
+{% endblock %}
+{% block content %}
+    <div class = "row p-3 gx-lg-5 justify-content-center">
+        <div class="col-12 text-center">
+
+            <h3>
+                ❣️ 프로젝트 목적 및 취지
+            </h3>
+
+            <ul>
+                <li> 재학생들의 연구를 졸업생들이 피드백해줄 수 있는 환경 조성 </li>
+                <li> 학계의 Peer review system을 경험해볼 수 있도록 함. </li>
+                <li> 우수 연구성과의 데이터베이스화 및 연구의욕증진, 연구장려분위기 조성 </li>
+            </ul>
+
+            <h3> 📆 프로젝트 기간</h3>
+
+            <p>
+                <b>반기 1회씩</b> (상반기; 여름방학, 하반기; 겨울방학) 정해진 기간 동안 JOHA 사이트를 통해 재학생들의 연구계획서와 논문을 접수함. 이후 피드백 과정을 진행하고, 논문의 경우 반기 1회씩 온라인 저널에 업로드함.
+            </p>
+
+            <h3> 🗨️프로젝트 진행 방식 </h3>
+            
+            <ul>
+                <li> 
+                    재학생들이 정해진 기간 동안 연구계획서 / 논문 투고
+                </li>
+                <li> 
+                    `문과 / 이과 Chief editor`가 논문을 해당 전공분야 `졸업생 reviewer`에게 전달
+                </li>
+                <li> 
+                    reviewer들은 계획서와 논문에 대한 feedback을 작성한 뒤 다시 editor에게 전달
+                </li>
+                <li> 
+                    editor는 피드백을 취합하여 재학생에게 전달하고, 제출자(재학생)는 피드백을 반영하여 수정한 연구계획서/논문을 다시 제출할 수 있음.
+                </li>
+                <li>
+                    이 과정을 거쳐 `온라인 저널`에 완성된 논문을 게시.
+                </li>
+                <li>
+                    연구 계획서는 별도로 게시하지 않음.
+                </li>
+            </ul>
+
+            <h3>
+                🙋프로젝트 구성원
+            </h3>
+
+            <ul>
+                <li>
+                    - 프로젝트 총 책임자 겸 이과 부문 Chief editor : 김태민(1기 졸업생)
+                </li>
+                <li>
+                    - 문과 부문 Chief editor : 안예진(1기 졸업생)
+                </li>
+                <li>
+                    - 프로젝트 기획 : 김홍래(1기 졸업생), 강주호(2기 졸업생)
+                </li>
+                <li>
+                    - 사이트 개발 총괄 : 김신건(3기 졸업생)
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+

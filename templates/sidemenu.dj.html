@@ -67,7 +67,7 @@
             <a class="nav-link text-dark" type="button"
                 data-bs-toggle="collapse" data-bs-target="#collapseSideNavBoard"
                 aria-expanded="true" aria-controls="collapseSideNavBoard">
-                {% fa5_icon 'scroll' 'fas me-2' %}
+                {% fa5_icon 'newspaper' 'fas me-2' %}
                 게시판
             </a>
         </li>
@@ -102,6 +102,12 @@
             FAQ
             </a>
         </li> {% endcomment %}
+        <li class="nav-item">
+            <a href="{% url 'joha:index' %}" class="nav-link text-dark">
+            {% fa5_icon 'scroll' 'fas me-2' %}
+            JOHA
+            </a>
+        </li>
     </ul>
   </div>
 </nav>
