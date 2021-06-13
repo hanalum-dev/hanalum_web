@@ -12,6 +12,9 @@ class HanmaumAdmin(admin.ModelAdmin):
         'reset_like_and_dislike_counter',
         'reset_viewed_counter',
     ]
+    autocomplete_fields = [
+        'author'
+    ]
 
     list_display = [
         'id',

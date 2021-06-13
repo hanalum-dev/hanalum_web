@@ -8,6 +8,10 @@ from .models import Board, BoardAdminUser
 class BoardAdmin(admin.ModelAdmin):
     """게시판 어드민 설정 클래스입니다."""
 
+    autocomplete_fields = [
+        'creator'
+    ]
+
     list_display = [
         'title',
         'creator',

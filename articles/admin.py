@@ -19,6 +19,10 @@ class ArticleAdmin(admin.ModelAdmin):
         'set_to_top_unfixed_article'
     ]
 
+    autocomplete_fields = [
+        'author'
+    ]
+
     list_display = [
         'id',
         'abstract_title',
