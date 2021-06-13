@@ -36,6 +36,11 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """유저 클래스 (DB 생성)"""
+    class Meta:
+        """user meta class"""
+        verbose_name = '유저'
+        verbose_name_plural = '유저'
+        ordering = ("-id",)
 
     GENDER_CHOICES = (("M", "남"), ("F", "여"), ("E", "기타"), ("X", "선택안함"))
 
@@ -148,10 +153,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_joha_reviewer(self):
         return 'joha_reviewer' in self.roles
-
-    class Meta:
-        """user meta class"""
-
-        verbose_name = "user"
-        verbose_name_plural = "users"
-        ordering = ("-id",)

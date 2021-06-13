@@ -8,6 +8,10 @@ from hanalum_web.base_model import BaseModel, BaseModelManager
 
 class HashTag(BaseModel):
     """ 해쉬태그 모델 클래스입니다. """
+    class Meta:
+        verbose_name = '해시태그'
+        verbose_name_plural = '해시태그'
+
     tagged_type = models.ForeignKey(
         ContentType,
         verbose_name="모델명",

@@ -5,6 +5,10 @@ from users.models import User
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
 class PaperCategory(BaseModel):
+    class Meta:
+        verbose_name = '논문 카테고리'
+        verbose_name_plural = '논문 카테고리'
+
     content = models.TextField(
         verbose_name="카테고리 항목"
     )
@@ -19,6 +23,10 @@ class PaperQuerySet(models.QuerySet):
 
 
 class Paper(BaseModel):
+    class Meta:
+        verbose_name = '논문'
+        verbose_name_plural = '논문'
+
     objects = BaseModelManager.from_queryset(PaperQuerySet)()
 
     title = models.TextField(
@@ -39,6 +47,10 @@ class Paper(BaseModel):
 
 
 class PaperAuthor(BaseModel):
+    class Meta:
+        verbose_name = '논문 저자'
+        verbose_name_plural = '논문 저자'
+    
     author = models.ForeignKey(
         User,
         verbose_name="글쓴이",
@@ -56,6 +68,10 @@ class PaperAuthor(BaseModel):
 
 
 class PaperVersion(BaseModel):
+    class Meta:
+        verbose_name = '버전별 논문'
+        verbose_name_plural = '버전별 논문'
+
     paper = models.ForeignKey(
         Paper,
         verbose_name="논문",
@@ -84,6 +100,10 @@ class PaperVersion(BaseModel):
     )
 
 class PaperVersionReviewer(BaseModel):
+    class Meta:
+        verbose_name = '버전별 논문 리뷰어'
+        verbose_name_plural = '버전별 논문 리뷰어'
+
     STATUS_CHOICES = (
         ('unconfirm', '담당자 확인중'),
         ('pending', '리뷰어 배정 완료'),
@@ -115,6 +135,10 @@ class PaperVersionReviewer(BaseModel):
 
 
 class Review(BaseModel):
+    class Meta:
+        verbose_name = '리뷰'
+        verbose_name_plural = '리뷰'
+
     before_version = models.ForeignKey(
         PaperVersion,
         verbose_name="리뷰 대상 논문 버전",

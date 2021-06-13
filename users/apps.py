@@ -6,3 +6,4 @@ class UserConfig(AppConfig):
     """user 앱의 설정들을 정의합니다."""
 
     name = "users"
+    verbose_name = "유저"

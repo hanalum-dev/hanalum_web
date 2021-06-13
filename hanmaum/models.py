@@ -19,6 +19,10 @@ class HanmaumArticleQuerySet(models.QuerySet):
 
 class HanmaumArticle(BaseModel):
     """한마음 게시글 모델입니다."""
+    class Meta:
+        verbose_name = '한마음 게시글'
+        verbose_name_plural = '한마음 게시글'
+
     objects = BaseModelManager.from_queryset(HanmaumArticleQuerySet)()
 
     STATUS_CHOICES = (

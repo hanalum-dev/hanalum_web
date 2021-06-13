@@ -6,3 +6,4 @@ class ArticleConfig(AppConfig):
     """acticle 앱의 설정들을 정의합니다."""
 
     name = "articles"
+    verbose_name = "게시글"

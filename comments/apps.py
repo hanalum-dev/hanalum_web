@@ -5,3 +5,4 @@ from django.apps import AppConfig
 class CommentConfig(AppConfig):
     """comment 앱의 설정들을 정의합니다."""
     name = 'comments'
+    verbose_name = "댓글"

@@ -6,3 +6,4 @@ class BoardConfig(AppConfig):
     """board 앱의 설정들을 정의합니다."""
 
     name = "boards"
+    verbose_name = "게시판"

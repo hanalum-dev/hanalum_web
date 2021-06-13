@@ -20,6 +20,10 @@ class BoardQuerySet(models.QuerySet):
 
 class Board(BaseModel):
     """ 게시판 모델 클래스입니다."""
+    class Meta:
+        verbose_name = '게시판'
+        verbose_name_plural = '게시판'
+
     objects = BaseModelManager.from_queryset(BoardQuerySet)()
 
     STATUS_CHOICES = (
@@ -127,6 +131,9 @@ class Board(BaseModel):
 
 class BoardAdminUser(models.Model):
     """ 게시판 관리자 유저 모델"""
+    class Meta:
+        verbose_name = '게시판 어드민 유저'
+        verbose_name_plural = '게시판 어드민 유저'
 
     user = models.ForeignKey(
         'users.user',
