@@ -137,6 +137,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_hanmaum_member(self):
         return 'hanmaum' in self.roles
 
+    @property
+    def is_joha_chief(self):
+        return 'joha_chief' in self.roles
+
+    @property
+    def is_joha_editor(self):
+        return 'joha_editor' in self.roles
+
+    @property
+    def is_joha_reviewer(self):
+        return 'joha_reviewer' in self.roles
+
     class Meta:
         """user meta class"""
 

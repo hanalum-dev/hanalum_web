@@ -167,6 +167,7 @@ INSTALLED_APPS = [
     'notices',
     'hashtags',
     'history',
+    'joha',
     'policies',
 ]
 
