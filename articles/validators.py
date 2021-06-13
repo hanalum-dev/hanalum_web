@@ -48,7 +48,7 @@ class ArticlePermissionValidator():
 
         if article.status != 'p':
             raise NoPermissionException()
-        if current_user != article.author and current_user.is_admin:
+        if current_user != article.author and not current_user.is_admin:
             raise NoPermissionException()
 
         return True
@@ -84,5 +84,23 @@ class ArticlePermissionValidator():
 
         if not article.board.use_bad:
             raise NoPermissionException()
+
+        return True
+
+    @classmethod
+    def restrict_comment(cls, current_user, article_id):
+        Article.objects.get(pk=article_id)
+
+        if not current_user.is_admin:
+            return NoPermissionException()
+
+        return True
+
+    @classmethod
+    def allow_comment(cls, current_user, article_id):
+        Article.objects.get(pk=article_id)
+
+        if not current_user.is_admin:
+            return NoPermissionException()
 
         return True
