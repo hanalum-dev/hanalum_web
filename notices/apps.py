@@ -4,4 +4,5 @@ from django.apps import AppConfig
 
 class NoticeConfig(AppConfig):
     """ notice 앱의 설정들을 정의합니다. """
-    name = 'notice'
+    name = 'notices'
+    verbose_name = '공지사항'

@@ -6,6 +6,10 @@ from .models import ViewHistory, LikeActivity
 @admin.register(ViewHistory)
 class ViewHistoryAdmin(admin.ModelAdmin):
     """ ViewHistory 어드민 설정 클래스입니다. """
+    autocomplete_fields = [
+        'viewer'
+    ]
+
     list_display = [
         "viewed_type",
         "viewed_id",
@@ -26,6 +30,10 @@ class ViewHistoryAdmin(admin.ModelAdmin):
 @admin.register(LikeActivity)
 class LikeActivityAdmin(admin.ModelAdmin):
     """ LikeActivity 어드민 설정 클래스입니다. """
+    autocomplete_fields = [
+        'user'
+    ]
+
     list_display = [
         "content_type",
         "content_id",

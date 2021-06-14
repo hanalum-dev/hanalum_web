@@ -15,46 +15,47 @@ class UserAdmin(BaseUserAdmin):
     change_password_form = AdminPasswordChangeForm
 
     list_display = [
-        "email",
-        "nickname",
-        "realname",
-        "gender",
-        "avatar",
-        "is_admin",
-        "is_staff",
-        "is_active",
-        "is_superuser",
-        "read_authority",
-        "write_authority",
-        "user_category",
-        "roles",
+        'id',
+        'email',
+        'nickname',
+        'realname',
+        'gender',
+        'avatar',
+        'is_admin',
+        'is_staff',
+        'is_active',
+        'is_superuser',
+        'read_authority',
+        'write_authority',
+        'user_category',
+        'roles',
     ]
-    list_filter = ["is_admin", "read_authority", "write_authority", "user_category"]
+    list_filter = ['is_admin', 'read_authority', 'write_authority', 'user_category']
     fieldsets = (
         (
             None,
             {
-                "fields": (
-                    "email",
-                    "password",
+                'fields': (
+                    'email',
+                    'password',
                 )
             },
         ),
         (
-            "Personal info",
-            {"fields": ("nickname", "realname", "gender", "avatar", "user_category")},
+            'Personal info',
+            {'fields': ('nickname', 'realname', 'gender', 'avatar', 'user_category')},
         ),
         (
-            "Permissions",
+            'Permissions',
             {
-                "fields": (
-                    "is_admin",
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "read_authority",
-                    "write_authority",
-                    "roles"
+                'fields': (
+                    'is_admin',
+                    'is_active',
+                    'is_staff',
+                    'is_superuser',
+                    'read_authority',
+                    'write_authority',
+                    'roles'
                 )
             },
         ),
@@ -62,24 +63,24 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (
             None, {
-                "classes" : ("wide",),
-                "fields": (
-                    "email",
-                    "password1",
-                    "password2",
-                    "nickname",
-                    "realname",
-                    "gender",
-                    "avatar",
-                    "is_admin",
-                    "is_staff",
-                    "read_authority",
-                    "write_authority",
-                    "roles",
+                'classes' : ('wide',),
+                'fields': (
+                    'email',
+                    'password1',
+                    'password2',
+                    'nickname',
+                    'realname',
+                    'gender',
+                    'avatar',
+                    'is_admin',
+                    'is_staff',
+                    'read_authority',
+                    'write_authority',
+                    'roles',
                 )
             }
         ),
     )
-    search_fields = ("email", "realname", "nickname")
-    ordering = ("email",)
+    search_fields = ('email', 'realname', 'nickname')
+    ordering = ('email',)
     filter_horizontal = ()

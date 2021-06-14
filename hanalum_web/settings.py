@@ -140,6 +140,32 @@ SUMMERNOTE_CONFIG = {
     # },
 }
 
+ADMINLTE_SETTINGS = {
+    'search_form': True,
+    'navigation_expanded': True,
+
+    'show_apps': [
+        'main',
+        'boards',
+        'articles',
+        'notices',
+        'hanmaum',
+        'comments',
+        'hashtags',
+        'history',
+        'users',
+        'joha',
+        'sites'
+    ],
+    'main_navigation_app': 'django_admin_settings',
+    # 'icons': {
+    #     'myapp': {
+    #         'shops': 'fa-shopping-cart',
+    #         'products': 'fa-dollar',
+    #     }
+    # }
+}
+
 
 INSTALLED_APPS = [
     'adminlteui',

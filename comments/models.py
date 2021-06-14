@@ -18,6 +18,10 @@ class CommentQuerySet(models.QuerySet):
 
 class Comment(BaseModel):
     """ comment 클래스입니다. """
+    class Meta:
+        verbose_name = '댓글'
+        verbose_name_plural = '댓글'
+
     objects = BaseModelManager.from_queryset(CommentQuerySet)()
 
     STATUS_CHOICES = (

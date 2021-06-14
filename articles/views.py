@@ -316,6 +316,30 @@ def search(request):
     return render(request, 'articles/search.html', response)
 
 
+@catch_all_exceptions
+def restrict_comment(request, article_id):
+    current_user = request.user
+    ArticlePermissionValidator.restrict_comment(current_user, article_id)
+
+    article = Article.objects.get(pk=article_id)
+    article.comment_restricted = True
+    article.save()
+
+    return redirect('articles:show', article_id)
+
+
+@catch_all_exceptions
+def allow_comment(request, article_id):
+    current_user = request.user
+    ArticlePermissionValidator.allow_comment(current_user, article_id)
+    
+    article = Article.objects.get(pk=article_id)
+    article.comment_restricted = False
+    article.save()
+
+    return redirect('articles:show', article_id)
+
+
 def get_hashtag_list(hashtags_str):
     """입력된 hashtag 문자열을 list로 변환하여 반환합니다."""
     ret = []

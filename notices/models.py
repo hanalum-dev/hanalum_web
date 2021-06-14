@@ -28,6 +28,10 @@ class NoticeQuerySet(models.QuerySet):
 
 class Notice(BaseModel):
     """ 공지사항 모델 """
+    class Meta:
+        verbose_name = '공지사항'
+        verbose_name_plural = '공지사항'
+
     objects = BaseModelManager.from_queryset(NoticeQuerySet)()
 
     STATUS_CHOICES = (

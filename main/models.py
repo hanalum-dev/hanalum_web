@@ -8,6 +8,10 @@ from hanalum_web.base_model import BaseModel, BaseModelManager
 
 class TopBanner(BaseModel):
     """ 탑 배너 모델입니다. """
+    class Meta:
+        verbose_name = '탑배너'
+        verbose_name_plural = '탑배너'
+
     content = models.TextField(
         verbose_name='내용',
         max_length=100
@@ -40,6 +44,10 @@ class MainBoardQuerySet(models.QuerySet):
 
 class MainBoard(BaseModel):
     """ 메인화면에 보이는 게시판을 지정하는 모델입니다. """
+    class Meta:
+        verbose_name = '메인화면 게시판'
+        verbose_name_plural = '메인화면 게시판'
+
     objects = BaseModelManager.from_queryset(MainBoardQuerySet)()
 
     board = models.ForeignKey(Board,

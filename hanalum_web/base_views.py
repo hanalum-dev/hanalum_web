@@ -5,6 +5,7 @@ from functools import wraps
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from hanalum_web.settings import DEBUG
 
 from articles.models import Article
 from boards.models import Board
@@ -23,6 +24,8 @@ def catch_all_exceptions(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         response = dp(default_response)
+        if DEBUG:
+            return function(*args, **kwargs)
         try:
             return function(*args, **kwargs)
         except NoPermissionException:

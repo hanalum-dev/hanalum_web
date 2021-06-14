@@ -41,6 +41,10 @@ class ArticleQuerySet(models.QuerySet):
 
 class Article(BaseModel):
     """ 게시글 모델 """
+    class Meta:
+        verbose_name = '게시글'
+        verbose_name_plural = '게시글'
+
     objects = BaseModelManager.from_queryset(ArticleQuerySet)()
 
     STATUS_CHOICES = (
@@ -105,6 +109,12 @@ class Article(BaseModel):
         default=0,
         null=True,
         blank=True
+    )
+    comment_restricted = models.BooleanField(
+        verbose_name='댓글 작성 제한',
+        default=False,
+        null=False,
+        blank=False
     )
 
     def __str__(self):
