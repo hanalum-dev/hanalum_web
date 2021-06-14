@@ -30,12 +30,12 @@
                             {% comment_restrictable request.user as comment_restrictable %}
                             {% if comment_restrictable %}
                                 {% if article.comment_restricted %}
-                                    <a href="{% url 'articles:allow_comment' article.id%}">
-                                        댓글 제한 활성화
-                                    </a>
-                                {% else %}
                                     <a href="{% url 'articles:restrict_comment' article.id %}">
                                         댓글 제한 비활성화 
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'articles:allow_comment' article.id%}">
+                                        댓글 제한 활성화
                                     </a>
                                 {% endif %}
                             {% endif %}
