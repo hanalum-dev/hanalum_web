@@ -11,8 +11,19 @@
 {% block content %}
   <div class="joha row p-3 gx-lg-5 justify-content-center">
     <div class="col-lg-10 col-12 text-center">
-      apply
+      <div>
+        <h2> 논문 리뷰 신청 </h2>
+        <h4> 연구 계획서와 논문 초안을 등록하고 분야에 맞는 졸업생 리뷰어에게 리뷰를 받아보세요! </h4>
+        <h1>Testing Vue...</h1>
+        <div id="app"></div>
+      </div>
+
     </div>
   </div>
 
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static 'src/vue/dist/js/chunk-vendors.js' %}"></script>
+  <script type="text/javascript" src="{% static 'src/vue/dist/js/app.js' %}"></script>
 {% endblock %}
