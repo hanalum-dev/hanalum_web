@@ -36,14 +36,17 @@
                         {% endif %}
                     </small>
                     <div class="comment-action p-3">
-                        <a class="p-1 text-secondary"
-                            data-bs-toggle="collapse"
-                            href="#inputRecomment{{comment.id}}"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="inputRecomment{{comment.id}}">
-                            대댓글 쓰기
-                        </a>
+                        {% if article and article.comment_restricted %}
+                        {% else %}
+                            <a class="p-1 text-secondary"
+                                data-bs-toggle="collapse"
+                                href="#inputRecomment{{comment.id}}"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="inputRecomment{{comment.id}}">
+                                대댓글 쓰기
+                            </a>
+                        {% endif %}
                         {% editable comment request.user as editable %}
                         {% if editable %}
                             <a class="p-1 text-secondary"
@@ -156,18 +159,24 @@
             </div>
         </div>
     {% endfor %}
-    <div class="row m-1 p-1 border-top">
-        <form action="{{ new_comment_url }}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-                <label class="p-2 w-100"> 댓글 쓰기 </label>
-                <div class="input-group comment-textarea-wrapper w-100">
-                    <textarea class="form-control" name="content" rows="3"></textarea>
-                    <div class="comment-submit">
-                        <button type="submit" class="btn btn-primary"> 작성 </button>
+    {% if article and article.comment_restricted %}
+        <div class="m-1 p-3 border-top border-bottom">
+            <p class="text-muted text-center">관리자가 해당 게시물의 댓글 기능을 비활성화하였습니다.</p>
+        </div>
+    {% else %}
+        <div class="row m-1 p-1 border-top">
+            <form action="{{ new_comment_url }}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="p-2 w-100"> 댓글 쓰기 </label>
+                    <div class="input-group comment-textarea-wrapper w-100">
+                        <textarea class="form-control" name="content" rows="3"></textarea>
+                        <div class="comment-submit">
+                            <button type="submit" class="btn btn-primary"> 작성 </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    {% endif %}
 </div>

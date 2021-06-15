@@ -3,6 +3,7 @@
 {% load bootstrap5 %}
 {% load fontawesome_5 %}
 {% load sass_tags %}
+{% load article_policy_tags %}
 
 {% block stylesheet %}
     {% fontawesome_5_static %}
@@ -22,10 +23,22 @@
                     <h3 class="card-title">
                         {{ article.title }}
                     </h3>
-                    {% if is_author %}
+                    {% if is_author or request.user.is_admin %}
                         <div class="card-header-author-menu">
                             <a href="{% url 'articles:edit' article.id %}"> 글 수정 </a>
                             <a href="{% url 'articles:delete' article.id %}" onclick="return confirm('삭제하시겠습니까?');"> 글 삭제 </a>
+                            {% comment_restrictable request.user as comment_restrictable %}
+                            {% if comment_restrictable %}
+                                {% if article.comment_restricted %}
+                                    <a href="{% url 'articles:restrict_comment' article.id %}">
+                                        댓글 제한 비활성화 
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'articles:allow_comment' article.id%}">
+                                        댓글 제한 활성화
+                                    </a>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     {% endif %}
                     <small class="text-muted fw-light">

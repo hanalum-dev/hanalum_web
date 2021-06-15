@@ -110,6 +110,12 @@ class Article(BaseModel):
         null=True,
         blank=True
     )
+    comment_restricted = models.BooleanField(
+        verbose_name='댓글 작성 제한',
+        default=False,
+        null=False,
+        blank=False
+    )
 
     def __str__(self):
         return "[{}] {}".format(self.board, self.title)
