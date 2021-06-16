@@ -98,6 +98,11 @@ class PaperVersion(BaseModel):
         blank=False,
         upload_to='joha_files/%Y/%m/%d',
     )
+    comment_to_reviewer = models.TextField(
+        verbose_name="리뷰어에게 남기는 요청사항",
+        null=True,
+        blank=True
+    )
 
 class PaperVersionReviewer(BaseModel):
     class Meta:
