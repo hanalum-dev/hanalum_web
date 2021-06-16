@@ -3,6 +3,8 @@ secrets.json
 */bundles/*
 webpack-stats.json
 
+/static
+
 .DS_Store
 node_modules
 /dist
