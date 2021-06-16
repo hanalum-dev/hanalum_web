@@ -3,7 +3,7 @@
 
 <nav class="navbar sticky-top m-0 p-0">
     <div class="row w-100 m-3 justify-content-center">
-        <div class = "col-lg-3 col-11">
+        <div class = "col-lg-2 col-11">
             <a href="{% url 'joha:index' %}">
                 <h4 class = "nav-brand">
                     <img src = "{% static 'img/no-title-logo.png'%}" height = "30"/>
@@ -12,18 +12,18 @@
             </a>
         </div>
 
-        <div class = "col-lg-6 d-lg-block d-md-none d-none">
+        <div class = "col-lg-8 d-lg-block d-md-none d-none">
             <div class = "row w-100">
                 <div class = "col-12 text-center justify-content-center">
-                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:index' %}"> JOHA 소개</a>
-                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:reviews_apply' %}"> 논문 리뷰 신청하기 </a>
+                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:index' %}"> 소개 </a>
+                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:reviews_apply' %}"> 논문 리뷰 신청 </a>
                     <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:reviews_index' %}"> 논문 리뷰 현황 </a>
                     <a class="nav-menu-text align-middle nav-center-menu-item" href="/"> 한아름으로 돌아가기 </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-3 d-lg-block d-md-none d-none dropdown text-end">
+        <div class="col-lg-2 d-lg-block d-md-none d-none dropdown text-end">
             <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
             <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
                 {% if user.is_authenticated %}
