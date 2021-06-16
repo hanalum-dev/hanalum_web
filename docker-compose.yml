@@ -15,9 +15,12 @@ services:
       - ./backups:/home/backups
     command: -p 5433
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: > 
-      sh -c "python wait_for_postgres.py &&
+      sh -c "npm run build &&
+            python wait_for_postgres.py &&
             ./manage.py makemigrations --noinput &&
             ./manage.py migrate &&
             ./manage.py collectstatic  --noinput &&

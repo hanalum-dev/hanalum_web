@@ -5,7 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   context: __dirname,
-  mode: 'development',
+  mode: 'production',
   entry: {
     AppJohaApplyFormWizard: './public/js/AppJohaApplyFormWizard.js',
   },
