@@ -1,5 +1,12 @@
 ### SECRET ###
 secrets.json
+*/bundles/*
+webpack-stats.json
+
+static/ansi-regex/*
+static/lodash*
+static/strip*
+static/webpack-bundle-tracker
 
 .DS_Store
 node_modules

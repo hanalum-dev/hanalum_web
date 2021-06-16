@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import {FormWizard, TabContent} from 'vue-form-wizard'
+import { FormWizard, TabContent } from 'vue-form-wizard';
 
 export default {
   name: 'JohaApplyFormWizard',
@@ -116,4 +116,3 @@ export default {
   }
 }
 </script>
-

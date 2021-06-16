@@ -39,3 +39,10 @@ https://fontawesome.com/icons?d=gallery 참고
 와 같이 코드를 먼저 초기화하고, 
 
 `{% fa5_icon 'pencil-alt' 'fas' %}` 와 같은 형식으로 추가하면 됩니다.
+
+
+### webpack build (임시)
+
+```bash
+> ./node_modules/.bin/webpack --config webpack.config.js
+```
