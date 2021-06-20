@@ -1,4 +1,4 @@
-from joha.models import Paper, PaperAuthor, PaperVersion
+from joha.models import Paper, PaperAuthor, PaperVersion, JohaEventSchedule
 from django.http import response
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -17,12 +17,18 @@ def index(request):
 class JohaReviewsView:
     @classmethod
     def index(cls, request):
+        if not JohaEventSchedule.in_progress():
+            messages.info(request, "JOHA 리뷰 신청 기간이 아닙니다.")
+            return redirect("joha:index")
         response = dp(default_response)
 
         return render(request, 'joha/reviews/index.dj.html', response)
 
 
     def show(request):
+        if not JohaEventSchedule.in_progress():
+            messages.info(request, "JOHA 리뷰 신청 기간이 아닙니다.")
+            return redirect("joha:index")
         response = dp(default_response)
 
         return render(request, 'joha/reviews/show.dj.html', response)
@@ -30,6 +36,9 @@ class JohaReviewsView:
 
     @classmethod
     def new(request):
+        if not JohaEventSchedule.in_progress():
+            messages.info(request, "JOHA 리뷰 신청 기간이 아닙니다.")
+            return redirect("joha:index")
         response = dp(default_response)
 
         return render(request, 'joha/reviews/new.dj.html', response)
@@ -37,6 +46,9 @@ class JohaReviewsView:
 
     @classmethod
     def edit(request):
+        if not JohaEventSchedule.in_progress():
+            messages.info(request, "JOHA 리뷰 신청 기간이 아닙니다.")
+            return redirect("joha:index")
         response = dp(default_response)
 
         return render(request, 'joha/reviews/edit.dj.html', response)
@@ -45,6 +57,10 @@ class JohaReviewsView:
 @transaction.atomic
 @login_required(login_url='/users/signin')
 def apply(request):
+    if not JohaEventSchedule.in_progress():
+        messages.info(request, "JOHA 리뷰 신청 기간이 아닙니다.")
+        return redirect("joha:index")
+
     response = dp(default_response)
     current_user = request.user
 

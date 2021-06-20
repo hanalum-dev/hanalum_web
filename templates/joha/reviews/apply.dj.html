@@ -6,7 +6,6 @@
 
 {% block stylesheet %}
     <link href="{% sass_src 'style/pages/joha.scss' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'src/vue/dist/css/chunk-vendors.css' %}" rel="stylesheet" type="text/css" />
     <style>
       .vue-form-wizard label{
         text-align: start;
@@ -32,9 +31,4 @@
     </div>
   </div>
 
-{% endblock %}
-
-{% block scripts %}
-  <script type="text/javascript" src="{% static 'src/vue/dist/js/chunk-vendors.js' %}"></script>
-  <script type="text/javascript" src="{% static 'src/vue/dist/js/app.js' %}"></script>
 {% endblock %}

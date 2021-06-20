@@ -5,7 +5,8 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   context: __dirname,
-  mode: 'production',
+  // mode: 'production',
+  mode: 'development',
   entry: {
     AppJohaApplyFormWizard: './public/js/AppJohaApplyFormWizard.js',
   },
@@ -13,17 +14,28 @@ module.exports = {
       path: path.resolve('./assets/bundles/'),
       filename: "[name]-[hash].js",
   },
-
+  devServer: {
+    hot: true,
+    proxy: {
+      contentBase: './assets/bundles/',
+      '!/static/bundles/**': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    },
+  },
   plugins: [
     new BundleTracker({filename: './webpack-stats.json'}),
     new VueLoaderPlugin()
   ],
-
   module : {
     rules: [
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+        options: {
+          hotReload: true,
+        }
       },
       {
         test: /\.css/,

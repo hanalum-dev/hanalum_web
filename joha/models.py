@@ -1,8 +1,31 @@
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
+from django.utils import timezone
 
 from users.models import User
 from hanalum_web.base_model import BaseModel, BaseModelManager
+
+class JohaEventSchedule(BaseModel):
+    class Meta:
+        verbose_name = 'JOHA 이벤트 일정'
+        verbose_name_plural = 'JOHA 이벤트 일정'
+
+    receipt_start_at = models.DateTimeField(
+        verbose_name="이벤트 시작일",
+        blank=False,
+        null=False,
+    )
+    receipt_end_at = models.DateTimeField(
+        verbose_name="이벤트 종료일",
+        blank=False,
+        null=False,
+    )
+
+    @classmethod
+    def in_progress(cls):
+        current_datetime = timezone.localtime()
+        return JohaEventSchedule.objects.filter(receipt_start_at__lte=current_datetime, receipt_end_at__gte=current_datetime).count() > 0
+
 
 class PaperCategory(BaseModel):
     class Meta:
