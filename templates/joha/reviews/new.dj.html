@@ -1,0 +1,18 @@
+{% extends 'joha/base.dj.html' %}
+{% load static %}
+{% load sass_tags %}
+{% load bootstrap5 %}
+{% block stylesheet %}
+    <link href="{% sass_src 'style/pages/joha.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% comment %} {% block banner %}
+    {% include 'joha/components/_banner.dj.html' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+  <div class="joha row p-3 gx-lg-5 justify-content-center">
+    <div class="col-lg-10 col-12 text-center">
+      new
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% load static %}
+{% load fontawesome_5 %}
+
+<nav class="navbar sticky-top m-0 p-0">
+    <div class="row w-100 m-3 justify-content-center">
+        <div class = "col-lg-2 col-11">
+            <a href="{% url 'joha:index' %}">
+                <h4 class = "nav-brand">
+                    <img src = "{% static 'img/no-title-logo.png'%}" height = "30"/>
+                    <span class="text-blue">JOHA</span>
+                </h5>
+            </a>
+        </div>
+
+        <div class = "col-lg-8 d-lg-block d-md-none d-none">
+            <div class = "row w-100">
+                <div class = "col-12 text-center justify-content-center">
+                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:index' %}"> 소개 </a>
+                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:reviews_apply' %}"> 논문 리뷰 신청 </a>
+                    <a class="nav-menu-text align-middle nav-center-menu-item" href="{% url 'joha:reviews_index' %}"> 논문 리뷰 현황 </a>
+                    <a class="nav-menu-text align-middle nav-center-menu-item" href="/"> 한아름으로 돌아가기 </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 d-lg-block d-md-none d-none dropdown text-end">
+            <a class="nav-menu-text nav-link dropdown-toggle align-middle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {% fa5_icon 'user' 'fas' %} </a>
+            <div class="dropdown-menu align-self-end right-0" aria-labelledby="navbarDropdown">
+                {% if user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'users:me' %}">내정보</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'users:signout' %}">
+                            로그아웃
+                    </a></li>
+                {% else %}
+                    <li><a class="dropdown-item" href="{% url 'users:signin' %}"> 로그인 </a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:signup' %}"> 회원가입 </a></li>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-1 d-md-block d-lg-none">
+            <button class="btn nav-menu-text m-0 p-0 nav-menu-bar-button" id="sidebarCollapse">
+                {% fa5_icon 'bars' 'fas' %}
+            </button>
+        </div>
+    </div>
+</nav>
+{% include 'joha/components/_sidemenu.dj.html' %}

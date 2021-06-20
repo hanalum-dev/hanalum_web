@@ -17,6 +17,7 @@ django-material-admin==1.7.16
 django-sass-processor==1.0.1
 django-summernote==0.8.11.6
 django-treebeard==4.3
+django-webpack-loader==1.0.0
 filelock==3.0.12
 future==0.18.2
 html2text==2020.1.16

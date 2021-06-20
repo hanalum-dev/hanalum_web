@@ -1,0 +1,92 @@
+{% load static %}
+{% load fontawesome_5 %}
+
+<nav class="sidemenu d-lg-none vertical-nav active" id="sidebar">
+  <div class="py-4 px-3 mb-4 position-relative bg-light-dark">
+    <div class="media d-flex align-items-center w-80p">
+      <div class="media-body p-1">
+        {% if user.is_authenticated %}
+          <h4 class="m-1 text-white">{{request.user.nickname}}</h4>
+        {% else %}
+          <h4 class="mb-1 text-light-blue">비회원</h4>
+          <p class="font-weight-light text-white mb-0">로그인을 하시면 더 많은 내용을 확인할 수 있습니다.</p>
+        {% endif %}
+      </div>
+    </div>
+    <button id="sidebarCollapseInner" type="button" class="btn btn-light bg-white rounded-pill shadow-sm position-absolute right-10 top-30">
+        {% fa5_icon 'arrow-right' 'fas' %}
+    </button>
+  </div>
+
+  <div class = "bg-white">
+    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">회원 정보</p>
+    <ul class="nav flex-column mb-0">
+      {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'users:me' %}">
+                    {% fa5_icon 'user-alt' 'fas me-2' %}
+                    내정보
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'users:password_edit' %}" class="nav-link text-dark">
+                    {% fa5_icon 'user-edit' 'fas me-2' %}
+                    비밀번호 수정
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'users:signout' %}" class="nav-link text-dark">
+                    {% fa5_icon 'sign-out-alt' 'fas me-2' %}
+                    로그아웃
+                </a>
+            </li>
+      {% else %}
+        <li class="nav-item">
+            <a href="{% url 'users:signin' %}" class="nav-link text-dark">
+            {% fa5_icon 'sign-in-alt' 'fas me-2' %}
+            로그인
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'users:signup' %}" class="nav-link text-dark">
+            {% fa5_icon 'user-plus' 'fas me-2' %}
+            회원가입
+            </a>
+        </li>
+      {% endif %}
+    </ul>
+    <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">서비스</p>
+    <ul class="nav flex-column bg-white mb-0">
+        <li class="nav-item">
+            <a href="{% url 'joha:index' %}" class="nav-link text-dark">
+            {% fa5_icon 'home' 'fas me-2' %}
+            JOHA 소개
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'joha:index' %}" class="nav-link text-dark">
+            {% fa5_icon 'heart' 'fas me-2' %}
+            논문 리뷰 신청
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'joha:index' %}" class="nav-link text-dark">
+            {% fa5_icon 'flag' 'fas me-2' %}
+            논문 리뷰 현황
+            </a>
+        </li>
+        {% comment %} <li class="nav-item">
+            <a href="#" class="nav-link text-dark">
+            {% fa5_icon 'question' 'fas me-2' %}
+            FAQ
+            </a>
+        </li> {% endcomment %}
+        <li class="nav-item">
+            <a href="{% url 'joha:index' %}" class="nav-link text-dark">
+            {% fa5_icon 'scroll' 'fas me-2' %}
+            논문 리뷰하기
+            </a>
+        </li>
+    </ul>
+  </div>
+</nav>

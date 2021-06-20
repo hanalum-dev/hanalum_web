@@ -183,6 +183,7 @@ INSTALLED_APPS = [
     'fontawesome_5',
     'sass_processor',
     'django_inlinecss',
+    'webpack_loader',
     'users',
     'api',
     'articles',
@@ -292,7 +293,8 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "node_modules/")
+    os.path.join(BASE_DIR, "node_modules/"),
+    os.path.join(BASE_DIR, 'assets'),
 ]
 
 STATICFILES_FINDERS = (
@@ -303,3 +305,15 @@ STATICFILES_FINDERS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+        'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
+    }
+}

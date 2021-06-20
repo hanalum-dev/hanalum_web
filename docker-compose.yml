@@ -15,14 +15,19 @@ services:
       - ./backups:/home/backups
     command: -p 5433
   web:
-    build: .
-    command: >
-      bash -c "python wait_for_postgres.py &&
-              ./manage.py makemigrations --noinput &&
-              ./manage.py migrate &&
-              ./manage.py collectstatic  --noinput &&
-              ./manage.py runserver 0.0.0.0:3000 --insecure"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: > 
+      sh -c "npm run build &&
+            python wait_for_postgres.py &&
+            ./manage.py makemigrations --noinput &&
+            ./manage.py migrate &&
+            ./manage.py collectstatic  --noinput &&
+            ./manage.py runserver 0.0.0.0:3000 --insecure"
     ports:
       - "3000:3000"
     volumes:
       - .:/web
+    depends_on:
+      - db
