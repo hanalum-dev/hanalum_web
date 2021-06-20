@@ -1,6 +1,14 @@
 from django.contrib import admin
 
-from .models import PaperCategory, Paper, PaperAuthor, PaperVersion, PaperVersionReviewer, Review
+from .models import PaperCategory, Paper, PaperAuthor, PaperVersion, PaperVersionReviewer, Review, JohaEventSchedule
+
+@admin.register(JohaEventSchedule)
+class JohaEventScheduleAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'receipt_start_at',
+        'receipt_end_at',
+    ]
 
 @admin.register(PaperCategory)
 class PaperCategoryAdmin(admin.ModelAdmin):

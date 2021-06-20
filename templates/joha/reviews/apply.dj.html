@@ -1,0 +1,34 @@
+{% extends 'joha/base.dj.html' %}
+{% load static %}
+{% load sass_tags %}
+{% load bootstrap5 %}
+{% load render_bundle from webpack_loader %}
+
+{% block stylesheet %}
+    <link href="{% sass_src 'style/pages/joha.scss' %}" rel="stylesheet" type="text/css" />
+    <style>
+      .vue-form-wizard label{
+        text-align: start;
+        margin-bottom: 0.3rem;
+        margin-left: 0.2rem;
+        font-weight: bold;
+      }
+    </style>
+{% endblock %}
+{% comment %} {% block banner %}
+    {% include 'joha/components/_banner.dj.html' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+  <div class="joha row p-3 gx-lg-5 justify-content-center">
+    <div class="col-lg-10 col-12 text-center">
+      <form action="{% url 'joha:reviews_apply' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% verbatim %}
+          <div id="app"></div>
+        {% endverbatim %}
+        {% render_bundle 'AppJohaApplyFormWizard' %}
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
