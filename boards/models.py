@@ -4,6 +4,11 @@ from django_summernote.fields import SummernoteTextField
 
 from hanalum_web.base_model import BaseModel, BaseModelManager
 
+class BoardModelManager(models.Manager):
+    use_for_related_fields = True
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted_at__isnull=True).filter(type=self.model.__name__.lower())
 
 class BoardQuerySet(models.QuerySet):
     """ Board 모델 쿼리셋 클래스입니다. """
@@ -40,6 +45,14 @@ class Board(BaseModel):
     BOARD_FORAMT_CATEGORY_CHOICES = (
         ('text', '텍스트 중심'),
         ('gallery', '이미지 중심')
+    )
+
+    type = models.CharField(
+        verbose_name='게시판 타입',
+        max_length=20,
+        blank=True,
+        null=True,
+        default='board',
     )
 
     title = models.CharField(
@@ -128,6 +141,16 @@ class Board(BaseModel):
     def __str__(self):
         return "{}".format(self.title)
 
+
+class GalleryBoard(Board):
+    class Meta:
+        proxy = True
+
+    def __init__(self, *args, **kwargs):
+        self._meta.get_field('type').default = 'galleryboard'
+        super(GalleryBoard, self).__init__(*args, **kwargs)
+
+    objects = BoardModelManager.from_queryset(BoardQuerySet)()
 
 class BoardAdminUser(models.Model):
     """ 게시판 관리자 유저 모델"""
