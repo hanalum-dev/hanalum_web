@@ -1,7 +1,7 @@
 """ 게시판 어드민 사이트 설정 모듈입니다."""
 from django.contrib import admin
 
-from .models import Board, BoardAdminUser
+from .models import Board, GalleryBoard, BoardAdminUser
 
 
 @admin.register(Board)
@@ -13,6 +13,45 @@ class BoardAdmin(admin.ModelAdmin):
     ]
 
     list_display = [
+        'title',
+        'type',
+        'creator',
+        'creator_category',
+        'auth_read',
+        'auth_write',
+        'use_comment',
+        'use_good',
+        'use_bad',
+        'use_anonymous',
+        'status',
+        'priority',
+        'board_format_category',
+        'max_attachment_count'
+    ]
+    list_filter = [
+        'auth_read',
+        'creator',
+        'creator_category',
+        'auth_write',
+        'use_comment',
+        'use_good',
+        'use_bad',
+        'use_anonymous',
+        'status',
+        'board_format_category',
+        'max_attachment_count',
+    ]
+
+
+@admin.register(GalleryBoard)
+class GalleryBoardAdmin(admin.ModelAdmin):
+
+    autocomplete_fields = [
+        'creator'
+    ]
+
+    list_display = [
+        'type',
         'title',
         'creator',
         'creator_category',
