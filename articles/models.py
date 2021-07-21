@@ -117,16 +117,27 @@ class Article(BaseModel):
         blank=False
     )
 
+    def save(self, *args, **kwargs):  # pylint: disable=signature-differs
+        """ articles record는 아래 조건이 성립해야 합니다. """
+        # board가 익명 사용가능할 때, 익명 저자가 허용된다.
+        if self.anonymous_author and not self.board.use_anonymous:
+            raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
+        super().save(*args, **kwargs)
+
+    def copy(self, status='d'):
+        """ article 복사 메서드 """
+        new_article = Article()
+        new_article.author = self.author
+        new_article.anonymous_author = self.anonymous_author
+        new_article.title = self.title
+        new_article.board = self.board
+        new_article.content = self.content
+        new_article.status = status
+        new_article.save()
+        return new_article
+
     def __str__(self):
         return "[{}] {}".format(self.board, self.title)
-
-    @property
-    def abstract_title(self):
-        """article의 제목을 최대 30글자까지 반환합니다."""
-        if len(self.title) <= 30:
-            return str(self.title)
-        else:
-            return str(self.title)[:27] + "..."
 
     def summary(self, length=50):
         """ content 일부 표기"""
@@ -147,29 +158,18 @@ class Article(BaseModel):
 
         return plain_text
 
+    @property
+    def abstract_title(self):
+        """article의 제목을 최대 30글자까지 반환합니다."""
+        if len(self.title) <= 30:
+            return str(self.title)
+        else:
+            return str(self.title)[:27] + "..."
+
     @classmethod
     def classname(cls):
         """ 클래스명 """
         return "게시판"
-
-    def save(self, *args, **kwargs):  # pylint: disable=signature-differs
-        """ articles record는 아래 조건이 성립해야 합니다. """
-        # board가 익명 사용가능할 때, 익명 저자가 허용된다.
-        if self.anonymous_author and not self.board.use_anonymous:
-            raise ValidationError("해당 board는 익명 저자 기능을 사용할 수 없습니다.")
-        super().save(*args, **kwargs)
-
-    def copy(self, status='d'):
-        """ article 복사 메서드 """
-        new_article = Article()
-        new_article.author = self.author
-        new_article.anonymous_author = self.anonymous_author
-        new_article.title = self.title
-        new_article.board = self.board
-        new_article.content = self.content
-        new_article.status = status
-        new_article.save()
-        return new_article
 
     @classmethod
     def get_articles_created_by(cls, user):
