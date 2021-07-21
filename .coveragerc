@@ -1,0 +1,12 @@
+[run]
+omit =
+        */venv/*
+        */manage.py
+
+[report]
+omit =
+        */venv/*
+        */manage.py
+
+[html]
+directory = cover

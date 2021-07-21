@@ -46,3 +46,13 @@ https://fontawesome.com/icons?d=gallery 참고
 ```bash
 > ./node_modules/.bin/webpack --config webpack.config.js
 ```
+
+### test coverage commad
+#### run test
+> coverage run  manage.py test
+
+#### coverage cli report
+> coverage report
+
+#### coverage html report
+> coverage html
