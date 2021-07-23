@@ -26,4 +26,4 @@ COPY --from=package /root/wheels /root/wheels
 COPY requirements.txt .
 RUN pip install --no-index --find-links=/root/wheels -r requirements.txt
 
-EXPOSE 3000
+EXPOSE ${PORT}
