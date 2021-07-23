@@ -84,5 +84,5 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
     search_fields = ('email', 'realname', 'nickname')
-    ordering = ('email',)
+    ordering = ('-id',)
     filter_horizontal = ()
