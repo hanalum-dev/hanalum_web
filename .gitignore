@@ -3,6 +3,7 @@ secrets.json
 */bundles/*
 webpack-stats.json
 
+/cover
 /static
 
 .DS_Store

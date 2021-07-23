@@ -1,0 +1,14 @@
+[run]
+omit =
+        */venv/*
+        */migrations/*
+        */manage.py
+
+[report]
+omit =
+        */venv/*
+        */migrations/*
+        */manage.py
+
+[html]
+directory = cover
