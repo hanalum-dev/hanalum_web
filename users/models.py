@@ -92,23 +92,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=USER_CATEGORY_CHOICES,
     )
     created_at = models.DateTimeField(
-        verbose_name="created_at",
+        verbose_name="생성된 날짜",
         auto_now_add=True,
     )
     updated_at = models.DateTimeField(
-        verbose_name="updated_at",
+        verbose_name="수정된 날짜",
         auto_now=True
     )
     is_active = models.BooleanField(
-        verbose_name="Is active",
+        verbose_name="이메일 인증 유무",
         default=True,
     )
     is_admin = models.BooleanField(
-        verbose_name="Is admin",
-        default=False,
-    )
-    is_staff = models.BooleanField(
-        verbose_name="Is staff",
+        verbose_name="어드민 권한",
         default=False,
     )
     is_superuser = models.BooleanField(
@@ -153,3 +149,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_joha_reviewer(self):
         return 'joha_reviewer' in self.roles
+
+    @property
+    def is_staff(self):
+        return self.is_admin

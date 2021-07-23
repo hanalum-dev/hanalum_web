@@ -22,12 +22,14 @@ class UserAdmin(BaseUserAdmin):
         'gender',
         'avatar',
         'is_admin',
-        'is_staff',
         'is_active',
         'is_superuser',
         'read_authority',
         'write_authority',
         'user_category',
+        'created_at',
+        'updated_at',
+        'last_login',
         'roles',
     ]
     list_filter = ['is_admin', 'read_authority', 'write_authority', 'user_category']
