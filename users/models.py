@@ -29,7 +29,6 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **kwargs):
         """슈퍼 유저(superuser) 생성 메소드"""
         kwargs.setdefault("is_admin", True)
-        kwargs.setdefault("is_staff", True)
         kwargs.setdefault("is_superuser", True)
         return self._create_user(email, password, **kwargs)
 
