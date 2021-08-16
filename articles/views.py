@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from boards.models import Board
 from comments.models import Comment
-from configs.base_views import catch_all_exceptions
+from configs.views import catch_all_exceptions
 from hashtags.models import HashTag
 from helpers.default import default_response
 from history.models import LikeActivity, ViewHistory

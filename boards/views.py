@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from articles.models import Article
 from articles.views import get_recent_popular_articles
 from hashtags.models import HashTag
-from configs.base_views import catch_all_exceptions
+from configs.views import catch_all_exceptions
 from helpers.default import default_response
 from history.models import LikeActivity, ViewHistory
 

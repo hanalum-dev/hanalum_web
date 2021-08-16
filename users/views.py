@@ -15,7 +15,7 @@ from helpers.default import default_response
 from .forms import UserConfirmationForm, UserCreationForm, CustomPasswordChangeForm
 from .models import User
 from .tokens import account_activation_token
-from configs.base_views import catch_all_exceptions
+from configs.views import catch_all_exceptions
 from .validators import UserCreationValidator, UserPasswordEditionValidator, UserPermissionValidator
 from history.models import LikeActivity
 from articles.models import Article

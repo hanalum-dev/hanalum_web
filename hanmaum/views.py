@@ -7,7 +7,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-from configs.base_views import catch_all_exceptions
+from configs.views import catch_all_exceptions
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
