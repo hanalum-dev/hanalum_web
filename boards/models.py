@@ -2,13 +2,15 @@
 from django.db import models
 from django_summernote.fields import SummernoteTextField
 
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
+
 
 class BoardModelManager(models.Manager):
     use_for_related_fields = True
 
     def get_queryset(self):
         return super().get_queryset().filter(deleted_at__isnull=True).filter(type=self.model.__name__.lower())
+
 
 class BoardQuerySet(models.QuerySet):
     """ Board 모델 쿼리셋 클래스입니다. """
@@ -151,6 +153,7 @@ class GalleryBoard(Board):
         super(GalleryBoard, self).__init__(*args, **kwargs)
 
     objects = BoardModelManager.from_queryset(BoardQuerySet)()
+
 
 class BoardAdminUser(models.Model):
     """ 게시판 관리자 유저 모델"""

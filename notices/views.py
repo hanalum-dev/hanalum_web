@@ -8,9 +8,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from comments.models import Comment
 from helpers.default import default_response
 from history.models import ViewHistory
-from hanalum_web.base_views import catch_all_exceptions
+from configs.base_views import catch_all_exceptions
 
 from .models import Notice
+
 
 @catch_all_exceptions
 def index(request):
@@ -41,6 +42,7 @@ def index(request):
         notice.author = '한아름'
 
     return render(request, 'notices/index.dj.html', response)
+
 
 @catch_all_exceptions
 def show(request, notice_id):

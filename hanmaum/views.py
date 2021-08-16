@@ -7,13 +7,14 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-from hanalum_web.base_views import catch_all_exceptions
+from configs.base_views import catch_all_exceptions
 from .models import HanmaumArticle
 from history.models import ViewHistory, LikeActivity
 from helpers.default import default_response
 from comments.models import Comment
 from hanmaum.validators import HanmaumArticlePermissionValidator
 from .forms import HanmaumCreationForm
+
 
 @catch_all_exceptions
 def index(request):
@@ -77,6 +78,7 @@ def show(request, article_id):
 
     return render(request, 'hanmaum/show.dj.html', response)
 
+
 @catch_all_exceptions
 @login_required(login_url='/users/signin')
 def edit(request):
@@ -121,6 +123,7 @@ def new(request):
         return redirect("hanmaum:index")
     else:
         return render(request, 'hanmaum/new.dj.html', response)
+
 
 def introduce(request):
     response = dp(default_response)
@@ -189,6 +192,7 @@ def dislike(request, article_id):
 
     return redirect("hanmaum:show", article_id)
 
+
 @catch_all_exceptions
 @login_required(login_url='/users/signin')
 def new_comment(request, article_id):
@@ -204,9 +208,9 @@ def new_comment(request, article_id):
         parent = None
 
     Comment.new_comment(
-        _commented_object = hanmaum_article,
-        _user = user,
-        _content = content,
+        _commented_object=hanmaum_article,
+        _user=user,
+        _content=content,
         _parent=parent
     )
 

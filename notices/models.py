@@ -5,7 +5,8 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 from markdown import markdown
 
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
+
 
 class NoticeQuerySet(models.QuerySet):
     """ notice 모델 쿼리셋 클래스입니다. """
@@ -25,6 +26,7 @@ class NoticeQuerySet(models.QuerySet):
     def non_top_fixed(self):
         """ top_fixed 상태가 아닌 게시글만 리턴합니다. """
         return self.filter(top_fixed=False)
+
 
 class Notice(BaseModel):
     """ 공지사항 모델 """
@@ -72,14 +74,14 @@ class Notice(BaseModel):
     )
 
     def __str__(self):
-        return "[{}] {}".format(Notice.classname() ,self.title)
+        return "[{}] {}".format(Notice.classname() , self.title)
 
     def abstract_title(self, length=30):
         """ """
         if len(self.title) <= length:
             return str(self.title)
         else:
-            return str(self.title)[:(length-3)] + "..."
+            return str(self.title)[:(length - 3)] + "..."
 
     def summary(self, length=50):
         """ content 일부 표기"""

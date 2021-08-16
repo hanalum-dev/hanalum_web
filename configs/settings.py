@@ -142,7 +142,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "hanalum_web.urls"
+ROOT_URLCONF = "configs.urls"
 
 TEMPLATES = [
     {
@@ -167,7 +167,7 @@ SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
 SASS_OUTPUT_STYLE = 'compact'
 
-WSGI_APPLICATION = "hanalum_web.wsgi.application"
+WSGI_APPLICATION = "configs.wsgi.application"
 
 DATABASES = {
     "default": {
@@ -238,7 +238,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'bundles/', # must end with slash
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,

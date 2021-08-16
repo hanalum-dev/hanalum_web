@@ -4,7 +4,8 @@ from django.db import models
 
 from boards.models import Board
 
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
+
 
 class TopBanner(BaseModel):
     """ 탑 배너 모델입니다. """
@@ -34,6 +35,7 @@ class TopBanner(BaseModel):
                 pass
         super().save(*args, **kwargs)
 
+
 class MainBoardQuerySet(models.QuerySet):
     """ MainBoard 모델 쿼리셋 클래스입니다. """
 
@@ -41,6 +43,7 @@ class MainBoardQuerySet(models.QuerySet):
         # FIXME: 가나다 순이 제대로 안 작동함.
         """ 우선순위 높은 순서에 따라 정렬하고, 우선순위가 같다면 게시판 제목의 가나다 순으로 정렬합니다. """
         return self.order_by('-priority', 'board__title')
+
 
 class MainBoard(BaseModel):
     """ 메인화면에 보이는 게시판을 지정하는 모델입니다. """
@@ -51,10 +54,10 @@ class MainBoard(BaseModel):
     objects = BaseModelManager.from_queryset(MainBoardQuerySet)()
 
     board = models.ForeignKey(Board,
-        related_name="main_board",
-        on_delete=models.CASCADE,
-        verbose_name="게시판"
-    )
+                              related_name="main_board",
+                              on_delete=models.CASCADE,
+                              verbose_name="게시판"
+                              )
     priority = models.IntegerField(
         verbose_name="우선순위",
         default=0

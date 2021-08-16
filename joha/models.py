@@ -3,7 +3,8 @@ from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils import timezone
 
 from users.models import User
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
+
 
 class JohaEventSchedule(BaseModel):
     class Meta:
@@ -73,7 +74,7 @@ class PaperAuthor(BaseModel):
     class Meta:
         verbose_name = '논문 저자'
         verbose_name_plural = '논문 저자'
-    
+
     author = models.ForeignKey(
         User,
         verbose_name="글쓴이",
@@ -126,6 +127,7 @@ class PaperVersion(BaseModel):
         null=True,
         blank=True
     )
+
 
 class PaperVersionReviewer(BaseModel):
     class Meta:

@@ -5,7 +5,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from hanalum_web.base_model import BaseModel
+from configs.base_model import BaseModel
 from helpers.activity_errors import (AlreadyDisLikeArticle, AlreadyLikeArticle,
                                      AlreadyNoneActivityArticle)
 from helpers.activity_sucesses import (DisLikeCancleSuccess, DisLikeSuccess,

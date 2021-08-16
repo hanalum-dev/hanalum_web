@@ -15,13 +15,14 @@ from helpers.default import default_response
 from .forms import UserConfirmationForm, UserCreationForm, CustomPasswordChangeForm
 from .models import User
 from .tokens import account_activation_token
-from hanalum_web.base_views import catch_all_exceptions
+from configs.base_views import catch_all_exceptions
 from .validators import UserCreationValidator, UserPasswordEditionValidator, UserPermissionValidator
 from history.models import LikeActivity
 from articles.models import Article
 from hanmaum.models import HanmaumArticle
 
 logger = logging.getLogger(__name__)
+
 
 @transaction.atomic
 def signup(request):
@@ -86,7 +87,7 @@ def signin(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = auth.authenticate(request, username=email, password=password)
-            
+
             if user is None:
                 # TODO: message가 아니라 validation text로 나오게 하기
                 messages.error(request, '이메일 혹은 비밀번호가 제대로 입력되지 않았습니다.')
@@ -137,7 +138,7 @@ def me(request):
     )
 
     response.update({
-        'user':current_user,
+        'user': current_user,
         'like_articles': like_articles,
         'like_hanmaum_articles': like_hanmaum_articles,
         'recent_comments': recent_comments,
@@ -145,6 +146,7 @@ def me(request):
     })
 
     return render(request, 'users/me.dj.html', response)
+
 
 @catch_all_exceptions
 def show(request, user_id):
@@ -191,7 +193,7 @@ def show(request, user_id):
 #         if form.is_valid():
 #             password = form.cleaned_data['password']
 #             avatar = form.cleaned_data['avatar']
-#             user = auth.authenticate(request, username=current_user.email, password=password)                
+#             user = auth.authenticate(request, username=current_user.email, password=password)
 #             form.save()
 #             messages.error(request, '유저 정보가 변경되었습니다!')
 #             return redirect('users:me')
@@ -205,6 +207,8 @@ def show(request, user_id):
 #     return render(request, 'users/edit.dj.html', response)
 
 # @catch_all_exceptions
+
+
 @login_required(login_url='/users/signin')
 def password_edit(request):
     """ 사용자 정보 수정 페이지 뷰"""
@@ -212,10 +216,10 @@ def password_edit(request):
     current_user = request.user
 
     response.update({
-        'user':current_user,
+        'user': current_user,
         'form': CustomPasswordChangeForm(current_user)
     })
-    
+
     if request.method == 'POST':
         form = response['form'] = CustomPasswordChangeForm(current_user, request.POST)
         _password1 = request.POST.get('new_password1')
@@ -252,6 +256,7 @@ def password_edit(request):
 
 def delete(request):
     """사용자 회원 탈퇴 반영 뷰"""
+
 
 @transaction.atomic
 def activate_account(request, uidb64, token):

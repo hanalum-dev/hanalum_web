@@ -5,7 +5,7 @@ from functools import wraps
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from hanalum_web.settings import DEBUG
+from configs.settings import DEBUG
 
 from articles.models import Article
 from boards.models import Board

@@ -6,7 +6,7 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 from markdown import markdown
 
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
 
 
 class ArticleQuerySet(models.QuerySet):
@@ -173,11 +173,12 @@ class Article(BaseModel):
 
     @classmethod
     def get_articles_created_by(cls, user):
-        return Article.objects.filter(author=user, anonymous_author = False)
+        return Article.objects.filter(author=user, anonymous_author=False)
 
     @classmethod
     def get_articles_include_anonymous_author_created_by(cls, user):
         return Article.objects.filter(author=user)
+
 
 class ArticleAttachment(models.Model):
     """ 게시글 첨부파일 모델 """

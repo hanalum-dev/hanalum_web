@@ -7,7 +7,8 @@ from django.db import models
 from django_summernote.fields import SummernoteTextField
 
 from users.models import User
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
+
 
 class HanmaumArticleQuerySet(models.QuerySet):
     """ 한마음 모델 쿼리셋 클래스입니다. """

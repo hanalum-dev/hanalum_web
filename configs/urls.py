@@ -1,4 +1,4 @@
-"""hanalum_web urls 정의 파일입니다."""
+"""config urls 정의 파일입니다."""
 from copy import deepcopy as dp
 from policies.views import personal_information
 from django.conf import settings
@@ -26,7 +26,7 @@ urlpatterns = [
     path("policy/personal_information", personal_information),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
-] 
+]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

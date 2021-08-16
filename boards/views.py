@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from articles.models import Article
 from articles.views import get_recent_popular_articles
 from hashtags.models import HashTag
-from hanalum_web.base_views import catch_all_exceptions
+from configs.base_views import catch_all_exceptions
 from helpers.default import default_response
 from history.models import LikeActivity, ViewHistory
 
@@ -22,7 +22,7 @@ def show(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
     current_user = request.user
     BoardPermissionValidator.show(current_user, board_id)
-    
+
     top_fixed_articles = Article.objects.filter(board=board)\
         .published().top_fixed().recent()
 

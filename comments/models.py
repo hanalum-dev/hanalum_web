@@ -5,7 +5,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from hanalum_web.base_model import BaseModel, BaseModelManager
+from configs.base_model import BaseModel, BaseModelManager
 
 
 class CommentQuerySet(models.QuerySet):
@@ -127,5 +127,5 @@ class Comment(BaseModel):
 
         for comment in comments:
             comment.show_url = "/{}/{}".format(comment.commented_type.app_label, comment.commented_id)
-        
+
         return comments
